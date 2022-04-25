@@ -4,8 +4,8 @@
 
 # Site
 title: Vic blog
-subtitle: 佳憲
-description: 很棒的網站
+subtitle:
+description:
 keywords:
 author: 蔡佳憲
 language: zh
@@ -13,7 +13,7 @@ timezone: ""
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: http://example.com
+url: https://yoshuu.github.io/
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
@@ -125,3 +125,4 @@ live2d:
     height: 300
   mobile:
     show: false #手機顯示
+
