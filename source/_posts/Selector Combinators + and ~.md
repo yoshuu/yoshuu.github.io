@@ -1,10 +1,10 @@
 ---
 title: "Selector Combinators 中的+跟~差別"
 date: 2022-04-04T05:40:00.000-07:00
-tags: 
-
+tags:
+  - css
 categories:
-- 舊部落格移植文章
+  - 舊部落格移植文章
 ---
 
 # Selector Combinators 中的+跟~差別
