@@ -7,7 +7,7 @@ title: Vic blog
 subtitle:
 description:
 keywords:
-author: 蔡佳憲
+author: 可以點選上方“Vic blog”回到首頁～
 language: zh-TW
 timezone:
 
@@ -121,8 +121,8 @@ live2d:
   # 改成你選擇的
   display:
     position: right
-    width: 300
-    height: 300
+    width: 350
+    height: 350
   mobile:
     show: false #手機顯示
 
