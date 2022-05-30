@@ -68,7 +68,7 @@
   </entry>
   <entry>
     <title>Selector Combinators 中的+跟~差別</title>
-    <url>/2022/04/04/Selector%20Combinators/</url>
+    <url>/2022/04/04/Adjacent%20and%20General%20Sibling%20Selector/</url>
     <content><![CDATA[<p>原文連結: <a href="https://appcs342.blogspot.com/2022/04/selector-combinators.html">https://appcs342.blogspot.com/2022/04/selector-combinators.html</a><br>移植時的最後更新日期: 2022-04-04T05:40:13.467-07:00</p>
 <span id="more"></span>
 <div><span style="font-family: inherit;">介紹兩個很類似的選擇器，</span></div><span style="font-family: inherit;">全名是Next-sibling combinator，簡稱加號(+)</span><div><span style="font-family: inherit;">全名是Subsequent-sibling combinator，簡稱波浪號(~)</span></div><div><span style="font-family: inherit;"><br /></span></div><div><ul style="text-align: left;"><li><span style="font-family: inherit;">加號是會影響到後方同層級的首次遇到元素</span></li><li><span style="font-family: inherit;">波浪號則是影響後方同層級的全部元素</span></li></ul><div><span style="font-family: inherit;"><br /></span></div></div><div><span style="font-family: inherit;">加號跟波浪號都是目標為要影響後方同層級，語法使用方式也都差不多</span></div><div><span style="font-family: inherit;">[選取對象A + 選取對象B] 及 [選取對象A ~ 選取對象B]。</span></div><div><span style="font-family: inherit;"><br /></span></div><div><span style="font-family: inherit;"><br /></span></div><div><span style="font-family: inherit;">看起來非常的像，不過有一些差別：</span></div><div><ul style="text-align: left;"><li>加號是只能選到A後面那一個B</li><li>波浪號是選到A後面整串同層的B</li></ul></div>
@@ -79,5 +79,27 @@
       <tags>
         <tag>css</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>hexo 有部署沒顯示問題</title>
+    <url>/2022/05/30/blog%20not%20showing/</url>
+    <content><![CDATA[<h2 id="狀況問題如下："><a href="#狀況問題如下：" class="headerlink" title="狀況問題如下："></a>狀況問題如下：</h2><p>我的其中一篇”Selector Combinators 中的+跟~差別”，已經部署上去的文章，明明已經成功部署了，但是點進去看時會出現這個畫面</p>
+<span id="more"></span>
+
+<p><img src="https://i.imgur.com/TIukMIU.png"></p>
+<p>剛看到時毫無頭緒，後來思考了幾種拯救的方式來試試看能不能救回來</p>
+<h2 id="重新做部署的動作"><a href="#重新做部署的動作" class="headerlink" title="重新做部署的動作"></a>重新做部署的動作</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo g // 建立靜態頁面</span><br><span class="line">hexo d // 部署到github</span><br></pre></td></tr></table></figure>
+
+<p>還是沒辦法</p>
+<h2 id="修改-code"><a href="#修改-code" class="headerlink" title="修改 code"></a>修改 code</h2><p>那我在想有可能是因為 code 的部分有寫錯的問題，仔細檢查了程式碼之後的確有不尋常的地方</p>
+<p><img src="https://i.imgur.com/YwpD9qx.png"></p>
+<p>試試看把標題裡那個有藍色波浪號拿到後，是不是就正常了</p>
+<p>也不是這個問題，排除</p>
+<h2 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h2><p>經過多次的比對之後，發現了原因<br>source 裡 posts 文件的命名中我有使用到～及＋<br>看來名稱的使用上要注意一些符號<br>雖然本地端預覽使用 hexo server 看都沒問題，不過推到遠端就會發生 404</p>
+<p>最後改過後就又恢復正常了～</p>
+]]></content>
+      <categories>
+        <category>還沒分類的</category>
+      </categories>
   </entry>
 </search>
