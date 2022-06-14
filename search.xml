@@ -102,4 +102,56 @@
         <category>還沒分類的</category>
       </categories>
   </entry>
+  <entry>
+    <title>javascript的throw用法</title>
+    <url>/2022/06/14/javascript%20throw/</url>
+    <content><![CDATA[<p>js 在拋出錯誤的時候會使用到 throw</p>
+<p>提到<code>throw</code>之前要先來介紹一下相同性質的<code>try</code>, <code>catch</code></p>
+<span id="more"></span>
+
+<h2 id="try…catch"><a href="#try…catch" class="headerlink" title="try…catch"></a>try…catch</h2><p>它會分成兩個區塊，一個 try 一個 catch</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">// 要執行的程式</span></span><br><span class="line">&#125; <span class="keyword">catch</span>(error) &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="comment">// 錯誤發生時，上面的就不會執行，改執行這邊</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>舉例時間：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">apple</span>(<span class="string">&quot;apple不是正確的使用方式喔&quot;</span>);</span><br><span class="line">&#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;我錯了&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>這段 code 的結果會印出我錯了，如下：<br><img src="https://i.imgur.com/8wTpx1D.png"></p>
+<p>為什麼會發生這樣的結果？這是因為如果<code>try</code>區塊裡面的程式碼假如沒有任何的錯誤，就會直接忽略掉<code>catch</code>區塊裡面的程式碼，反之有錯的話，就會以<code>catch</code>裡面的程式碼為主，而錯誤的<code>try</code>就會中斷執行，所以在這個範例來說，因為<code>try</code>寫錯了，所以會以<code>try</code>裡面的程式碼為主</p>
+<p>另外如果<code>catch</code>區塊如果接受了一個參數，就可以直接利用這個參數獲取錯誤資料，一般都會是直接在後台輸出資料，這邊來試試看：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">apple</span>(<span class="string">&quot;apple不是正確的使用方式喔&quot;</span>);</span><br><span class="line">&#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;錯誤訊息 :&quot;</span>, e);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>這段 code 的結果會印出錯誤資訊，如下：<br><img src="https://i.imgur.com/rqNUD5z.png"></p>
+<h2 id="throw"><a href="#throw" class="headerlink" title="throw"></a>throw</h2><p>接下來介紹這次的主題<code>throw</code>，它常常用於上面提到的<code>try…catch</code>結構，<code>throw</code>這個語句只要一出現就會直接中斷程式執行，代表說在它之後的語句都不會再被執行，簡單來說，在<code>try</code>的區塊時碰到<code>throw</code>就會直接中斷執行並且把控制權交給<code>catch</code>的區塊，所以說要是沒有<code>catch</code>的區塊，程式就會立刻停止</p>
+<p>就如同最前面說的，<code>throw</code>可以拋出一個錯誤，這樣的好處是可以很清楚的知道說錯誤的具體位置，可以很方便去做判斷</p>
+<p>舉例時間：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;這邊很多蘋果，準備開始賣給顧客！&quot;</span>);</span><br><span class="line">  <span class="keyword">throw</span> <span class="string">&quot;等等有壞蘋果！終止交易！&quot;</span>; <span class="comment">// throw 會中斷進行</span></span><br><span class="line">  <span class="comment">// 故意製造壞蘋果</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title class_">BadApple</span>(<span class="string">&quot;壞蘋果x5&quot;</span>);</span><br><span class="line">  <span class="comment">// 假如沒有被中斷，可以正常賣蘋果的世界線</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;好吃蘋果，大賣特賣，大家快來買！&quot;</span>);</span><br><span class="line">&#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(e);</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;有壞蘋果不准你賣！&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>這段 code 的結果順序會是</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="number">1.</span> 這邊很多蘋果，準備開始賣給顧客！</span><br><span class="line"><span class="number">2.</span> 等等有壞蘋果！終止交易！</span><br><span class="line"><span class="number">3.</span> 有壞蘋果不准你賣！</span><br></pre></td></tr></table></figure>
+
+<p>如下：<br><img src="https://i.imgur.com/dTgafCo.png"></p>
+<p>首先，因為<code>throw</code>會中斷後面所有語句執行的特性，所以上面那段範例中還沒遇到<code>壞蘋果x5</code>就會直接跳到<code>catch</code>區塊的<code>有壞蘋果不准你賣！</code>，這邊我故意把<code>壞蘋果x5</code>弄成製造錯誤的方式，但是一樣被中斷跳過，於是可以發現一件事情：</p>
+<blockquote>
+<p><code>throw</code>中斷了後面所有語句，包括了錯誤也一樣</p>
+</blockquote>
+<p>所以這邊衍伸出了一個問題，如果錯誤是發生在<code>throw</code>語句之前，那會發生什麼事情呢，我們來試試看：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;這邊很多蘋果，準備開始賣給顧客！&quot;</span>);</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title class_">BadApple</span>(<span class="string">&quot;壞蘋果x5&quot;</span>);</span><br><span class="line">  <span class="keyword">throw</span> <span class="string">&quot;等等有壞蘋果！終止交易！&quot;</span>;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;好吃蘋果，大賣特賣，大家快來買！&quot;</span>);</span><br><span class="line">&#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(e);</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;有壞蘋果不准你賣！&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>結果如下：<br><img src="https://i.imgur.com/hep0E8x.png"></p>
+<p>從結果可以發現說，假如錯誤發生在<code>throw</code>語句之前，那麼錯誤還是會被正常的顯示出來，而<code>throw</code>語句傳送的東西就不會出現，所以就可以利用像是這種模式，慢慢的交替把程式碼錯誤的位置給尋找出來</p>
+<br>
+
+<p>以上是我在學習<code>throw</code>時研究的紀錄，有任何問題都歡迎指教～</p>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ol>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/try...catch">MDN try…catch</a></li>
+<li><a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Guide/Control_flow_and_error_handling">MDN 流程控制與例外處理</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>javascript</category>
+      </categories>
+      <tags>
+        <tag>javascript</tag>
+      </tags>
+  </entry>
 </search>
