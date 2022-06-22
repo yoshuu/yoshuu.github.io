@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>JavaScript 請解釋「遞迴」的概念 - Vic blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Vic blog"><meta name="msapplication-TileImage" content="https://cdn4.iconfinder.com/data/icons/logos-and-brands/512/254_Phoenix_Framework_logo-512.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Vic blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="我們先來看一下遞迴(recursion)在 mdn 上面的定義："><meta property="og:type" content="blog"><meta property="og:title" content="JavaScript 請解釋「遞迴」的概念"><meta property="og:url" content="https://yoshuu.github.io/2022/06/22/javascript%20%20recursion/"><meta property="og:site_name" content="Vic blog"><meta property="og:description" content="我們先來看一下遞迴(recursion)在 mdn 上面的定義："><meta property="og:locale" content="zh_TW"><meta property="og:image" content="https://i.imgur.com/ypKel4Q.png"><meta property="article:published_time" content="2022-06-22T01:26:58.000Z"><meta property="article:modified_time" content="2022-06-22T01:30:47.267Z"><meta property="article:author" content="可以點選上方“Vic blog”回到首頁～"><meta property="article:tag" content="javascript"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="https://i.imgur.com/ypKel4Q.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://yoshuu.github.io/2022/06/22/javascript%20%20recursion/"},"headline":"JavaScript 請解釋「遞迴」的概念","image":["https://i.imgur.com/ypKel4Q.png"],"datePublished":"2022-06-22T01:26:58.000Z","dateModified":"2022-06-22T01:30:47.267Z","author":{"@type":"Person","name":"可以點選上方“Vic blog”回到首頁～"},"publisher":{"@type":"Organization","name":"Vic blog","logo":{"@type":"ImageObject"}},"description":"我們先來看一下遞迴(recursion)在 mdn 上面的定義："}</script><link rel="canonical" href="https://yoshuu.github.io/2022/06/22/javascript%20%20recursion/"><link rel="icon" href="https://cdn4.iconfinder.com/data/icons/logos-and-brands/512/254_Phoenix_Framework_logo-512.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><meta name="generator" content="Hexo 6.1.0"><link rel="stylesheet" href="/css/prism.css" type="text/css"></head><body class="is-1-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">Vic blog</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">首頁</a><a class="navbar-item" href="/archives">彙整</a><a class="navbar-item" href="/categories">分類</a><a class="navbar-item" href="/tags">標籤</a><a class="navbar-item" href="/about">關於</a></div><div class="navbar-end"><a class="navbar-item search" title="搜尋" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-12"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-06-22T01:26:58.000Z" title="2022/6/22 上午9:26:58">2022-06-22</time>發表</span><span class="level-item"><time dateTime="2022-06-22T01:30:47.267Z" title="2022/6/22 上午9:30:47">2022-06-22</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/javascript/">javascript</a></span><span class="level-item">6 分鐘讀完 (大約877個字)</span></div></div><h1 class="title is-3 is-size-4-mobile">JavaScript 請解釋「遞迴」的概念</h1><div class="content"><p>我們先來看一下遞迴(recursion)在 mdn 上面的定義：</p>
+<span id="more"></span>
+
+<blockquote>
+<p>函式呼叫函式自己的行為，稱為遞迴、或是遞歸。它主要用於解決含有子問題的問題。遞迴函式會收到兩個輸入：結束遞迴的基本情況（base case）或是延續遞迴的遞迴情況（recursive case）。</p>
+</blockquote>
+<p>簡單來說，就是一種自己定義自己的意思，利用自己定義自己來解決問題，通常需要被遞迴的問題是一個可以被分成很多小問題的大問題。</p>
+<p>可以使用迴圈解決的問題，也可以用遞迴來做解決，原本只會使用迴圈的我，想不通幹嘛要用遞回，後來想想其實多了一種新的解決問題的方式是一件好事。</p>
+<p>會想要特別寫遞迴是因為一開始看不太懂，但突然看著看著就有了一些概念覺得蠻特別的，所以就來試著講解做個紀錄。</p>
+<h2 id="一個基本的遞迴會需要有："><a href="#一個基本的遞迴會需要有：" class="headerlink" title="一個基本的遞迴會需要有："></a>一個基本的遞迴會需要有：</h2><ol>
+<li>終止條件</li>
+<li>遞迴條件</li>
+</ol>
+<p>第一個是因為假如沒有終止條件，那函式不斷的呼叫自己，最後就會變得沒完沒了，程式將無窮無盡不會結束。</p>
+<p>而遞迴條件就是呼叫自已的條件，沒有終止條件就會無限循環然後當掉，但是沒有遞迴條件就沒辦法呼叫自己，程式就不知道怎麼呼叫。</p>
+<h2 id="遞迴小故事："><a href="#遞迴小故事：" class="headerlink" title="遞迴小故事："></a>遞迴小故事：</h2><blockquote>
+<p>從前有座山，山裡有個廟，廟裡有個老和尚在給小和尚講故事，講的是從前有座山，山裡有個廟，廟裡有個老和尚在給小和尚講故事，講的是從前有座山。。。</p>
+</blockquote>
+<p>出處：<a target="_blank" rel="noopener" href="https://iter01.com/9337.html">https://iter01.com/9337.html</a></p>
+<h2 id="遞迴裡面有個經典的例子：費氏數列"><a href="#遞迴裡面有個經典的例子：費氏數列" class="headerlink" title="遞迴裡面有個經典的例子：費氏數列"></a>遞迴裡面有個經典的例子：費氏數列</h2><p><img src="https://i.imgur.com/ypKel4Q.png"><br>以費波那契數為邊的正方形拼成的近似的黃金矩形<br>圖片來源：<a target="_blank" rel="noopener" href="https://zh.m.wikipedia.org/zh-tw/%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0">https://zh.m.wikipedia.org/zh-tw/%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0</a></p>
+<p>在數學上，費波那契數是以遞迴的方法來定義：</p>
+<ul>
+<li>f0&#x3D;0 (1)</li>
+<li>f1&#x3D;1 (2)</li>
+<li>Fn &#x3D; Fn-1+Fn-2 (3)</li>
+</ul>
+<p>其中(1)跟(2)就是上述提到的終止條件，而(3)是遞回的定義</p>
+<p>簡單來說，費式數列是從零開始，之後的數字都是由前面的數字兩者相加而成：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1、 1、 2、 3、 5、 8、 13、 21、 34、 55、 89、 144、 233、 377、 610</span><br></pre></td></tr></table></figure>
+
+<p>使用 JavaScript 迴圈的寫法來寫：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">fibonacci</span>(<span class="params">n</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (n &lt; <span class="number">2</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> n;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">fibonacci</span>(n - <span class="number">1</span>) + <span class="title function_">fibonacci</span>(n - <span class="number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="小結"><a href="#小結" class="headerlink" title="小結"></a>小結</h2><p>寫的比較簡單，但是遞迴其實還有很多東西可以講的，待日後我懂更多後再回來補充吧</p>
+<p>最後分享一下我有做了一個簡報然後上台分享，裡面寫得比較深，在這邊也分享一下：<br><a target="_blank" rel="noopener" href="https://hackmd.io/@OjHi9LEySUSS8jl6WKL4ug/HJZNNa0tc#/">https://hackmd.io/@OjHi9LEySUSS8jl6WKL4ug/HJZNNa0tc#/</a></p>
+<hr>
+<h2 id="參考資源"><a href="#參考資源" class="headerlink" title="參考資源"></a>參考資源</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://chupai.github.io/posts/2008/alg_recursion/">JavaScript 學演算法（二十二）- 遞迴 Recursion</a></li>
+<li><a target="_blank" rel="noopener" href="https://medium.com/tomsnote/javascript%E7%9A%84%E9%81%9E%E8%BF%B4-recursive-f8ce5d084533">Javascript 的遞迴(Recursive)</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-TW/docs/Glossary/Recursion">mdn 遞迴</a></li>
+<li><a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10265916">岔路上的風景 - 遞迴</a></li>
+<li><a target="_blank" rel="noopener" href="https://iter01.com/9337.html">JavaScript 演算法之遞迴</a></li>
+<li><a target="_blank" rel="noopener" href="https://zh.m.wikipedia.org/zh-tw/%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0">維基百科-費波那契數</a></li>
+</ul>
+</div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/javascript/">javascript</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2022/06/14/javascript%20throw/"><span class="level-item">javascript的throw用法</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><!--!--><div class="column column-right  order-3 is-sticky"><!--!--></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">Vic blog</a><p class="is-size-7"><span>&copy; 2022 可以點選上方“Vic blog”回到首頁～</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-TW");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到頁首" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此網站使用Cookie來改善您的體驗。",
+          dismiss: "知道了！",
+          allow: "允許使用Cookie",
+          deny: "拒絕",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="請輸入關鍵字..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"請輸入關鍵字...","untitled":"(無標題)","posts":"文章","pages":"頁面","categories":"分類","tags":"標籤"});
+        });</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":350,"height":350},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body></html>
