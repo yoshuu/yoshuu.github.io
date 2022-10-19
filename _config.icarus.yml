@@ -171,6 +171,13 @@ search:
 #   # Disqus shortname
 #   shortname: ""
 
+comment:
+  type: utterances
+  repo: yoshuu/VIC_BLOG
+  issue_term: title
+  label: 部落格留言
+  theme: github-light
+
 # Donate plugin configurations
 # https://ppoffice.github.io/hexo-theme-icarus/categories/Plugins/Donation/
 
