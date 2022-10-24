@@ -17,7 +17,9 @@ categories:
 
 ![](https://i.imgur.com/Zu9pEFi.png)
 
-## <meta charset="UTF-8">
+<br>
+
+## `<meta charset="UTF-8">`
 
 這一段是跟編碼有所關聯，可以用來指定說這個網頁內容需要用什麼編碼。
 
@@ -26,7 +28,9 @@ categories:
 詳細可以參考這一篇文章，我覺得還不錯：
 [[HTML][新手] 04. 中文編碼表示 meta charset](https://progressbar.tw/posts/200)
 
-## <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<br>
+
+## `<meta http-equiv="X-UA-Compatible" content="IE=edge">`
 
 這一段主要是用到控制 IE 相容模式，可以用此來設定 IE 的版本。
 
@@ -36,7 +40,9 @@ categories:
 [IE 相容模式設定 X-UA-Compatible](https://hackercat.org/web-notes/ie-x-ua-compatible)
 [<meta http-equiv="X-UA-Compatible" content="IE=edge">詳解](https://www.cnblogs.com/youpeng/p/10991144.html)
 
-## <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<br>
+
+## `<meta name="viewport" content="width=device-width, initial-scale=1.0">`
 
 這段的作用是 rwd 響應式的設定，會需要 meta 裡面的 viewport 來指定瀏覽器怎麼渲染和縮放網頁畫面的的大小。
 
