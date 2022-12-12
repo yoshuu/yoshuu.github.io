@@ -7,12 +7,9 @@ categories:
   - javascript
 ---
 
-- 自己尋找參考資源： -[在 JavaScript 中獲取使用者輸入| D 棧](https://www.delftstack.com/zh-tw/howto/javascript/get-user-input-in-javascript/)
+- 自己研究時的參考資源： -[在 JavaScript 中獲取使用者輸入| D 棧](https://www.delftstack.com/zh-tw/howto/javascript/get-user-input-in-javascript/)
   [Hans-Tsai/Node.js-Learn](https://github.com/Hans-Tsai/Node.js-Learn) -[Node.js 官網](https://nodejs.org/en/)
-
-- angela 參考支援： -[JS17 intro](https://hackmd.io/OkoZwY_jQmaqno3TT-7MYg?view)
-
-node.js 要取得使用者輸入會需要方法，我目前在使用的方式是用 readline 的方式，可以藉由它直接去做到使用者輸入
+  node.js 要取得使用者輸入會需要方法，我目前在使用的方式是用 readline 的方式，可以藉由它直接去做到使用者輸入
 
 <!--more-->
 
