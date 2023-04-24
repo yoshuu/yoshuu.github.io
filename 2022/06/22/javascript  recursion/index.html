@@ -1,0 +1,208 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>JavaScript 請解釋「遞迴」的概念 | Hexo</title><meta name="author" content="John Doe"><meta name="copyright" content="John Doe"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="我們先來看一下遞迴(recursion)在 mdn 上面的定義：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript 請解釋「遞迴」的概念">
+<meta property="og:url" content="https://yoshuu.github.io/hexo-practice/2022/06/22/javascript%20%20recursion/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="我們先來看一下遞迴(recursion)在 mdn 上面的定義：">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="article:published_time" content="2022-06-22T01:26:58.000Z">
+<meta property="article:modified_time" content="2023-04-24T12:37:45.692Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="javascript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/hexo-practice/img/favicon.png"><link rel="canonical" href="https://yoshuu.github.io/hexo-practice/2022/06/22/javascript%20%20recursion/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/hexo-practice/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/hexo-practice/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'JavaScript 請解釋「遞迴」的概念',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-04-24 20:37:45'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.1.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/hexo-practice/archives/"><div class="headline">Articles</div><div class="length-num">46</div></a><a href="/hexo-practice/tags/"><div class="headline">Tags</div><div class="length-num">5</div></a><a href="/hexo-practice/categories/"><div class="headline">Categories</div><div class="length-num">8</div></a></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/hexo-practice/" title="Hexo"><span class="site-name">Hexo</span></a></span><div id="menus"><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">JavaScript 請解釋「遞迴」的概念</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-06-22T01:26:58.000Z" title="Created 2022-06-22 09:26:58">2022-06-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-04-24T12:37:45.692Z" title="Updated 2023-04-24 20:37:45">2023-04-24</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/hexo-practice/categories/javascript/">javascript</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="JavaScript 請解釋「遞迴」的概念"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>我們先來看一下遞迴(recursion)在 mdn 上面的定義：</p>
+<span id="more"></span>
+
+<blockquote>
+<p>函式呼叫函式自己的行為，稱為遞迴、或是遞歸。它主要用於解決含有子問題的問題。遞迴函式會收到兩個輸入：結束遞迴的基本情況（base case）或是延續遞迴的遞迴情況（recursive case）。</p>
+</blockquote>
+<p>簡單來說，就是一種自己定義自己的意思，利用自己定義自己來解決問題，通常需要被遞迴的問題是一個可以被分成很多小問題的大問題。</p>
+<p>可以使用迴圈解決的問題，也可以用遞迴來做解決，原本只會使用迴圈的我，想不通幹嘛要用遞回，後來想想其實多了一種新的解決問題的方式是一件好事。</p>
+<p>會想要特別寫遞迴是因為一開始看不太懂，但突然看著看著就有了一些概念覺得蠻特別的，所以就來試著講解做個紀錄。</p>
+<h2 id="一個基本的遞迴會需要有："><a href="#一個基本的遞迴會需要有：" class="headerlink" title="一個基本的遞迴會需要有："></a>一個基本的遞迴會需要有：</h2><ol>
+<li>終止條件</li>
+<li>遞迴條件</li>
+</ol>
+<p>第一個是因為假如沒有終止條件，那函式不斷的呼叫自己，最後就會變得沒完沒了，程式將無窮無盡不會結束。</p>
+<p>而遞迴條件就是呼叫自已的條件，沒有終止條件就會無限循環然後當掉，但是沒有遞迴條件就沒辦法呼叫自己，程式就不知道怎麼呼叫。</p>
+<h2 id="遞迴小故事："><a href="#遞迴小故事：" class="headerlink" title="遞迴小故事："></a>遞迴小故事：</h2><blockquote>
+<p>從前有座山，山裡有個廟，廟裡有個老和尚在給小和尚講故事，講的是從前有座山，山裡有個廟，廟裡有個老和尚在給小和尚講故事，講的是從前有座山。。。</p>
+</blockquote>
+<p>出處：<a target="_blank" rel="noopener" href="https://iter01.com/9337.html">https://iter01.com/9337.html</a></p>
+<h2 id="遞迴裡面有個經典的例子：費氏數列"><a href="#遞迴裡面有個經典的例子：費氏數列" class="headerlink" title="遞迴裡面有個經典的例子：費氏數列"></a>遞迴裡面有個經典的例子：費氏數列</h2><p><img src="https://i.imgur.com/ypKel4Q.png"><br>以費波那契數為邊的正方形拼成的近似的黃金矩形<br>圖片來源：<a target="_blank" rel="noopener" href="https://zh.m.wikipedia.org/zh-tw/%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0">https://zh.m.wikipedia.org/zh-tw/%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0</a></p>
+<p>在數學上，費波那契數是以遞迴的方法來定義：</p>
+<ul>
+<li>f0&#x3D;0 (1)</li>
+<li>f1&#x3D;1 (2)</li>
+<li>Fn &#x3D; Fn-1+Fn-2 (3)</li>
+</ul>
+<p>其中(1)跟(2)就是上述提到的終止條件，而(3)是遞回的定義</p>
+<p>簡單來說，費式數列是從零開始，之後的數字都是由前面的數字兩者相加而成：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1、 1、 2、 3、 5、 8、 13、 21、 34、 55、 89、 144、 233、 377、 610</span><br></pre></td></tr></table></figure>
+
+<p>使用 JavaScript 迴圈的寫法來寫：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">fibonacci</span>(<span class="params">n</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (n &lt; <span class="number">2</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> n;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">fibonacci</span>(n - <span class="number">1</span>) + <span class="title function_">fibonacci</span>(n - <span class="number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="小結"><a href="#小結" class="headerlink" title="小結"></a>小結</h2><p>寫的比較簡單，但是遞迴其實還有很多東西可以講的，待日後我懂更多後再回來補充吧</p>
+<p>最後分享一下我有做了一個簡報然後上台分享，裡面寫得比較深，在這邊也分享一下：<br><a target="_blank" rel="noopener" href="https://hackmd.io/@OjHi9LEySUSS8jl6WKL4ug/HJZNNa0tc#/">https://hackmd.io/@OjHi9LEySUSS8jl6WKL4ug/HJZNNa0tc#/</a></p>
+<hr>
+<h2 id="參考資源"><a href="#參考資源" class="headerlink" title="參考資源"></a>參考資源</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://chupai.github.io/posts/2008/alg_recursion/">JavaScript 學演算法（二十二）- 遞迴 Recursion</a></li>
+<li><a target="_blank" rel="noopener" href="https://medium.com/tomsnote/javascript%E7%9A%84%E9%81%9E%E8%BF%B4-recursive-f8ce5d084533">Javascript 的遞迴(Recursive)</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-TW/docs/Glossary/Recursion">mdn 遞迴</a></li>
+<li><a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10265916">岔路上的風景 - 遞迴</a></li>
+<li><a target="_blank" rel="noopener" href="https://iter01.com/9337.html">JavaScript 演算法之遞迴</a></li>
+<li><a target="_blank" rel="noopener" href="https://zh.m.wikipedia.org/zh-tw/%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0">維基百科-費波那契數</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="https://yoshuu.github.io/hexo-practice">John Doe</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://yoshuu.github.io/hexo-practice/2022/06/22/javascript%20%20recursion/">https://yoshuu.github.io/hexo-practice/2022/06/22/javascript%20%20recursion/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/hexo-practice/tags/javascript/">javascript</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/hexo-practice/2022/07/03/Destructuring%20assignment/" title="JavaScript 解構賦值解構什麼？"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">JavaScript 解構賦值解構什麼？</div></div></a></div><div class="next-post pull-right"><a href="/hexo-practice/2022/06/14/javascript%20throw/" title="javascript的throw用法"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">javascript的throw用法</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/hexo-practice/2022/07/03/Destructuring%20assignment/" title="JavaScript 解構賦值解構什麼？"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-07-03</div><div class="title">JavaScript 解構賦值解構什麼？</div></div></a></div><div><a href="/hexo-practice/2022/06/14/javascript%20throw/" title="javascript的throw用法"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-06-14</div><div class="title">javascript的throw用法</div></div></a></div><div><a href="/hexo-practice/2022/11/29/nodeJS%20readline/" title="node.js 取得使用者輸入"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-29</div><div class="title">node.js 取得使用者輸入</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/hexo-practice/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">John Doe</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/hexo-practice/archives/"><div class="headline">Articles</div><div class="length-num">46</div></a><a href="/hexo-practice/tags/"><div class="headline">Tags</div><div class="length-num">5</div></a><a href="/hexo-practice/categories/"><div class="headline">Categories</div><div class="length-num">8</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E5%80%8B%E5%9F%BA%E6%9C%AC%E7%9A%84%E9%81%9E%E8%BF%B4%E6%9C%83%E9%9C%80%E8%A6%81%E6%9C%89%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">一個基本的遞迴會需要有：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%81%9E%E8%BF%B4%E5%B0%8F%E6%95%85%E4%BA%8B%EF%BC%9A"><span class="toc-number">2.</span> <span class="toc-text">遞迴小故事：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%81%9E%E8%BF%B4%E8%A3%A1%E9%9D%A2%E6%9C%89%E5%80%8B%E7%B6%93%E5%85%B8%E7%9A%84%E4%BE%8B%E5%AD%90%EF%BC%9A%E8%B2%BB%E6%B0%8F%E6%95%B8%E5%88%97"><span class="toc-number">3.</span> <span class="toc-text">遞迴裡面有個經典的例子：費氏數列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%B5%90"><span class="toc-number">4.</span> <span class="toc-text">小結</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%BA%90"><span class="toc-number">5.</span> <span class="toc-text">參考資源</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/hexo-practice/2023/02/28/volta/" title="volta 使用筆記">volta 使用筆記</a><time datetime="2023-02-28T14:42:33.000Z" title="Created 2023-02-28 22:42:33">2023-02-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/hexo-practice/2022/11/29/nodeJS%20readline/" title="node.js 取得使用者輸入">node.js 取得使用者輸入</a><time datetime="2022-11-29T01:18:35.000Z" title="Created 2022-11-29 09:18:35">2022-11-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/hexo-practice/2022/11/28/web%20client%20challenge/" title="好想工作室的案主挑戰賽 參加心得">好想工作室的案主挑戰賽 參加心得</a><time datetime="2022-11-28T00:40:47.000Z" title="Created 2022-11-28 08:40:47">2022-11-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/hexo-practice/2022/11/27/sass%20build%20environment/" title="建立sass環境(2022)">建立sass環境(2022)</a><time datetime="2022-11-27T06:01:27.000Z" title="Created 2022-11-27 14:01:27">2022-11-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/hexo-practice/2022/11/13/snippets/" title="如何在vscode設定自己想要的使用者片段">如何在vscode設定自己想要的使用者片段</a><time datetime="2022-11-13T08:07:36.000Z" title="Created 2022-11-13 16:07:36">2022-11-13</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By John Doe</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/hexo-practice/js/utils.js"></script><script src="/hexo-practice/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="/hexo-practice/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body></html>
