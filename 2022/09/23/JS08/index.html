@@ -1,0 +1,327 @@
+<!DOCTYPE html><html lang="zh-TW" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>JS之路 Day08 - What is Set ? | Vic's Blog</title><meta name="author" content="Vic"><meta name="copyright" content="Vic"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="前言這兩天會來講Set&#x2F;Map，這是ES6後才新增的兩種資料結構，主要是用來處理一些array跟object沒辦法完全顧及的領域，也因如此，其實許多地方跟array跟object非常相似，那今天就從set開始吧！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS之路 Day08 - What is Set ?">
+<meta property="og:url" content="https://yoshuu.github.io/2022/09/23/JS08/index.html">
+<meta property="og:site_name" content="Vic&#39;s Blog">
+<meta property="og:description" content="前言這兩天會來講Set&#x2F;Map，這是ES6後才新增的兩種資料結構，主要是用來處理一些array跟object沒辦法完全顧及的領域，也因如此，其實許多地方跟array跟object非常相似，那今天就從set開始吧！">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://member.ithome.com.tw/avatars/174235?s=ithelp">
+<meta property="article:published_time" content="2022-09-23T07:40:44.000Z">
+<meta property="article:modified_time" content="2023-04-25T07:03:19.726Z">
+<meta property="article:author" content="Vic">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://member.ithome.com.tw/avatars/174235?s=ithelp"><link rel="shortcut icon" href="https://member.ithome.com.tw/avatars/174235?s=ithelp"><link rel="canonical" href="https://yoshuu.github.io/2022/09/23/JS08/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查詢的內容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '複製成功',
+    error: '複製錯誤',
+    noSupport: '瀏覽器不支援'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '剛剛',
+    min: '分鐘前',
+    hour: '小時前',
+    day: '天前',
+    month: '個月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'JS之路 Day08 - What is Set ?',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-04-25 15:03:19'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/fish.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/zyoushuo/Blog@latest/hexo/css/loading_style_1.css" ><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/zyoushuo/Blog@latest/hexo/css/loading_style_2.css" ><meta name="generator" content="Hexo 6.3.0"></head><body>
+<div id="loader">
+  
+  <div class="outer_box">
+    <div class="loader_overlay"></div>
+    <div class="loader_cogs">
+      <div class="loader_cogs__top">
+        <div class="top_part"></div>
+        <div class="top_part"></div>
+        <div class="top_part"></div>
+        <div class="top_hole"></div>
+      </div>
+      <div class="loader_cogs__left">
+        <div class="left_part"></div>
+        <div class="left_part"></div>
+        <div class="left_part"></div>
+        <div class="left_hole"></div>
+      </div>
+      <div class="loader_cogs__bottom">
+        <div class="bottom_part"></div>
+        <div class="bottom_part"></div>
+        <div class="bottom_part"></div>
+        <div class="bottom_hole"></div>
+      </div>
+      <p style="text-align: center">&nbsp;&nbsp;&nbsp;loading...</p>
+    </div>
+  </div>
+  
+</div>
+
+<script>
+  var endLoading = function () {
+    document.body.style.overflow = "auto";
+    document.getElementById("loader").classList.add("loading");
+  };
+  window.addEventListener("load", endLoading);
+</script>
+
+<div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://member.ithome.com.tw/avatars/174235?s=ithelp" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">46</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">8</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Vic's Blog"><img class="site-icon" src="https://member.ithome.com.tw/avatars/174235?s=ithelp"/><span class="site-name">Vic's Blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜尋</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">JS之路 Day08 - What is Set ?</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">發表於</span><time class="post-meta-date-created" datetime="2022-09-23T07:40:44.000Z" title="發表於 2022-09-23 15:40:44">2022-09-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新於</span><time class="post-meta-date-updated" datetime="2023-04-25T07:03:19.726Z" title="更新於 2023-04-25 15:03:19">2023-04-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/2022-iThome-%E9%90%B5%E4%BA%BA%E8%B3%BD/">2022 iThome 鐵人賽</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="JS之路 Day08 - What is Set ?"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">閱讀量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>這兩天會來講<code>Set/Map</code>，這是<code>ES6</code>後才新增的兩種資料結構，主要是用來處理一些<code>array</code>跟<code>object</code>沒辦法完全顧及的領域，也因如此，其實許多地方跟<code>array</code>跟<code>object</code>非常相似，那今天就從<code>set</code>開始吧！</p>
+<span id="more"></span>
+
+<p><code>set</code>是集合的意思，在<code>JavaScript</code>裡是唯一值的集合，意思就是說，<code>set</code>裡面的每一個值都只能出現一次。</p>
+<h2 id="什麼是集合？"><a href="#什麼是集合？" class="headerlink" title="什麼是集合？"></a>什麼是集合？</h2><p>set 的中文翻譯是集合的意思，在 JavaScript 裡這個語法是唯一值的集合，而數學上的集合定義，去爬了維基百科，得到以下結論：</p>
+<blockquote>
+<p>指具有某種特定性質的事物的母體，集合裡的事物稱作元素。</p>
+</blockquote>
+<p>下圖就是一個有一些多邊形的集合。關於集合我的理解是可以把它當作一堆類型差不多的東西，而在<code>JavaScript</code>就是一堆值，而在<code>array</code>確實就只有一大堆值，跟<code>Set</code>的差別就在於，JS 的<code>Set</code>值是獨一無二的。</p>
+<p><img src="https://i.imgur.com/l69soAK.png"></p>
+<h6 id="出處-https-zh-wikipedia-org-zh-tw-E9-9B-86-E5-90-88-28-E6-95-B0-E5-AD-A6-29"><a href="#出處-https-zh-wikipedia-org-zh-tw-E9-9B-86-E5-90-88-28-E6-95-B0-E5-AD-A6-29" class="headerlink" title="出處: https://zh.wikipedia.org/zh-tw/%E9%9B%86%E5%90%88_%28%E6%95%B0%E5%AD%A6%29"></a>出處: <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-tw/%E9%9B%86%E5%90%88_%28%E6%95%B0%E5%AD%A6%29">https://zh.wikipedia.org/zh-tw/%E9%9B%86%E5%90%88_%28%E6%95%B0%E5%AD%A6%29</a></h6><h2 id="set常用方法與屬性"><a href="#set常用方法與屬性" class="headerlink" title="set常用方法與屬性"></a><code>set</code>常用方法與屬性</h2><ul>
+<li>new Set() &#x3D;&gt; 創建一個<code>set</code></li>
+<li>add() &#x3D;&gt; 往<code>set</code>裡面新增一個元素</li>
+<li>delete() &#x3D;&gt; 從<code>set</code>裡面刪除一個元素</li>
+<li>has() &#x3D;&gt; 判斷<code>set</code>有沒有存在指定的元素</li>
+<li>clear() &#x3D;&gt; 刪除<code>set</code>裡面所有東西</li>
+<li>size &#x3D;&gt; 回傳整個<code>set</code>裡面元素的種類量</li>
+</ul>
+<p>以下簡單實作一次：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">const vicSet = new Set([1, 2, 2, 3]);</span><br><span class="line">console.log(vicSet); // Set(3) &#123; 1, 2, 3 &#125;</span><br><span class="line"></span><br><span class="line">// ↑一開始創建出來，set裡面是空的</span><br><span class="line"></span><br><span class="line">set.add(4);</span><br><span class="line">console.log(vicSet); // Set(4) &#123; 1, 2, 3, 4 &#125;</span><br><span class="line"></span><br><span class="line">// ↑幫set新增加了4這個元素進去</span><br><span class="line"></span><br><span class="line">set.delete(1);</span><br><span class="line">console.log(vicSet); // Set(3) &#123; 2, 3, 4 &#125;</span><br><span class="line"></span><br><span class="line">// ↑把1這個元素從set完整的刪除</span><br><span class="line"></span><br><span class="line">console.log(vicSet.has(1), vicSet.has(2)); // false true</span><br><span class="line"></span><br><span class="line">// ↑判斷set裡面有沒有這些指定的元素</span><br><span class="line"></span><br><span class="line">console.log(vicSet.size); // 3</span><br><span class="line"></span><br><span class="line">// ↑這個屬性將會找出set裡面元素的種類</span><br><span class="line"></span><br><span class="line">set.clear();</span><br><span class="line">console.log(vicSet); // Set(0) &#123;&#125;</span><br><span class="line"></span><br><span class="line">// ↑把map裡面所有東西都清空</span><br></pre></td></tr></table></figure>
+
+<h2 id="拿不出的值，跟沒有-index-的Set"><a href="#拿不出的值，跟沒有-index-的Set" class="headerlink" title="拿不出的值，跟沒有 index 的Set"></a>拿不出的值，跟沒有 index 的<code>Set</code></h2><p>我嘗試從<code>set</code>裡面拿到值，但發現拿不出來，why?</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> vicSet = <span class="keyword">new</span> <span class="title class_">Set</span>([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(cicSet[<span class="number">0</span>]);</span><br><span class="line"></span><br><span class="line"><span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+
+<p>因為<code>set</code>實際上就沒有 index，所以沒有辦法從<code>set</code>獲取值，可能也沒有必要，不然就會發明出一個叫做 get()的方法對吧？</p>
+<p>我想只需要知道，某一個值是不是還存在於集合裡面，所以有 has()的方法可以檢查，畢竟<code>set</code>的特點是獨一無二的值，都是唯一的，順序沒有意義。</p>
+<p>沒有必要在<code>set</code>獲取值的原因是，如果目的是為了按照順序存取值，然後去獲取它，**那就應該要去用<code>array</code>，而不是<code>Set</code>**。</p>
+<p>可以想像成是，假如我有五顆蘋果要塞入一個盤子集合裡面：</p>
+<p>用<code>set</code>的方式 &#x3D;&gt; 盤子裡有一個種類 - 蘋果 (不知道誰先誰後)。<br>用<code>array</code>的方式 &#x3D;&gt; 蘋果陸陸續續地進到了盤子裡面 (知道誰先誰後)。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> plate = [<span class="string">&quot;apple&quot;</span>, <span class="string">&quot;apple&quot;</span>, <span class="string">&quot;apple&quot;</span>, <span class="string">&quot;apple&quot;</span>, <span class="string">&quot;apple&quot;</span>];</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(plate[<span class="number">3</span>]); <span class="comment">// apple, 第四顆進去的蘋果</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> plate2 = <span class="keyword">new</span> <span class="title class_">Set</span>();</span><br><span class="line">plate2.<span class="title function_">add</span>([<span class="string">&quot;apple&quot;</span>, <span class="string">&quot;apple&quot;</span>, <span class="string">&quot;apple&quot;</span>, <span class="string">&quot;apple&quot;</span>, <span class="string">&quot;apple&quot;</span>]);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(plate2); <span class="comment">//Set(1), 一個種類 蘋果</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="那我又想要有set的特性，又想要有array的-index-使用方式要怎麼做？"><a href="#那我又想要有set的特性，又想要有array的-index-使用方式要怎麼做？" class="headerlink" title="那我又想要有set的特性，又想要有array的 index 使用方式要怎麼做？"></a>那我又想要有<code>set</code>的特性，又想要有<code>array</code>的 index 使用方式要怎麼做？</h3><p>用<code>set</code>把資料都處理完後，再轉成<code>array</code>，就可以了。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> vicSet = <span class="keyword">new</span> <span class="title class_">Set</span>([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> arrVicSet = <span class="title class_">Array</span>.<span class="title function_">from</span>(vicSet);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(arrVicSet[<span class="number">0</span>]); <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Set-可以被迭代"><a href="#Set-可以被迭代" class="headerlink" title="Set 可以被迭代"></a>Set 可以被迭代</h2><p>這代表著使用 <code>for..of</code> 或 <code>forEach</code> 来遍歷 <code>Set</code>。<br>基本上跟<code>array</code>都一樣，因為都是 Iterable(可迭代)。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> set = <span class="keyword">new</span> <span class="title class_">Set</span>([<span class="string">&quot;apple&quot;</span>, <span class="string">&quot;vic&quot;</span>, <span class="string">&quot;book&quot;</span>]);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> order <span class="keyword">of</span> set) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;for..of 方法: &quot;</span> + order);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">set.<span class="title function_">forEach</span>(<span class="function">(<span class="params">order</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;forEach: &quot;</span> + order);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// for..of 方法: apple</span></span><br><span class="line"><span class="comment">// for..of 方法: vic</span></span><br><span class="line"><span class="comment">// for..of 方法: book</span></span><br><span class="line"><span class="comment">// forEach: apple</span></span><br><span class="line"><span class="comment">// forEach: vic</span></span><br><span class="line"><span class="comment">// forEach: book</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Set迭代方法"><a href="#Set迭代方法" class="headerlink" title="Set迭代方法"></a><code>Set</code>迭代方法</h3><ul>
+<li>set.keys() &#x3D;&gt; 遍歷 set</li>
+<li>set.values() &#x3D;&gt; 遍歷 set</li>
+<li>entries() &#x3D;&gt; 遍歷 set 後再返回一個實體</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const vicSet = new Set([1, 2, 2, 3, 4, 5]);</span><br><span class="line"></span><br><span class="line">console.log(vicSet.keys()); //[Set Iterator] &#123; 1, 2, 3, 4, 5 &#125;</span><br><span class="line"></span><br><span class="line">console.log(vicSet.values()); //[Set Iterator] &#123; 1, 2, 3, 4, 5 &#125;</span><br><span class="line"></span><br><span class="line">console.log(vicSet.entries()); //[Set Entries] &#123; [ 1, 1 ], [ 2, 2 ], [ 3, 3 ], [ 4, 4 ], [ 5, 5 ] &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Set-實際上使用時機-x3D-gt-刪除-arr-的重複值"><a href="#Set-實際上使用時機-x3D-gt-刪除-arr-的重複值" class="headerlink" title="Set 實際上使用時機&#x3D;&gt; 刪除 arr 的重複值"></a>Set 實際上使用時機&#x3D;&gt; 刪除 arr 的重複值</h2><p>這邊會用到一個概念 <code>Spread Operator</code>(展開運算符)。</p>
+<h3 id="Spread-Operator"><a href="#Spread-Operator" class="headerlink" title="Spread Operator"></a>Spread Operator</h3><p>es6 才出來的一個新語法，來介紹一下它的作用。<br>其實就是展開的概念，看下面我寫的簡單範例應該就能了解。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> A = [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> B = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, ...A];</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(B); <span class="comment">//[ 1, 2, 3, 4, 5, 6 ]</span></span><br></pre></td></tr></table></figure>
+
+<p><code>...</code>在當<code>Spread Operator</code>時，後面一定接著一個陣列，然後功用就是會把這個陣列給展開，像是上面範例那樣，常常用於來連接陣列，但是還有另外一種方法。</p>
+<p>只要<code>...</code>前面沒東西時，後面也是會展開，但因為前面沒東西，就像是直接複製的感覺，所以也可以來當作陣列的淺拷貝(淺拷貝意思是改 arr2 不會影響到 arr)。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">const</span> arr2 = [...arr];</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(arr2); <span class="comment">//[1, 2, 3]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h3><p>使用剛剛前面講到的<code>Spread Operator</code>，搭配<code>set</code>的特性，先把陣列裡面的值都變成<code>set</code>獨一無二的值之後，再用<code>Spread Operator</code>複製起來到一個新的陣列，大功告成。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">unique</span>(<span class="params">arr</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> [...<span class="keyword">new</span> <span class="title class_">Set</span>(arr)];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> values = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">4</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">5</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> newValues = <span class="title function_">unique</span>(values);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(newValues); <span class="comment">// [ 1, 2, 3, 4, 5 ]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h3><p>首先要先了解<code>Array.from</code>是什麼，在這裡要知道的是它可以把<code>set</code>的東西轉成陣列，所以一樣是先把陣列裡面的值都變成<code>set</code>獨一無二的值之後，再轉成一個新的陣列，完成。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">unique</span>(<span class="params">arr</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="title class_">Array</span>.<span class="title function_">from</span>(<span class="keyword">new</span> <span class="title class_">Set</span>(arr));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> values = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">4</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">5</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> newValues = <span class="title function_">unique</span>(values);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(newValues); <span class="comment">// [ 1, 2, 3, 4, 5 ]</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="WeakSet"><a href="#WeakSet" class="headerlink" title="WeakSet"></a>WeakSet</h2><p>最後來講講跟<code>Set</code>長得很像的<code>WeakSet</code>，其實不會差太多，但還是有一些差異。</p>
+<p>像是會習慣在<code>Set</code>使用<code>array</code>但是在<code>WeakSet</code>使用時會報錯，這是因為在<code>WeakSet</code>只能增加<code>object</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> set = <span class="keyword">new</span> <span class="title class_">WeakSet</span>([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(set); <span class="comment">//TypeError: Invalid value used in weak set</span></span><br></pre></td></tr></table></figure>
+
+<p>而跟<code>WeakSet</code>一樣的地方是會保留<code>Set</code>的一些方法：</p>
+<ul>
+<li>add()</li>
+<li>delete()</li>
+<li>has()</li>
+</ul>
+<p>但是<code>size</code>就沒辦法使用要特別注意。</p>
+<p>那<code>Set</code>要變成<code>WeakSet</code>的用意在哪裡？從字面意思上來看，<code>weak</code>是虛弱的意思，而虛弱的<code>Set</code>也沒辦法讓人直覺想到東西。</p>
+<p>從 MDN 的解釋來看：</p>
+<blockquote>
+<p>The WeakSet is weak, meaning references to objects in a WeakSet are held weakly. If no other references to an object stored in the WeakSet exist, those objects can be garbage collected.</p>
+</blockquote>
+<p>來源：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet">MDN</a></p>
+<p>後面那段大意是說如果不存在對儲存在物件的其他引用，就可以把這些物件進行垃圾回收。</p>
+<p>意思是如果有個物件使用<code> WeakSet</code>之後，如果其他物件都不再引用這個物件，那就會有一個垃圾回收的機制，這個機制可能就是把這個對象所佔用的內存通通消滅掉，丟到垃圾桶。</p>
+<p>這樣做有一些好處，首先變成<code>Weak</code>(弱)狀態的同時，可以想像成多了一個空間，可以拿來檢查，同時因為有<code>Set</code>的特性，獨一無二沒辦法重複。</p>
+<p>主要用來判斷是跟否，而不是拿來做使用，所以是沒辦法拿出來獲取的。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> weakSet = <span class="keyword">new</span> <span class="title class_">WeakSet</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> a = &#123; <span class="attr">a</span>: <span class="number">1</span> &#125;;</span><br><span class="line"><span class="keyword">let</span> b = &#123; <span class="attr">b</span>: <span class="number">1</span> &#125;;</span><br><span class="line"><span class="keyword">let</span> c = &#123; <span class="attr">c</span>: <span class="number">1</span> &#125;;</span><br><span class="line"></span><br><span class="line">weakSet.<span class="title function_">add</span>(a);</span><br><span class="line">weakSet.<span class="title function_">add</span>(b);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(weakSet); <span class="comment">// WeakSet &#123; &lt;items unknown&gt; &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(weakSet.<span class="title function_">has</span>(a)); <span class="comment">// true</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(weakSet.<span class="title function_">has</span>(c)); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+
+<p>要直接清除掉只要再使用<code>null</code>就好。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="literal">null</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(weakSet.<span class="title function_">has</span>(a)); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+
+<p>簡單來說，<code>WeakSet</code>可以做的幾件事情：</p>
+<ol>
+<li>幫其他地方的物件做一個額外的存取空間(集合)。</li>
+<li>將物件弱連結(weak)到集合中 &#x3D;&gt; add() 。</li>
+<li>判斷這個物件有沒有成功有連結(佔用)了 &#x3D;&gt; true、false。</li>
+<li>從集合中刪除這個物件 &#x3D;&gt; null 。</li>
+</ol>
+<p>什麼情境會使用到呢？<br>個人覺得是很怕犯錯，需要避免錯誤時，可以在這個被「隔離」的集合內做檢查。</p>
+<p>而 MDN 上面有提到說，可以用來檢測循環引用，這個我看起來也因為需要避免錯誤(迭代時涉及循環引用的錯誤)，有興趣可以去研究看看。</p>
+<h2 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h2><p>[1] <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set">MDN - Set</a><br>[2] <a target="_blank" rel="noopener" href="https://www.w3schools.com/js/js_object_sets.asp">W3Schools - JavaScript Sets</a><br>[3] <a target="_blank" rel="noopener" href="https://javascript.info/map-set">The Modern JavaScript Tutorial - Map and Set</a><br>[4] <a target="_blank" rel="noopener" href="https://www.muji.dev/2020/01/05/iron30-29">JS 原力覺醒 Day29 - Set &#x2F; Map</a><br>[5] <a target="_blank" rel="noopener" href="https://pjchender.dev/javascript/js-set/">PJCHENder -JavaScript 集合（Set）</a><br>[6] <a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10214228">前端工程師用 javaScript 學演算法 - 集合 Set</a><br>[7] <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-tw/%E9%9B%86%E5%90%88_(%E6%95%B0%E5%AD%A6)">維基百科 - 集合 (數學)</a><br>[8] <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/44715210/how-to-get-index-based-value-from-set">How to get index based value from Set</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://yoshuu.github.io">Vic</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章連結: </span><span class="post-copyright-info"><a href="https://yoshuu.github.io/2022/09/23/JS08/">https://yoshuu.github.io/2022/09/23/JS08/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版權聲明: </span><span class="post-copyright-info">本部落格所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 許可協議。轉載請註明來自 <a href="https://yoshuu.github.io" target="_blank">Vic's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://member.ithome.com.tw/avatars/174235?s=ithelp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/09/24/JS09/" title="JS之路 Day09 - What is Map ?"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">JS之路 Day09 - What is Map ?</div></div></a></div><div class="next-post pull-right"><a href="/2022/09/22/JS07/" title="JS之路 Day07 - 語法糖Class(下)"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">JS之路 Day07 - 語法糖Class(下)</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 評論</span></div></div><div class="comment-wrap"><div><div id="utterances-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://member.ithome.com.tw/avatars/174235?s=ithelp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Vic</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">46</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">8</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/yoshuu"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="/vicwork327@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目錄</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AF%E9%9B%86%E5%90%88%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">什麼是集合？</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%87%BA%E8%99%95-https-zh-wikipedia-org-zh-tw-E9-9B-86-E5-90-88-28-E6-95-B0-E5-AD-A6-29"><span class="toc-number">2.0.0.0.1.</span> <span class="toc-text">出處: https:&#x2F;&#x2F;zh.wikipedia.org&#x2F;zh-tw&#x2F;%E9%9B%86%E5%90%88_%28%E6%95%B0%E5%AD%A6%29</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#set%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E8%88%87%E5%B1%AC%E6%80%A7"><span class="toc-number">3.</span> <span class="toc-text">set常用方法與屬性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8B%BF%E4%B8%8D%E5%87%BA%E7%9A%84%E5%80%BC%EF%BC%8C%E8%B7%9F%E6%B2%92%E6%9C%89-index-%E7%9A%84Set"><span class="toc-number">4.</span> <span class="toc-text">拿不出的值，跟沒有 index 的Set</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%82%A3%E6%88%91%E5%8F%88%E6%83%B3%E8%A6%81%E6%9C%89set%E7%9A%84%E7%89%B9%E6%80%A7%EF%BC%8C%E5%8F%88%E6%83%B3%E8%A6%81%E6%9C%89array%E7%9A%84-index-%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F%E8%A6%81%E6%80%8E%E9%BA%BC%E5%81%9A%EF%BC%9F"><span class="toc-number">4.1.</span> <span class="toc-text">那我又想要有set的特性，又想要有array的 index 使用方式要怎麼做？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Set-%E5%8F%AF%E4%BB%A5%E8%A2%AB%E8%BF%AD%E4%BB%A3"><span class="toc-number">5.</span> <span class="toc-text">Set 可以被迭代</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Set%E8%BF%AD%E4%BB%A3%E6%96%B9%E6%B3%95"><span class="toc-number">5.1.</span> <span class="toc-text">Set迭代方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Set-%E5%AF%A6%E9%9A%9B%E4%B8%8A%E4%BD%BF%E7%94%A8%E6%99%82%E6%A9%9F-x3D-gt-%E5%88%AA%E9%99%A4-arr-%E7%9A%84%E9%87%8D%E8%A4%87%E5%80%BC"><span class="toc-number">6.</span> <span class="toc-text">Set 實際上使用時機&#x3D;&gt; 刪除 arr 的重複值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Spread-Operator"><span class="toc-number">6.1.</span> <span class="toc-text">Spread Operator</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80"><span class="toc-number">6.2.</span> <span class="toc-text">方法一</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C"><span class="toc-number">6.3.</span> <span class="toc-text">方法二</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WeakSet"><span class="toc-number">7.</span> <span class="toc-text">WeakSet</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#reference"><span class="toc-number">8.</span> <span class="toc-text">reference</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/02/28/volta/" title="volta 使用筆記">volta 使用筆記</a><time datetime="2023-02-28T14:42:33.000Z" title="發表於 2023-02-28 22:42:33">2023-02-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2022/11/29/nodeJS%20readline/" title="node.js 取得使用者輸入">node.js 取得使用者輸入</a><time datetime="2022-11-29T01:18:35.000Z" title="發表於 2022-11-29 09:18:35">2022-11-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2022/11/28/web%20client%20challenge/" title="好想工作室的案主挑戰賽 參加心得">好想工作室的案主挑戰賽 參加心得</a><time datetime="2022-11-28T00:40:47.000Z" title="發表於 2022-11-28 08:40:47">2022-11-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2022/11/27/sass%20build%20environment/" title="建立sass環境(2022)">建立sass環境(2022)</a><time datetime="2022-11-27T06:01:27.000Z" title="發表於 2022-11-27 14:01:27">2022-11-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2022/11/13/snippets/" title="如何在vscode設定自己想要的使用者片段">如何在vscode設定自己想要的使用者片段</a><time datetime="2022-11-13T08:07:36.000Z" title="發表於 2022-11-13 16:07:36">2022-11-13</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2023 By Vic</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主題 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">未來的事情，誰也不知道。正因為如此，就如同再次相見本身，未來才有無限的可能</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="閱讀模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="簡繁轉換">繁</button><button id="darkmode" type="button" title="淺色和深色模式轉換"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="單欄和雙欄切換"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="設定"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目錄"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直達評論"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到頂部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>function loadUtterances () {
+  let ele = document.createElement('script')
+  ele.setAttribute('id', 'utterances_comment')
+  ele.setAttribute('src', 'https://utteranc.es/client.js')
+  ele.setAttribute('repo', 'yoshuu/VIC_BLOG')
+  ele.setAttribute('issue-term', 'title')
+  let nowTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'photon-dark' : 'github-light'
+  ele.setAttribute('theme', nowTheme)
+  ele.setAttribute('crossorigin', 'anonymous')
+  ele.setAttribute('async', 'true')
+  document.getElementById('utterances-wrap').insertAdjacentElement('afterbegin',ele)
+}
+
+function utterancesTheme () {
+  const iframe = document.querySelector('.utterances-frame')
+  if (iframe) {
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'photon-dark' : 'github-light'
+    const message = {
+      type: 'set-theme',
+      theme: theme
+    };
+    iframe.contentWindow.postMessage(message, 'https://utteranc.es');
+  }
+}
+
+if ('Utterances' === 'Utterances' || !true) {
+  if (true) btf.loadComment(document.getElementById('utterances-wrap'), loadUtterances)
+  else loadUtterances()
+} else {
+  function loadOtherComment () {
+    loadUtterances()
+  }
+}</script></div><script type="text/javascript" src="https://unpkg.zhimg.com/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/gh/xiabo2/CDN@latest/fishes.js"></script><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="false" data-text="VIC" data-fontsize="15px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜尋</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  資料庫載入中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜尋文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
