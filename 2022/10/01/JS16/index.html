@@ -1,0 +1,266 @@
+<!DOCTYPE html><html lang="zh-TW" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>JS之路 Day16 - Promise methods(承諾方法) | Vic's Blog</title><meta name="author" content="Vic"><meta name="copyright" content="Vic"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="前言前幾天講的Promise的 then()、catch()、finally()也是Promise的 methods，從 MDN 的定義上會把這三種 methods 稱之為Instance methods，而今天要講的是Static methods，中文叫做靜態方法，大致上可以分成六種，這些的方法都是為了更好的使用Promise而被發明出來，可能用不到但懂了沒壞處。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS之路 Day16 - Promise methods(承諾方法)">
+<meta property="og:url" content="https://yoshuu.github.io/2022/10/01/JS16/index.html">
+<meta property="og:site_name" content="Vic&#39;s Blog">
+<meta property="og:description" content="前言前幾天講的Promise的 then()、catch()、finally()也是Promise的 methods，從 MDN 的定義上會把這三種 methods 稱之為Instance methods，而今天要講的是Static methods，中文叫做靜態方法，大致上可以分成六種，這些的方法都是為了更好的使用Promise而被發明出來，可能用不到但懂了沒壞處。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://member.ithome.com.tw/avatars/174235?s=ithelp">
+<meta property="article:published_time" content="2022-10-01T08:02:14.000Z">
+<meta property="article:modified_time" content="2023-04-25T08:26:59.484Z">
+<meta property="article:author" content="Vic">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://member.ithome.com.tw/avatars/174235?s=ithelp"><link rel="shortcut icon" href="https://member.ithome.com.tw/avatars/174235?s=ithelp"><link rel="canonical" href="https://yoshuu.github.io/2022/10/01/JS16/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查詢的內容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '複製成功',
+    error: '複製錯誤',
+    noSupport: '瀏覽器不支援'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '剛剛',
+    min: '分鐘前',
+    hour: '小時前',
+    day: '天前',
+    month: '個月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'JS之路 Day16 - Promise methods(承諾方法)',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-04-25 16:26:59'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/fish.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/zyoushuo/Blog@latest/hexo/css/loading_style_1.css" ><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/zyoushuo/Blog@latest/hexo/css/loading_style_2.css" ><meta name="generator" content="Hexo 6.3.0"></head><body>
+<div id="loader">
+  
+  <div class="outer_box">
+    <div class="loader_overlay"></div>
+    <div class="loader_cogs">
+      <div class="loader_cogs__top">
+        <div class="top_part"></div>
+        <div class="top_part"></div>
+        <div class="top_part"></div>
+        <div class="top_hole"></div>
+      </div>
+      <div class="loader_cogs__left">
+        <div class="left_part"></div>
+        <div class="left_part"></div>
+        <div class="left_part"></div>
+        <div class="left_hole"></div>
+      </div>
+      <div class="loader_cogs__bottom">
+        <div class="bottom_part"></div>
+        <div class="bottom_part"></div>
+        <div class="bottom_part"></div>
+        <div class="bottom_hole"></div>
+      </div>
+      <p style="text-align: center">&nbsp;&nbsp;&nbsp;loading...</p>
+    </div>
+  </div>
+  
+</div>
+
+<script>
+  var endLoading = function () {
+    document.body.style.overflow = "auto";
+    document.getElementById("loader").classList.add("loading");
+  };
+  window.addEventListener("load", endLoading);
+</script>
+
+<div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://member.ithome.com.tw/avatars/174235?s=ithelp" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">46</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">8</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Vic's Blog"><img class="site-icon" src="https://member.ithome.com.tw/avatars/174235?s=ithelp"/><span class="site-name">Vic's Blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜尋</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">JS之路 Day16 - Promise methods(承諾方法)</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">發表於</span><time class="post-meta-date-created" datetime="2022-10-01T08:02:14.000Z" title="發表於 2022-10-01 16:02:14">2022-10-01</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新於</span><time class="post-meta-date-updated" datetime="2023-04-25T08:26:59.484Z" title="更新於 2023-04-25 16:26:59">2023-04-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/2022-iThome-%E9%90%B5%E4%BA%BA%E8%B3%BD/">2022 iThome 鐵人賽</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="JS之路 Day16 - Promise methods(承諾方法)"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">閱讀量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前幾天講的<code>Promise</code>的 then()、catch()、finally()也是<code>Promise</code>的 methods，從 MDN 的定義上會把這三種 methods 稱之為<code>Instance methods</code>，而今天要講的是<code>Static methods</code>，中文叫做靜態方法，大致上可以分成六種，這些的方法都是為了更好的使用<code>Promise</code>而被發明出來，可能用不到但懂了沒壞處。</p>
+<span id="more"></span>
+
+<p>哪六種：</p>
+<ul>
+<li>Promise.all()</li>
+<li>Promise.allSettled()</li>
+<li>Promise.any()</li>
+<li>Promise.race()</li>
+<li>Promise.resolve()</li>
+<li>Promise.reject()</li>
+</ul>
+<p>會嘗試用好理解的方式介紹，let’s go。</p>
+<h2 id="Promise-all"><a href="#Promise-all" class="headerlink" title="Promise.all()"></a>Promise.all()</h2><p>執行很多的<code>Promise</code>會用到，簡單來說，全部都達成才會成功，不然就會失敗。<br>舉一個例子，小白願意去找工作，但他有著前提條件，只要他擁有了一台車，然後有了房子，還擁有 100 萬的存款，他就會去找工作。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Promise</span>.<span class="title function_">all</span>([</span><br><span class="line">  <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">resolve</span>(<span class="string">&quot;獲得車&quot;</span>), <span class="number">100</span>)),</span><br><span class="line">  <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">resolve</span>(<span class="string">&quot;獲得房子&quot;</span>), <span class="number">200</span>)),</span><br><span class="line">  <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">resolve</span>(<span class="string">&quot;獲得100萬&quot;</span>), <span class="number">300</span>)),</span><br><span class="line">  <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">resolve</span>(<span class="string">&quot;=&gt; 好! 去工作&quot;</span>), <span class="number">400</span>)),</span><br><span class="line">]).<span class="title function_">then</span>(<span class="variable language_">console</span>.<span class="property">log</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// [ &#x27;獲得車&#x27;, &#x27;獲得房子&#x27;, &#x27;獲得100萬&#x27;, &#x27;=&gt; 好! 去工作&#x27; ]</span></span><br></pre></td></tr></table></figure>
+
+<p>會等到全部的結果都成功，才會全部都<code> resolve</code>， 會發現說它回傳的會是一個 array，這個 array 裝的東西就是所有的結果。</p>
+<p>只要有一個失敗，就直接失敗，就像是只要有一個前提條件沒達成，小白就沒辦法去找工作。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Promise</span>.<span class="title function_">all</span>([</span><br><span class="line">  <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">resolve</span>(<span class="string">&quot;獲得車&quot;</span>), <span class="number">100</span>)),</span><br><span class="line">  <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">resolve</span>(<span class="string">&quot;獲得房子&quot;</span>), <span class="number">200</span>)),</span><br><span class="line">  <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span></span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">reject</span>(<span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&quot;沒有一百萬，沒人要給你&quot;</span>)), <span class="number">300</span>)</span><br><span class="line">  ),</span><br><span class="line">  <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">resolve</span>(<span class="string">&quot;=&gt; 好! 去工作&quot;</span>), <span class="number">400</span>)),</span><br><span class="line">])</span><br><span class="line">  .<span class="title function_">then</span>(<span class="variable language_">console</span>.<span class="property">log</span>)</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="variable language_">console</span>.<span class="property">log</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Error: 沒有一百萬，沒人要給你</span></span><br></pre></td></tr></table></figure>
+
+<p>其中有一個被<code>reject</code>就會導致全部整個<code>Promise.all</code>都被<code>reject</code>，最後的結果就是<code>reject</code>裡面寫好的<code>Error</code>訊息。</p>
+<h2 id="Promise-allSettled"><a href="#Promise-allSettled" class="headerlink" title="Promise.allSettled()"></a>Promise.allSettled()</h2><p>情境是使用在都每種<code>Promise</code>都想知道結果的時候。</p>
+<p>代表說成功或是失敗的結果都會被記錄下來，這兩種都會被裝在一個陣列裡面。</p>
+<p><strong>成功</strong>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">status</span>:<span class="string">&quot;fulfilled&quot;</span>, <span class="attr">value</span>:成功的訊息&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>失敗</strong>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">status</span>:<span class="string">&quot;rejected&quot;</span>, <span class="attr">reason</span>:失敗的訊息&#125;</span><br></pre></td></tr></table></figure>
+
+<p>繼續上方的例子，小白做好準備要出發去找工作，他的策略是履歷海，什麼都投，投完後開心地坐在家中等消息。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Promise.allSettled([</span><br><span class="line">  // 找工作是一個包著promise的函式，裡面就會放失敗跟成功的訊息</span><br><span class="line"></span><br><span class="line">  找工作(&quot;第一間公司&quot;, 100),</span><br><span class="line">  找工作(&quot;第二間公司&quot;, 200),</span><br><span class="line">  找工作(&quot;第三間公司&quot;, 300),</span><br><span class="line">])</span><br><span class="line">  .then((value) =&gt; console.log(value));</span><br><span class="line">  .catch((err) =&gt; console.log(err));</span><br><span class="line"></span><br><span class="line">// 結果=&gt;</span><br><span class="line">[</span><br><span class="line">  &#123; status: &#x27;fulfilled&#x27;, value: &#x27;第一間公司：發來面試請求！&#x27; &#125;,</span><br><span class="line">  &#123; status: &#x27;rejected&#x27;, reason: &#x27;第二間公司，無聲卡&#x27; &#125;,</span><br><span class="line">  &#123; status: &#x27;fulfilled&#x27;, value: &#x27;第三間公司：發來面試請求！&#x27; &#125;,</span><br><span class="line"></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>其中有一個被<code>reject</code>，也會把其他結果通通跑完，跑完之後會能看到所有的結果，無論結果是如何，都會全部都被<code>settle</code>，所以叫做<code>allSettled</code>。</p>
+<h2 id="Promise-any"><a href="#Promise-any" class="headerlink" title="Promise.any()"></a>Promise.any()</h2><p>假如成功就馬上成功，直到全部都失敗。</p>
+<p>而在全部都失敗的狀態下，會回傳一個叫做<code>AggregateError</code>的物件裡面，把失敗的訊息都放進去。</p>
+<p>小白出發前往面試，他只要有上就好，成功了就不會繼續下一間。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Promise</span>.<span class="title function_">any</span>([</span><br><span class="line">  <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span></span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">reject</span>(<span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&quot;失敗，下一間&quot;</span>)), <span class="number">100</span>)</span><br><span class="line">  ),</span><br><span class="line">  <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span></span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">resolve</span>(<span class="string">&quot;成功找到工作&quot;</span>), <span class="number">200</span>)</span><br><span class="line">  ),</span><br><span class="line">  <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">resolve</span>(<span class="string">&quot;回家睡覺&quot;</span>), <span class="number">300</span>)),</span><br><span class="line">]).<span class="title function_">then</span>(<span class="variable language_">console</span>.<span class="property">log</span>); <span class="comment">// 成功找到工作</span></span><br></pre></td></tr></table></figure>
+
+<p>假如完全都沒有任何公司是面試成功的話：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Promise</span>.<span class="title function_">any</span>([</span><br><span class="line">  <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span></span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">reject</span>(<span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&quot;失敗，下一間&quot;</span>)), <span class="number">100</span>)</span><br><span class="line">  ),</span><br><span class="line">  <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span></span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">reject</span>(<span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&quot;失敗，下一間&quot;</span>)), <span class="number">200</span>)</span><br><span class="line">  ),</span><br><span class="line">  <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span></span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">reject</span>(<span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&quot;失敗，下一間&quot;</span>)), <span class="number">300</span>)</span><br><span class="line">  ),</span><br><span class="line">])</span><br><span class="line">  .<span class="title function_">then</span>(<span class="variable language_">console</span>.<span class="property">log</span>)</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function">(<span class="params">error</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(error.<span class="property">constructor</span>.<span class="property">name</span>, error.<span class="property">errors</span>);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 會出現：</span></span><br><span class="line"><span class="title class_">AggregateError</span> [</span><br><span class="line">  <span class="title class_">Error</span>: 失敗，下一間</span><br><span class="line">  <span class="title class_">Error</span>: 失敗，下一間</span><br><span class="line">  <span class="title class_">Error</span>: 失敗，下一間</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h2 id="Promise-race"><a href="#Promise-race" class="headerlink" title="Promise.race()"></a>Promise.race()</h2><p>跟<code>Promise.any</code>有點像，當一個<code>promise</code>有結果，就回傳跟結束。</p>
+<p>剛剛提到小白找到了工作，他很開心想要慶祝，所以打算去吃一間豪華的餐廳，他還沒想要要吃什麼，抱著不想找太久的心手舞足蹈的前往。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Promise</span>.<span class="title function_">race</span>([</span><br><span class="line">  <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">resolve</span>(<span class="string">&quot;吃牛排&quot;</span>), <span class="number">200</span>)),</span><br><span class="line">  <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">resolve</span>(<span class="string">&quot;吃拉麵&quot;</span>), <span class="number">300</span>)),</span><br><span class="line">  <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">resolve</span>(<span class="string">&quot;吃火鍋&quot;</span>), <span class="number">400</span>)),</span><br><span class="line">])</span><br><span class="line">  .<span class="title function_">then</span>(<span class="variable language_">console</span>.<span class="property">log</span>)</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function">(<span class="params">error</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(error);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 吃牛排</span></span><br></pre></td></tr></table></figure>
+
+<p>小白看到了牛排，然後裡面就有位子不用排隊，二話不說就直接開吃了。</p>
+<p>到這邊跟<code>Promise.any</code>幾乎一模一樣，有了一個成功，其他都就不會去看直接結束。</p>
+<p>但是要是第一間要去的不是牛排店，而是人很多的燒賣店呢？讓我們看下去。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Promise</span>.<span class="title function_">race</span>([</span><br><span class="line">  <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span></span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">reject</span>(<span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&quot;人太多，不吃了&quot;</span>)), <span class="number">100</span>)</span><br><span class="line">  ),</span><br><span class="line">  <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">resolve</span>(<span class="string">&quot;吃牛排&quot;</span>), <span class="number">200</span>)),</span><br><span class="line">  <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">resolve</span>(<span class="string">&quot;吃拉麵&quot;</span>), <span class="number">300</span>)),</span><br><span class="line">  <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">resolve</span>(<span class="string">&quot;吃火鍋&quot;</span>), <span class="number">400</span>)),</span><br><span class="line">])</span><br><span class="line">  .<span class="title function_">then</span>(<span class="variable language_">console</span>.<span class="property">log</span>)</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function">(<span class="params">error</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(error);</span><br><span class="line">  &#125;);</span><br><span class="line"><span class="comment">// Error: 人太多，不吃了</span></span><br></pre></td></tr></table></figure>
+
+<p>小白第一間到了燒賣店，看到了那人山人海的群眾，內心湧入一陣倒胃，突然就沒有吃飯的慾望了，於是就直接回家結束了這回合。</p>
+<p>這就是<code>Promise.race</code>的特性，不管是成功還是失敗，<code>Promise.race</code>都會被解決。</p>
+<h2 id="Promise-race-和-Promise-any-比一比"><a href="#Promise-race-和-Promise-any-比一比" class="headerlink" title="Promise.race() 和 Promise.any() 比一比"></a>Promise.race() 和 Promise.any() 比一比</h2><p>來複習一下這兩者的差別：</p>
+<p><strong>Promise.race</strong>:<br>不管是成功還是失敗，都會直接完成。</p>
+<p><strong>Promise.any</strong>:<br>當成功了，或是全部都失敗，才會完成。</p>
+<p>兩個都會有拒絕的狀況，<code>Promise.race</code>的拒絕狀況是因為碰到了第一個<code>Promise</code>拒絕後就馬上拒絕，而<code>Promise.any</code>是全部都被拒絕後，回傳一個，<code>AggregateError</code>。</p>
+<p>要如何使用它們兩個，要依照情境而定，可以知道的是他們兩個很相似但是依舊是不同的東西。</p>
+<h2 id="Promise-resolve"><a href="#Promise-resolve" class="headerlink" title="Promise.resolve()"></a>Promise.resolve()</h2><p>我的理解是設定<code>Promise</code>成功後的訊息。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> promise = <span class="title class_">Promise</span>.<span class="title function_">resolve</span>(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">promise.<span class="title function_">then</span>(<span class="function">(<span class="params">value</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(value);</span><br><span class="line">&#125;); <span class="comment">//1</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Promise-reject"><a href="#Promise-reject" class="headerlink" title="Promise.reject()"></a>Promise.reject()</h2><p>而<code>reject</code>就是<code>Promise</code>失敗後的訊息，所以要用 catch()去抓。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> promise = <span class="title class_">Promise</span>.<span class="title function_">reject</span>(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">promise.<span class="title function_">catch</span>(<span class="function">(<span class="params">value</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(value);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="小結"><a href="#小結" class="headerlink" title="小結"></a>小結</h2><p>每一種方法都有它適合的情境，在使用<code>promise</code>可以試著用用看這些方法～說不定會發現方便又好用，而我個人體感跟爬文看到來說，<code>Promise.all</code>這個方法是實際上會使用最多的，所以可以考慮先從這個開始下手認識，那麼今天就是這些，謝謝明天見。</p>
+<h2 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h2><p>[1] <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">MDN - Promise</a><br>[2] <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/61732049/what-is-the-difference-between-promise-any-and-promise-race">What is the difference between Promise.any() and Promise.race()</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://yoshuu.github.io">Vic</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章連結: </span><span class="post-copyright-info"><a href="https://yoshuu.github.io/2022/10/01/JS16/">https://yoshuu.github.io/2022/10/01/JS16/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版權聲明: </span><span class="post-copyright-info">本部落格所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 許可協議。轉載請註明來自 <a href="https://yoshuu.github.io" target="_blank">Vic's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://member.ithome.com.tw/avatars/174235?s=ithelp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/10/02/JS17/" title="JS之路 Day17 - async/await(Promise語法糖)"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">JS之路 Day17 - async/await(Promise語法糖)</div></div></a></div><div class="next-post pull-right"><a href="/2022/09/30/JS15/" title="JS之路 Day15 - Promise Chain(承諾鏈)"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">JS之路 Day15 - Promise Chain(承諾鏈)</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://member.ithome.com.tw/avatars/174235?s=ithelp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Vic</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">46</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">8</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/yoshuu"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="/vicwork327@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目錄</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Promise-all"><span class="toc-number">2.</span> <span class="toc-text">Promise.all()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Promise-allSettled"><span class="toc-number">3.</span> <span class="toc-text">Promise.allSettled()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Promise-any"><span class="toc-number">4.</span> <span class="toc-text">Promise.any()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Promise-race"><span class="toc-number">5.</span> <span class="toc-text">Promise.race()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Promise-race-%E5%92%8C-Promise-any-%E6%AF%94%E4%B8%80%E6%AF%94"><span class="toc-number">6.</span> <span class="toc-text">Promise.race() 和 Promise.any() 比一比</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Promise-resolve"><span class="toc-number">7.</span> <span class="toc-text">Promise.resolve()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Promise-reject"><span class="toc-number">8.</span> <span class="toc-text">Promise.reject()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%B5%90"><span class="toc-number">9.</span> <span class="toc-text">小結</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#reference"><span class="toc-number">10.</span> <span class="toc-text">reference</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/02/28/volta/" title="volta 使用筆記">volta 使用筆記</a><time datetime="2023-02-28T14:42:33.000Z" title="發表於 2023-02-28 22:42:33">2023-02-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2022/11/29/nodeJS%20readline/" title="node.js 取得使用者輸入">node.js 取得使用者輸入</a><time datetime="2022-11-29T01:18:35.000Z" title="發表於 2022-11-29 09:18:35">2022-11-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2022/11/28/web%20client%20challenge/" title="好想工作室的案主挑戰賽 參加心得">好想工作室的案主挑戰賽 參加心得</a><time datetime="2022-11-28T00:40:47.000Z" title="發表於 2022-11-28 08:40:47">2022-11-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2022/11/27/sass%20build%20environment/" title="建立sass環境(2022)">建立sass環境(2022)</a><time datetime="2022-11-27T06:01:27.000Z" title="發表於 2022-11-27 14:01:27">2022-11-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2022/11/13/snippets/" title="如何在vscode設定自己想要的使用者片段">如何在vscode設定自己想要的使用者片段</a><time datetime="2022-11-13T08:07:36.000Z" title="發表於 2022-11-13 16:07:36">2022-11-13</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2023 By Vic</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主題 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">未來的事情，誰也不知道。正因為如此，就如同再次相見本身，未來才有無限的可能</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="閱讀模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="簡繁轉換">繁</button><button id="darkmode" type="button" title="淺色和深色模式轉換"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="單欄和雙欄切換"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="設定"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目錄"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到頂部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script type="text/javascript" src="https://unpkg.zhimg.com/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/gh/xiabo2/CDN@latest/fishes.js"></script><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="false" data-text="VIC" data-fontsize="15px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜尋</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  資料庫載入中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜尋文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

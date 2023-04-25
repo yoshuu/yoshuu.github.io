@@ -52,7 +52,7 @@
   isHome: true,
   isHighlightShrink: false,
   isToc: false,
-  postUpdate: '2023-04-25 16:25:28'
+  postUpdate: '2023-04-25 16:27:50'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -156,34 +156,194 @@
       }
     }
     detectApple()
-    })(window)</script><link rel="stylesheet" href="/css/fish.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">載入中...</div></div></div><script>const preloader = {
-  endLoading: () => {
-    document.body.style.overflow = '';
-    document.getElementById('loading-box').classList.add("loaded")
-  },
-  initLoading: () => {
-    document.body.style.overflow = 'hidden';
-    document.getElementById('loading-box').classList.remove("loaded")
-  }
-}
+    })(window)</script><link rel="stylesheet" href="/css/fish.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/zyoushuo/Blog@latest/hexo/css/loading_style_1.css" ><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/zyoushuo/Blog@latest/hexo/css/loading_style_2.css" ><meta name="generator" content="Hexo 6.3.0"></head><body>
+<div id="loader">
+  
+  <div class="outer_box">
+    <div class="loader_overlay"></div>
+    <div class="loader_cogs">
+      <div class="loader_cogs__top">
+        <div class="top_part"></div>
+        <div class="top_part"></div>
+        <div class="top_part"></div>
+        <div class="top_hole"></div>
+      </div>
+      <div class="loader_cogs__left">
+        <div class="left_part"></div>
+        <div class="left_part"></div>
+        <div class="left_part"></div>
+        <div class="left_hole"></div>
+      </div>
+      <div class="loader_cogs__bottom">
+        <div class="bottom_part"></div>
+        <div class="bottom_part"></div>
+        <div class="bottom_part"></div>
+        <div class="bottom_hole"></div>
+      </div>
+      <p style="text-align: center">&nbsp;&nbsp;&nbsp;loading...</p>
+    </div>
+  </div>
+  
+</div>
 
-preloader.initLoading()
-window.addEventListener('load',()=> { preloader.endLoading() })
+<script>
+  var endLoading = function () {
+    document.body.style.overflow = "auto";
+    document.getElementById("loader").classList.add("loading");
+  };
+  window.addEventListener("load", endLoading);
+</script>
 
-if (false) {
-  document.addEventListener('pjax:send', () => { preloader.initLoading() })
-  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
-}</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://member.ithome.com.tw/avatars/174235?s=ithelp" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">1</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">0</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Vic's Blog"><img class="site-icon" src="https://member.ithome.com.tw/avatars/174235?s=ithelp"/><span class="site-name">Vic's Blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜尋</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/04/25/hello-world/" title="Hello World">Hello World</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">發表於</span><time datetime="2023-04-25T08:21:10.986Z" title="發表於 2023-04-25 16:21:10">2023-04-25</time></span></div><div class="content">Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick StartCreate a new post1$ hexo new &quot;My New Post&quot;
+<div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://member.ithome.com.tw/avatars/174235?s=ithelp" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">46</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">8</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Vic's Blog"><img class="site-icon" src="https://member.ithome.com.tw/avatars/174235?s=ithelp"/><span class="site-name">Vic's Blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜尋</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/02/28/volta/" title="volta 使用筆記">volta 使用筆記</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">發表於</span><time datetime="2023-02-28T14:42:33.000Z" title="發表於 2023-02-28 22:42:33">2023-02-28</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E9%82%84%E6%B2%92%E5%88%86%E9%A1%9E%E7%9A%84/">還沒分類的</a></span></div><div class="content">會學習 volta 主要是在進行 node 版本切換的時候，原本會是使用 nvm 的方式，但是聽說現在有一個更好用的工作叫做 volta，所以開始對這個工具進行研究。
 
-More info: Writing
-Run server1$ hexo server
 
-More info: Server
-Generate static files1$ hexo generate
+首先是 volta 的官網： https://volta.sh/
+進到這個官網以後，就可以看得到如何安裝的方式。
 
-More info: Generating
-Deploy to remote sites1$ hexo deploy
+在這裡就打開終端機，然後下這串指令：
+1curl https://get.volta.sh | bash
 
-More info: Deployment
-</div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://member.ithome.com.tw/avatars/174235?s=ithelp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Vic</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">1</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/yoshuu"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="/vicwork327@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/04/25/hello-world/" title="Hello World">Hello World</a><time datetime="2023-04-25T08:21:10.986Z" title="發表於 2023-04-25 16:21:10">2023-04-25</time></div></div></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>歸檔</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/04/"><span class="card-archive-list-date">四月 2023</span><span class="card-archive-list-count">1</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>網站資訊</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章數目 :</div><div class="item-count">1</div></div><div class="webinfo-item"><div class="item-name">本站訪客數 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站總訪問量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最後更新時間 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2023-04-25T08:25:28.768Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2023 By Vic</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主題 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">未來的事情，誰也不知道。正因為如此，就如同再次相見本身，未來才有無限的可能</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="translateLink" type="button" title="簡繁轉換">繁</button><button id="darkmode" type="button" title="淺色和深色模式轉換"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="單欄和雙欄切換"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="設定"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到頂部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script type="text/javascript" src="https://unpkg.zhimg.com/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/gh/xiabo2/CDN@latest/fishes.js"></script><script id="canvas_nest" defer="defer" color="0,0,0" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="false" data-text="VIC" data-fontsize="15px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜尋</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  資料庫載入中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜尋文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
+就會自動安裝成功了，在這裡我自己有遇到一些問題，就是安裝明明是成功的，但是當我下volta -v試圖去查詢版本號時，卻得到not found volta的結果，讓我以為沒有成功安裝，但後來發現只是因為使用 vscode 內建的終端機去下載安裝完還需要重載不然不會正確顯示，其實原本還是有安裝，這點要記得注意。
+如何使用官網在這裡把 volta 的管理分成
+
+Managing your toolchain
+Managing your project
+
+在這裡的第一個會使用到的指令是volta install
+剛開一個新專案時都是空的，還沒有任何資料，這時候切換 node 版本的方式就只能是用volta ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/11/29/nodeJS%20readline/" title="node.js 取得使用者輸入">node.js 取得使用者輸入</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">發表於</span><time datetime="2022-11-29T01:18:35.000Z" title="發表於 2022-11-29 09:18:35">2022-11-29</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/javascript/">javascript</a></span></div><div class="content">
+自己研究時的參考資源： -在 JavaScript 中獲取使用者輸入| D 棧Hans-Tsai&#x2F;Node.js-Learn -Node.js 官網node.js 要取得使用者輸入會需要方法，我目前在使用的方式是用 readline 的方式，可以藉由它直接去做到使用者輸入
+
+
+
+主要的幾種方式
+readline &#x3D;&gt; node.js 提供，可直接引用來幫助取得輸出輸入
+prompt-sync &#x3D;&gt;
+
+
+
+
+
+readline
+prompt-sync
+
+
+
+Text
+非同步
+同步
+
+
+Text
+不需要安裝
+需要安裝
+
+
+readline引用基於 callback and sync 的 API
+1const readline = require(&#x27;node:readline&#x27;);
+
+引用基於 promise 的 API
+1import * as readline from &#x27;node:readline/promises&#x27;;
+
+CJS 範例版本 &#x3D;&gt; commonJs
+123456789101 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/11/28/web%20client%20challenge/" title="好想工作室的案主挑戰賽 參加心得">好想工作室的案主挑戰賽 參加心得</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">發表於</span><time datetime="2022-11-28T00:40:47.000Z" title="發表於 2022-11-28 08:40:47">2022-11-28</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%B4%BB%E5%8B%95%E5%BF%83%E5%BE%97/">活動心得</a></span></div><div class="content">參加這個練功的活動，完全在我的意料之外，因為案主挑戰賽開賽期間我正在參與一個案子，算是接案中，但後來在最後一刻還是參與了進來。
+
+
+模擬案主所謂的案主會由工作室內資深的前輩進駐者擔任，會由他們之前所做的案子之中，萃取出直接之前專案中遇到的難題來當作挑戰賽主軸，包括題目的設定，驗收的 story，挑戰賽過程中也會不斷地跟參賽者有所互動。
+規則大致上是這樣，會分成幾組來比賽，舉辦方會依造參加者目前的程度，來平均分隊，像是這次主要就分成三組，每組三個人，時程就只有一個禮拜，在這一個禮拜中要儘可能的把案主的需求做完，生出一個網站。
+一切的起源就在那一個風和日麗的下午，工作室內有要參加這次案主挑戰賽的人全部聚集在了大會議室，人微微多讓我覺得有點緊張，主辦方首先請我們每一個參加的人寫下想跟誰同隊的小紙張，我隨便寫了一個便交了出去，隨後便是一陣主辦方的操作，經過一個我也不太了解的機制後，我的另外兩個隊友就出爐了，所有的分組組合就印在會議室內的大白板上，主辦方開始講一些該注意的事項。
+這時我突然凝視著前方的白板，看了看我的隊友，除了我之外沒有人有寫程式的經驗，有一個還連切版都不太會切，我的汗慢慢從我的 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/11/27/sass%20build%20environment/" title="建立sass環境(2022)">建立sass環境(2022)</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">發表於</span><time datetime="2022-11-27T06:01:27.000Z" title="發表於 2022-11-27 14:01:27">2022-11-27</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/sass/">sass</a></span></div><div class="content">此篇文章建立已經有 npm 的情況下。
+如果是像我還有需要 node.js 的人，只要去安裝了 node.js，也會同時安裝 npm，至於如何安裝 node.js 可以去它的官網看&#x3D;&gt;https://nodejs.org/en/ 。
+
+
+回到這次主題。
+環境分成兩種
+全域的方式
+本地端的方式
+
+全域的方式代表只要裝了一次，整台電腦都會有 sass，而本地端則是範圍只限於一個專案之中，個人偏好使用本地端的方式，儘管可能每次都要裝一次，但會比較清楚使用了什麼。
+全域安裝 sass 環境第一步打開終端機。
+第二步直接打指令。
+安裝的指令： npm install -g sass解除安裝的指令： npm uninstall -g sass
+在這過程中可能會直接錯誤，畫面上會給出報醋，這是十分正常的，爬文後發現有一些權限問題，這時候只要最前面加上sudo，以及之後打上密碼就 ok 了。
+例如：安裝的指令 &#x3D;&gt; sudo npm install -g sass解除安裝的指令 &#x3D;&gt; sudo npm uninstall -g sass
+而要怎麼檢查安裝 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/11/13/snippets/" title="如何在vscode設定自己想要的使用者片段">如何在vscode設定自己想要的使用者片段</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">發表於</span><time datetime="2022-11-13T08:07:36.000Z" title="發表於 2022-11-13 16:07:36">2022-11-13</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E9%82%84%E6%B2%92%E5%88%86%E9%A1%9E%E7%9A%84/">還沒分類的</a></span></div><div class="content">前端工程師在使用 vscode 這個編譯器進行切板剛開始時，通常開完一個叫做 index.html 的檔案後，就會開始在最初的頁面裡下一個驚嘆號。
+
+
+
+這是預設的，所以完全不用做任何的設定，而當把這個驚嘆號給按下去之後，就會出現一套模板，包含了 html、head、body，這個模板節省了最初的撰寫時間，相信很多人沒有這個驚探號生成的模板可能剛開頭就不知道如何下手了。
+而這個其實也能夠自己手動去做設定的，它是 vscode 其中的一個好用功能，叫做 User Snippets，也稱之為使用者自訂程式碼片段。
+接下來就會教如何從零設定自己想要的使用者片段。
+步驟一首先 vscode 頁面從最上面那一排找到一個叫做喜好設定的選項當中，會看到裡面有一個叫做&#x3D;&#x3D;使用者程式碼片段&#x3D;&#x3D;的區塊，點下去。
+
+步驟二會出現一個視窗的選項在中央供選擇，這此請按新增&#x3D;&#x3D;全域程式碼片段檔案&#x3D;&#x3D;。
+這個選項的意思是此檔案設定的使用者片段會讓你的所有檔案都可以使用，所以假如只由讓特定檔案使用而已的話，就不適合全域的方式，可以選擇只  ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/10/24/html%20three%20meta%20tag/" title="HTML 內建範本的三個meta">HTML 內建範本的三個meta</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">發表於</span><time datetime="2022-10-24T01:37:10.000Z" title="發表於 2022-10-24 09:37:10">2022-10-24</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/html/">html</a></span></div><div class="content">創建完.html 的檔案後，在開始把版面切出來之前，通常會使用!的方式把內建的範本給建立出來，使用內建範本會把一些基本的東西都先呈現出來，像是 html、head、body 的 tag。
+
+
+
+雖然十分的理所當然，但也因為方便所以有時會忽略掉那些內建的東西是什麼，在內建範本之中，我覺得最容易被忽略掉，跟最容易經過時間遺忘的是其中的三個 meta tag，所以在此做個筆記讓之後遺忘可以複習。
+
+
+
+&lt;meta charset=&quot;UTF-8&quot;&gt;這一段是跟編碼有所關聯，可以用來指定說這個網頁內容需要用什麼編碼。
+一般來說會使用”UTF-8”來做編碼，HTML5 的規範也推薦所有開發人員都使用 UTF-8 字符集，因為它幾乎涵蓋了世界上所有的字符跟符號。
+詳細可以參考這一篇文章，我覺得還不錯：[HTML][新手] 04. 中文編碼表示 meta charset
+
+
+&lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;這一段主要是用到控制 IE 相容模式，可以 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/10/15/JS30/" title="JS之路 Day30 - 結束與開始的序言">JS之路 Day30 - 結束與開始的序言</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">發表於</span><time datetime="2022-10-15T05:38:21.000Z" title="發表於 2022-10-15 13:38:21">2022-10-15</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/2022-iThome-%E9%90%B5%E4%BA%BA%E8%B3%BD/">2022 iThome 鐵人賽</a></span></div><div class="content">大家好，我是 Vic，目前已經寫到鐵人賽的最後一天，過程中受到很多好人的幫助指點，讓我獲得了不放棄的勇氣，今年的鐵人賽無論結果如何，我覺得至少我自己已經做到了堅持，而這不是單單靠我一個人就辦得到，是遇到了一堆好人後最終產生的結果，所以在開頭想感謝所有幫助過我的人事物。
+
+
+感謝好想工作室的這個環境，感謝給我建議跟指點的每個朋友，也感謝團體賽中每個夥伴的互相包容，因為雖然當了團長，但我其實連自己都顧不太來，所以很多時候沒時間去關心其他人的進度，能夠順利平安結束真的是太好了。
+這次的鐵人賽文章會同步發佈於:
+我的部落格
+接著就進入最後一次的序言時間。
+預想與實際我是一個不囤稿派的。
+我的想法是鐵人的精神就是要藉由每天迫使自己的產出，排除萬難來達成挑戰，藉此來磨練自身意志力，培養出持之以恆的習慣，若是通通都先寫好了，不過就只是一個無情的發文機器人，每天時間到就發，發完就去做其他事情，磨練在哪裡，鐵人精神又在哪裡，所以我都沒有準備文章。
+只有一個念頭是，我應該從困難的開始寫，我有注意到之前鐵人賽其他參加者的狀況，很多半途而廢的人，蠻多有一個共同點，都是從簡單的開始寫，寫到後面開始越寫越難，最終 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/10/14/JS29/" title="JS之路 Day29 - Destructuring assignment(解構賦值)">JS之路 Day29 - Destructuring assignment(解構賦值)</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">發表於</span><time datetime="2022-10-14T05:36:38.000Z" title="發表於 2022-10-14 13:36:38">2022-10-14</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/2022-iThome-%E9%90%B5%E4%BA%BA%E8%B3%BD/">2022 iThome 鐵人賽</a></span></div><div class="content">解構賦值是 es6 之後出來的一個新語法，我的理解它是一種語法糖，語法糖意思也就是說它可以用更簡單的方式達到相同的效果。
+
+
+至於它究竟解構了什麼？其實就是陣列或是物件裡面的值，原本我們假如要取出陣列跟物件裡面的值，可能會這樣來寫：
+123456789101112// 陣列的情況const goodNum = [10, 20, 30, 40];// 我想要取出裡面的數字，各個分別取出來const one = goodNum[0];const two = goodNum[1];const three = goodNum[2];const four = goodNum[3];console.log(one, two, three, four); // 10 20 30 40
+
+123456789101112// 物件的情況const goodFruit = &#123;  name: &quot;西瓜&quot;,  color: &quot;green&quot;,&#125;;// 我希望把個別key內中的value給取出來const name = goodFruit.name;con ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/10/13/JS28/" title="JS之路 Day28 - Currying (柯里化)">JS之路 Day28 - Currying (柯里化)</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">發表於</span><time datetime="2022-10-13T05:34:40.000Z" title="發表於 2022-10-13 13:34:40">2022-10-13</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/2022-iThome-%E9%90%B5%E4%BA%BA%E8%B3%BD/">2022 iThome 鐵人賽</a></span></div><div class="content">柯里化是一個函數的運用技術，不只是JavaScript裡面，它可以運用在很多的地方，簡單來說就是幫忙做了轉換。
+
+
+原本的函式可能是長這樣的：
+1fnc(A, B, C);
+
+柯里化後會變成這樣：
+1fnc(A)(B)(C);
+
+這兩種方式最後出來的結果都是會一樣的，而怎麼實現的等等就會提到，今天會從幾個角度介紹這個主題 &#x3D;&gt;
+
+介紹與原理
+目的與好處
+
+介紹與原理柯里化主要的用途是用來簡化呼叫函式的過程，像是說把呼叫 f(a,b)變成呼叫 f(a)以及 f(b)，就可以達成說，把一個很多參數的函式，切分成很多只有一個參數的函式。
+舉例來說：這是一個簡單的相加，它是一個有很多參數的函式。
+12345function plus(a, b, c) &#123;  return a + b + c;&#125;console.log(plus(1, 2, 3)); //印出6
+
+使用柯里化的方式改寫，讓它變成很多只有一個參數的函式。
+12345678910function plus(a) &#123;  return function (b) &#123;    return ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/10/12/JS27/" title="JS之路 Day27- JSON Methods(JSON 方法)">JS之路 Day27- JSON Methods(JSON 方法)</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">發表於</span><time datetime="2022-10-12T15:18:23.000Z" title="發表於 2022-10-12 23:18:23">2022-10-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/2022-iThome-%E9%90%B5%E4%BA%BA%E8%B3%BD/">2022 iThome 鐵人賽</a></span></div><div class="content">今天要來介紹JSON的兩個靜態方法：
+
+JSON.parse()
+JSON.stringify()
+
+會從什麼是JSON開始介紹起，直接開始吧。
+
+
+JSONJSON的全名是JavaScript Object Notation，它是一種輕量型的數據交換格式，就是可以用來儲存跟方便傳遞的一種格式，跟物件的樣子很像，但其實不太一樣，會有著JSON的出現，主要還是單純物件的話，還不夠簡單跟容易閱讀。
+跟使用物件的格式有一些差別。
+第一JSON它只能用雙引號，不能用單引號，不論是key還是value，物件沒有這種限制，可以用單引號，甚至key不要加引號也沒有關係。
+第二JSON 支持 object、array、string、number、boolean 和 null，基本上除了undefined之外其他全包了。
+不過雖然支持，但是大部分的JavaScript都不是JSON，主要原因還是上面第一點，不論是key還是value都需要雙引號。
+簡單說，JSON 是用來表示在JavaScript物件的一種格式，比單純的物件格式更好閱讀，有更高的相容性。
+JSON的範例：
+1234567&#123;&q ...</div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span><a class="page-number" href="/page/2/#content-inner">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/#content-inner">5</a><a class="extend next" rel="next" href="/page/2/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://member.ithome.com.tw/avatars/174235?s=ithelp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Vic</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">46</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">8</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/yoshuu"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="/vicwork327@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/02/28/volta/" title="volta 使用筆記">volta 使用筆記</a><time datetime="2023-02-28T14:42:33.000Z" title="發表於 2023-02-28 22:42:33">2023-02-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2022/11/29/nodeJS%20readline/" title="node.js 取得使用者輸入">node.js 取得使用者輸入</a><time datetime="2022-11-29T01:18:35.000Z" title="發表於 2022-11-29 09:18:35">2022-11-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2022/11/28/web%20client%20challenge/" title="好想工作室的案主挑戰賽 參加心得">好想工作室的案主挑戰賽 參加心得</a><time datetime="2022-11-28T00:40:47.000Z" title="發表於 2022-11-28 08:40:47">2022-11-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2022/11/27/sass%20build%20environment/" title="建立sass環境(2022)">建立sass環境(2022)</a><time datetime="2022-11-27T06:01:27.000Z" title="發表於 2022-11-27 14:01:27">2022-11-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2022/11/13/snippets/" title="如何在vscode設定自己想要的使用者片段">如何在vscode設定自己想要的使用者片段</a><time datetime="2022-11-13T08:07:36.000Z" title="發表於 2022-11-13 16:07:36">2022-11-13</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分類</span>
+            
+            </div>
+            <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/2022-iThome-%E9%90%B5%E4%BA%BA%E8%B3%BD/"><span class="card-category-list-name">2022 iThome 鐵人賽</span><span class="card-category-list-count">30</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/css/"><span class="card-category-list-name">css</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/html/"><span class="card-category-list-name">html</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/javascript/"><span class="card-category-list-name">javascript</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/sass/"><span class="card-category-list-name">sass</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%B4%BB%E5%8B%95%E5%BF%83%E5%BE%97/"><span class="card-category-list-name">活動心得</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E8%88%8A%E9%83%A8%E8%90%BD%E6%A0%BC%E7%A7%BB%E6%A4%8D%E6%96%87%E7%AB%A0/"><span class="card-category-list-name">舊部落格移植文章</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E9%82%84%E6%B2%92%E5%88%86%E9%A1%9E%E7%9A%84/"><span class="card-category-list-name">還沒分類的</span><span class="card-category-list-count">3</span></a></li>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>標籤</span></div><div class="card-tag-cloud"><a href="/tags/sass/" style="font-size: 1.1em; color: #999">sass</a> <a href="/tags/grid/" style="font-size: 1.1em; color: #999">grid</a> <a href="/tags/javascript/" style="font-size: 1.5em; color: #99a9bf">javascript</a> <a href="/tags/html/" style="font-size: 1.1em; color: #999">html</a> <a href="/tags/css/" style="font-size: 1.5em; color: #99a9bf">css</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>歸檔</span><a class="card-more-btn" href="/archives/" title="檢視更多">
+    <i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/02/"><span class="card-archive-list-date">二月 2023</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/11/"><span class="card-archive-list-date">十一月 2022</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/10/"><span class="card-archive-list-date">十月 2022</span><span class="card-archive-list-count">16</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/09/"><span class="card-archive-list-date">九月 2022</span><span class="card-archive-list-count">15</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/08/"><span class="card-archive-list-date">八月 2022</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/07/"><span class="card-archive-list-date">七月 2022</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/06/"><span class="card-archive-list-date">六月 2022</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/05/"><span class="card-archive-list-date">五月 2022</span><span class="card-archive-list-count">2</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>網站資訊</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章數目 :</div><div class="item-count">46</div></div><div class="webinfo-item"><div class="item-name">本站訪客數 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站總訪問量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最後更新時間 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2023-04-25T08:27:50.399Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2023 By Vic</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主題 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">未來的事情，誰也不知道。正因為如此，就如同再次相見本身，未來才有無限的可能</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="translateLink" type="button" title="簡繁轉換">繁</button><button id="darkmode" type="button" title="淺色和深色模式轉換"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="單欄和雙欄切換"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="設定"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到頂部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script type="text/javascript" src="https://unpkg.zhimg.com/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/gh/xiabo2/CDN@latest/fishes.js"></script><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="false" data-text="VIC" data-fontsize="15px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜尋</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  資料庫載入中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜尋文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
