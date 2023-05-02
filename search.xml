@@ -4,44 +4,6 @@
   
     
     <entry>
-      <title>JavaScript的「引數」、「參數」、「變數」</title>
-      <link href="/2023/05/01/a/"/>
-      <url>/2023/05/01/a/</url>
-      
-        <content type="html"><![CDATA[<p>這三個常常會搞混，用一個簡單的範例超快速搞懂這三個概念！</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">add</span>(<span class="params">a, b</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(a + b);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">add</span>(<span class="number">1</span>, <span class="number">2</span>); <span class="comment">// 3</span></span><br></pre></td></tr></table></figure><p>這時候 add 這個函式裡面的 a 跟 b 就是<code>參數</code>。<br>而下方呼叫函式裡面的 1 跟 2 就是<code>引數</code>。</p><p>那現在如何把變數的概念也加進去 &#x3D;&gt;</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> c = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">add</span>(<span class="params">a, b</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(a + b);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">add</span>(<span class="number">1</span>, c);</span><br></pre></td></tr></table></figure><p>剛剛的那個例子中就會多了一個叫做 c 的變數，這個 c 的變數就會在呼叫 add 這個函式的時候把變數帶入這個引數，這個時候變數就成為了引數，然後這個引數會在帶回這個參數，最後把結果給算出來。</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> JavaScript </category>
-          
-      </categories>
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>JavaScript的「回傳」與「印出」</title>
-      <link href="/2023/05/01/JS%20retrun%20and%20log/"/>
-      <url>/2023/05/01/JS%20retrun%20and%20log/</url>
-      
-        <content type="html"><![CDATA[<p>剛開始學習時常常搞混的地方，關於什麼時候屬於「回傳」什麼時候得「印出」常常傻傻搞不清楚，在這裡做個筆記紀錄一下，我自己研究完後的理解。</p><p>這部分要先知道所謂的「回傳」在 JavaScript 使用的語法是<code>return</code>，<br>而「印出」則是<code>console.log</code>。</p><h2 id="回傳：return"><a href="#回傳：return" class="headerlink" title="回傳：return"></a>回傳：return</h2><p>通常是使用在函式裡面，代表說回傳一個值的概念，這邊要注意，只是代表說會回傳一個值但是不會印出來，所以說假如去互叫一個只有<code>retrun</code>卻沒有<code>console.log</code>的函式，那會發現什麼也不會發生。</p><p>假如是想要在呼叫函式的時候，也可以印出值的話，就得在函式中去<code>retrun</code>出值，然後在外面的部分去進行<code>console.log</code>的東西才有辦法做得到。</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">call</span>(<span class="params">name</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">call</span>(<span class="string">&quot;vic&quot;</span>));</span><br></pre></td></tr></table></figure><h2 id="印出：console-log"><a href="#印出：console-log" class="headerlink" title="印出：console.log"></a>印出：console.log</h2><p>單純把被<code>console.log</code>裡面的值給印出來，跟回傳不一樣的地方是，假如今天函式內直接做<code>console.log</code>，那在外面呼叫時就會直接印出東西來。</p><p>印出東西的情境我覺得最多是用在找 bug 的時候，非常的方便建議多多利用，因為編譯的時候其實都不太會被錯，所以很多的錯誤都是要等程式執行之後才跑出來，這時候就可以用<code>console.log</code>慢慢尋找錯誤的地方。</p><h2 id="瀏覽器上特殊的行為"><a href="#瀏覽器上特殊的行為" class="headerlink" title="瀏覽器上特殊的行為"></a>瀏覽器上特殊的行為</h2><p>在瀏覽器上假如使用 dev tool 去寫 JavaScript，會發現瀏覽器多幫忙做了一些事情，所以建議如果要做測試時或是想試寫一個函式是要印出值的，在 node.js 的環境下比較保險。</p><p>我發現瀏覽器多做的一些事情比如說像是寫一個函式裡面只有使用回傳<code>retrun</code>，但是如果只要呼叫這個函式，也是會直接把值給印出來，我大膽假設瀏覽器每次都會多幫忙在外面多幫忙做一次<code>console.log</code>，所以才會造成這種現象。</p><h2 id="小結"><a href="#小結" class="headerlink" title="小結"></a>小結</h2><p>新手卡關就是會卡在這裡了，但還是得花一些時間把這塊釐清清楚，兩個都很常用到，也很容易做出互相搭配，這邊最後提醒一下，<code>retrun</code>除了回傳值之外，它同時也代表著就到此結束，所以後面的程式碼就不會繼續進行下去了，這點要注意。</p><h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><p><a href="https://lidemy.com/courses/387030/lectures/9677847">「回傳」與「印出」的差異 | Lidemy 鋰學院</a></p>]]></content>
-      
-      
-      <categories>
-          
-          <category> JavaScript </category>
-          
-      </categories>
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>前端資料本地儲存的方式</title>
       <link href="/2023/04/27/Cookies%20vs.%20Local%20storage%20vs.%20Session%20Storage/"/>
       <url>/2023/04/27/Cookies%20vs.%20Local%20storage%20vs.%20Session%20Storage/</url>
@@ -118,6 +80,44 @@
             <tag> volta </tag>
             
         </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>JavaScript的「回傳」與「印出」</title>
+      <link href="/2023/01/02/JS%20retrun%20and%20log/"/>
+      <url>/2023/01/02/JS%20retrun%20and%20log/</url>
+      
+        <content type="html"><![CDATA[<p>剛開始學習時常常搞混的地方，關於什麼時候屬於「回傳」什麼時候得「印出」常常傻傻搞不清楚，在這裡做個筆記紀錄一下，我自己研究完後的理解。</p><p>這部分要先知道所謂的「回傳」在 JavaScript 使用的語法是<code>return</code>，<br>而「印出」則是<code>console.log</code>。</p><h2 id="回傳：return"><a href="#回傳：return" class="headerlink" title="回傳：return"></a>回傳：return</h2><p>通常是使用在函式裡面，代表說回傳一個值的概念，這邊要注意，只是代表說會回傳一個值但是不會印出來，所以說假如去互叫一個只有<code>retrun</code>卻沒有<code>console.log</code>的函式，那會發現什麼也不會發生。</p><p>假如是想要在呼叫函式的時候，也可以印出值的話，就得在函式中去<code>retrun</code>出值，然後在外面的部分去進行<code>console.log</code>的東西才有辦法做得到。</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">call</span>(<span class="params">name</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">call</span>(<span class="string">&quot;vic&quot;</span>));</span><br></pre></td></tr></table></figure><h2 id="印出：console-log"><a href="#印出：console-log" class="headerlink" title="印出：console.log"></a>印出：console.log</h2><p>單純把被<code>console.log</code>裡面的值給印出來，跟回傳不一樣的地方是，假如今天函式內直接做<code>console.log</code>，那在外面呼叫時就會直接印出東西來。</p><p>印出東西的情境我覺得最多是用在找 bug 的時候，非常的方便建議多多利用，因為編譯的時候其實都不太會被錯，所以很多的錯誤都是要等程式執行之後才跑出來，這時候就可以用<code>console.log</code>慢慢尋找錯誤的地方。</p><h2 id="瀏覽器上特殊的行為"><a href="#瀏覽器上特殊的行為" class="headerlink" title="瀏覽器上特殊的行為"></a>瀏覽器上特殊的行為</h2><p>在瀏覽器上假如使用 dev tool 去寫 JavaScript，會發現瀏覽器多幫忙做了一些事情，所以建議如果要做測試時或是想試寫一個函式是要印出值的，在 node.js 的環境下比較保險。</p><p>我發現瀏覽器多做的一些事情比如說像是寫一個函式裡面只有使用回傳<code>retrun</code>，但是如果只要呼叫這個函式，也是會直接把值給印出來，我大膽假設瀏覽器每次都會多幫忙在外面多幫忙做一次<code>console.log</code>，所以才會造成這種現象。</p><h2 id="小結"><a href="#小結" class="headerlink" title="小結"></a>小結</h2><p>新手卡關就是會卡在這裡了，但還是得花一些時間把這塊釐清清楚，兩個都很常用到，也很容易做出互相搭配，這邊最後提醒一下，<code>retrun</code>除了回傳值之外，它同時也代表著就到此結束，所以後面的程式碼就不會繼續進行下去了，這點要注意。</p><h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><p><a href="https://lidemy.com/courses/387030/lectures/9677847">「回傳」與「印出」的差異 | Lidemy 鋰學院</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> JavaScript </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>JavaScript的「引數」、「參數」、「變數」</title>
+      <link href="/2023/01/01/a/"/>
+      <url>/2023/01/01/a/</url>
+      
+        <content type="html"><![CDATA[<p>這三個常常會搞混，用一個簡單的範例超快速搞懂這三個概念！</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">add</span>(<span class="params">a, b</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(a + b);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">add</span>(<span class="number">1</span>, <span class="number">2</span>); <span class="comment">// 3</span></span><br></pre></td></tr></table></figure><p>這時候 add 這個函式裡面的 a 跟 b 就是<code>參數</code>。<br>而下方呼叫函式裡面的 1 跟 2 就是<code>引數</code>。</p><p>那現在如何把變數的概念也加進去 &#x3D;&gt;</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> c = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">add</span>(<span class="params">a, b</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(a + b);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">add</span>(<span class="number">1</span>, c);</span><br></pre></td></tr></table></figure><p>剛剛的那個例子中就會多了一個叫做 c 的變數，這個 c 的變數就會在呼叫 add 這個函式的時候把變數帶入這個引數，這個時候變數就成為了引數，然後這個引數會在帶回這個參數，最後把結果給算出來。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> JavaScript </category>
+          
+      </categories>
+      
       
     </entry>
     
