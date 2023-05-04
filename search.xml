@@ -124,25 +124,6 @@
     
     
     <entry>
-      <title>JavaScript的「引數」、「參數」、「變數」</title>
-      <link href="/2023/01/01/JS%20three%20numbers/"/>
-      <url>/2023/01/01/JS%20three%20numbers/</url>
-      
-        <content type="html"><![CDATA[<p>這三個常常會搞混，用一個簡單的範例超快速搞懂這三個概念！</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">add</span>(<span class="params">a, b</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(a + b);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">add</span>(<span class="number">1</span>, <span class="number">2</span>); <span class="comment">// 3</span></span><br></pre></td></tr></table></figure><p>這時候 add 這個函式裡面的 a 跟 b 就是<code>參數</code>。<br>而下方呼叫函式裡面的 1 跟 2 就是<code>引數</code>。</p><p>那現在如何把變數的概念也加進去 &#x3D;&gt;</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> c = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">add</span>(<span class="params">a, b</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(a + b);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">add</span>(<span class="number">1</span>, c);</span><br></pre></td></tr></table></figure><p>剛剛的那個例子中就會多了一個叫做 c 的變數，這個 c 的變數就會在呼叫 add 這個函式的時候把變數帶入這個引數，這個時候變數就成為了引數，然後這個引數會在帶回這個參數，最後把結果給算出來。</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> JavaScript </category>
-          
-      </categories>
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>node.js 取得使用者輸入</title>
       <link href="/2022/11/29/nodeJS%20readline/"/>
       <url>/2022/11/29/nodeJS%20readline/</url>
@@ -222,6 +203,25 @@
       <categories>
           
           <category> 軟體與操作 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>JavaScript的「引數」、「參數」、「變數」</title>
+      <link href="/2022/10/30/JS%20three%20numbers/"/>
+      <url>/2022/10/30/JS%20three%20numbers/</url>
+      
+        <content type="html"><![CDATA[<p>這三個常常會搞混，用一個簡單的範例超快速搞懂這三個概念！</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">add</span>(<span class="params">a, b</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(a + b);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">add</span>(<span class="number">1</span>, <span class="number">2</span>); <span class="comment">// 3</span></span><br></pre></td></tr></table></figure><p>這時候 add 這個函式裡面的 a 跟 b 就是<code>參數</code>。<br>而下方呼叫函式裡面的 1 跟 2 就是<code>引數</code>。</p><p>那現在如何把變數的概念也加進去 &#x3D;&gt;</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> c = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">add</span>(<span class="params">a, b</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(a + b);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">add</span>(<span class="number">1</span>, c);</span><br></pre></td></tr></table></figure><p>剛剛的那個例子中就會多了一個叫做 c 的變數，這個 c 的變數就會在呼叫 add 這個函式的時候把變數帶入這個引數，這個時候變數就成為了引數，然後這個引數會在帶回這個參數，最後把結果給算出來。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> JavaScript </category>
           
       </categories>
       
