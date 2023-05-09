@@ -187,12 +187,6 @@
         <content type="html"><![CDATA[<p>此篇文章建立已經有 npm 的情況下。</p><p>如果是像我還有需要 node.js 的人，只要去安裝了 node.js，也會同時安裝 npm，至於如何安裝 node.js 可以去它的官網看&#x3D;&gt;<a href="https://nodejs.org/en/">https://nodejs.org/en/</a> 。</p><p>回到這次主題。</p><h2 id="環境分成兩種"><a href="#環境分成兩種" class="headerlink" title="環境分成兩種"></a>環境分成兩種</h2><ul><li>全域的方式</li><li>本地端的方式</li></ul><p>全域的方式代表只要裝了一次，整台電腦都會有 sass，而本地端則是範圍只限於一個專案之中，個人偏好使用本地端的方式，儘管可能每次都要裝一次，但會比較清楚使用了什麼。</p><h2 id="全域安裝-sass-環境"><a href="#全域安裝-sass-環境" class="headerlink" title="全域安裝 sass 環境"></a>全域安裝 sass 環境</h2><p>第一步打開終端機。</p><p>第二步直接打指令。</p><p>安裝的指令： <code>npm install -g sass</code><br>解除安裝的指令： <code>npm uninstall -g sass</code></p><p>在這過程中可能會直接錯誤，畫面上會給出報醋，這是十分正常的，爬文後發現有一些權限問題，這時候只要最前面加上<code>sudo</code>，以及之後打上密碼就 ok 了。</p><p>例如：<br>安裝的指令 &#x3D;&gt; <code>sudo npm install -g sass</code><br>解除安裝的指令 &#x3D;&gt; <code>sudo npm uninstall -g sass</code></p><p>而要怎麼檢查安裝有沒有成功，或是有沒有成功卸載，可以透過查詢 sass 的版本來檢查，一樣在終端機的地方打上這段指令:<code>sass --version</code>。</p><p>要是你跟我一樣沒有在全域安裝的話就會出現這一段：<br><img src="https://i.imgur.com/SK51ICe.png"></p><h2 id="本地端安裝-sass-環境-自動編譯版"><a href="#本地端安裝-sass-環境-自動編譯版" class="headerlink" title="本地端安裝 sass 環境(自動編譯版)"></a>本地端安裝 sass 環境(自動編譯版)</h2><p>在創立一個專案後，進入到裡面開始以下步驟。</p><ol><li><p>先 <code> npm init -y</code><br>他跟 npm init 幾乎一樣，只是它會幫你把預設選項全部跳過，產生一個空白的 package.json (懶人專用)<br><img src="https://i.imgur.com/vbB13xu.png"></p></li><li><p>使用 <code>nam install sass</code><br><img src="https://i.imgur.com/Q5RzsZl.png"></p></li><li><p>加上 <code> &quot;sass&quot;: &quot;sass --watch scss/style.scss:style/style.css&quot;</code><br><img src="https://i.imgur.com/0rN0iKz.jpg"></p></li><li><p>把 scss 的資料夾給創出來</p></li><li><p>成功編譯！<br>之後之要寫<code>npm run sass</code>就可以一直幫忙自動編譯。<br><img src="https://i.imgur.com/jeOJPkI.png"></p></li></ol>]]></content>
       
       
-      <categories>
-          
-          <category> Css </category>
-          
-      </categories>
-      
       
         <tags>
             
@@ -1088,12 +1082,6 @@
         <content type="html"><![CDATA[<p>繼 css flex 佈局出來之後，後來又出現了 css grid 的佈局方式，不過 grid 這個詞不是被新發明出來的，是之前就有的東西。</p><p>假如你想跟別人討論說要使用 grid，但沒講清楚是哪種「grid」的話，可能溝通上就會造成許多問題，這篇會提到有三種解讀方式：</p><h2 id="格線系統-grid-system-的-grid"><a href="#格線系統-grid-system-的-grid" class="headerlink" title="格線系統(grid system)的 grid"></a>格線系統(grid system)的 grid</h2><p>一種 ui 設計會使用到的概念，可以幫助設計師更好的在畫面上安排，另外前端框架 Bootstrap 也會使用到 grid system，這邊要注意到並不是指 css 裡面的那個 grid</p><h2 id="css-佈局方式的-grid"><a href="#css-佈局方式的-grid" class="headerlink" title="css 佈局方式的 grid"></a>css 佈局方式的 grid</h2><p>屬於 css 裡面的佈局方式，使用時 display 會先變成 grid，如：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">display:grid</span><br></pre></td></tr></table></figure><p>使用之後，這個使用的區塊元素就都會變成「grid」，只需再搭配一堆 grid 系列的語法，就能利用 gird 讓網頁排成自己想要的形狀～</p><h2 id="簡寫屬性的-grid"><a href="#簡寫屬性的-grid" class="headerlink" title="簡寫屬性的 grid"></a>簡寫屬性的 grid</h2><p>剛剛上面提到，把區塊設成「grid」物件後，就能利用一堆的 gird 系列語法來完成佈局，這邊提到的簡寫屬性的 grid 就是它裡面的其中一種寫法，如：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">grid: auto-flow / 1fr 1fr 1fr;</span><br><span class="line">grid: auto-flow dense / 40px 40px 1fr;</span><br><span class="line">grid: repeat(3, 80px) / auto-flow;</span><br></pre></td></tr></table></figure><h2 id="小結"><a href="#小結" class="headerlink" title="小結"></a>小結</h2><p>一個 grid 各種解讀，蠻容易搞混的，就像我當初學習 Bootstrap 以為它的 grid system 主要是用 css 的 grid，但是並沒有，反而還跟 css 的 flex 相關度比較大。</p>]]></content>
       
       
-      <categories>
-          
-          <category> Css </category>
-          
-      </categories>
-      
       
         <tags>
             
@@ -1132,12 +1120,6 @@
         <content type="html"><![CDATA[<p>原文連結: <a href="https://appcs342.blogspot.com/2022/04/css-position.html">https://appcs342.blogspot.com/2022/04/css-position.html</a><br>移植時的最後更新日期: 2022-04-08T21:36:10.985-07:00</p><p></p><blockquote>&nbsp;最近有在研究position，在css中這算是一個非常重要的屬性，網頁中的定位全要靠它，在此整理一些研究時的筆記跟我的小小心得～</blockquote><p></p><p><br /></p><h2 style="text-align: left;">首先，是我對position作用的理解</h2><div>對網頁上物件的屬性添加了position就可以改變物件的排列方式，改變其在網頁上位置，但其實就算都沒有添加，原本物件間也會有自己的排列，所以我會覺得說，position它其實是在對網頁上的物件做一個「改變定位參考對象」的動作，預設狀態下參考對象會是原本物件資料自己本身的排列狀態，position的值會改變定位參考對象，從而改變物件排列方式。</div><p><br /></p><h2 style="text-align: left;">position主要有的值大致分成以下五種：</h2><p></p><ul style="text-align: left;"><li>static</li><li>relative</li><li>fixed</li><li>absolute</li><li>sticky</li></ul><div><br /></div><h3 style="text-align: left;">static</h3><div>這個值是假如都沒設position，預設就會是satic。</div><div>幾個我覺得重要的點</div><div><ol style="text-align: left;"><li>使用了這個值，其他的定位方式都會失效</li><li>很少用到，因為預設就是static，我想要預設那我就不下就好</li></ol><h3 style="text-align: left;">relative</h3></div><div>相對定位，它的定位參考位置還是原本預設狀態的，但是可以讓顯示位子去做偏移，意思就是能在不改變網頁佈局的狀態下去改變物件位子，假如去做偏移的話，會依造原本預設狀態的基礎下再去改變</div><div><br /></div><div class="separator" style="clear: both; text-align: center;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgup_EY1m4hQZh4lC0khq0ixwuNMDGGDcjVXD8rdXXaI8JxzDcvpdNo2G9HRV0a7Q0VEyq4vw5PS9HCPHowr4VZpv580PTaxmGBjIsVR-Lbgo534O0kMspgU7X2YgBRkZ6_aX9tByi-jZ29osmARJcw__uKneQnIx4JIptutCOYJqshSg9giHWomQnSGg/s1394/%E6%88%AA%E5%9C%96%202022-04-09%20%E4%B8%8A%E5%8D%8810.43.25.png" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" data-original-height="626" data-original-width="1394" height="285" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgup_EY1m4hQZh4lC0khq0ixwuNMDGGDcjVXD8rdXXaI8JxzDcvpdNo2G9HRV0a7Q0VEyq4vw5PS9HCPHowr4VZpv580PTaxmGBjIsVR-Lbgo534O0kMspgU7X2YgBRkZ6_aX9tByi-jZ29osmARJcw__uKneQnIx4JIptutCOYJqshSg9giHWomQnSGg/w672-h285/%E6%88%AA%E5%9C%96%202022-04-09%20%E4%B8%8A%E5%8D%8810.43.25.png" width="672" /></a></div><br /><div><br /></div><div><br /></div><div><br /></div><div><br /></div><div><br /></div><div><br /></div><div><br /></div><div><br /></div><div><br /></div><div><br /></div><div><br /></div><div><br /></div><div><br /></div><h3 style="text-align: left;">absolute</h3><div>絕對定位，它的定位參考位置就直接脫離原本預設狀態，所以讓設定的物件做偏離之外，就不會佔據任何空間 ＝ 其他沒被absolute且還是原本預設狀態的物件也會被跟著影響。另外，它的參考對象會是最近的非static設定的父層空間，所以常常在使用absolute時它的父層會在設定一個relative就是此道理，除了relative之外，fixed跟sticky也可以作為定位參考對象</div><div><br /></div><div class="separator" style="clear: both; text-align: center;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgKXxKVnTbraU2PsMsqYNDyH_fUpumjZ62kDVM3TPKxUvu_NAQ08pb9MUf-IJpxIG4b35strAyxZm1CN7431ei5A8oa5YOX4PhnecLOdE7MjwufI9vLr9D5xlHu3VGsRdsqN61EPBmpuzH4dUu8TTtSWYANNg2f-wL7paYsvFy9I3BRdlnPGDPKKH4p4A/s1316/%E6%88%AA%E5%9C%96%202022-04-09%20%E4%B8%8A%E5%8D%8811.14.25.png" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" data-original-height="772" data-original-width="1316" height="235" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgKXxKVnTbraU2PsMsqYNDyH_fUpumjZ62kDVM3TPKxUvu_NAQ08pb9MUf-IJpxIG4b35strAyxZm1CN7431ei5A8oa5YOX4PhnecLOdE7MjwufI9vLr9D5xlHu3VGsRdsqN61EPBmpuzH4dUu8TTtSWYANNg2f-wL7paYsvFy9I3BRdlnPGDPKKH4p4A/w642-h235/%E6%88%AA%E5%9C%96%202022-04-09%20%E4%B8%8A%E5%8D%8811.14.25.png" width="642" /></a></div><br /><div><br /></div><div><div class="separator" style="clear: both; text-align: center;"><br /></div><h3 style="text-align: left;">fixed</h3><div>固定定位，它的定位參考對象一樣會脫離原本的預設狀態，不過跟absolute不同的是，所定位參考對象會是當前視窗，意思就是當在滑動視窗捲軸時，不管怎麼滾動，被設定了fixed的物件都能一直固定在相同位置，等等講完sticky會一起用示意圖來跟abosolute做比較</div><div><br /></div><h3 style="text-align: left;"><span style="font-size: 18.72px;">sticky</span></h3><div>黏貼定位，擁有剛剛所講述的relative和fixed的特性，關於定位參考對象可以成在跨過特定值前為相對定位，之後為固定定位，那什麼是特定值呢？ 這就要來說到為什麼要使用黏貼定位：</div><div><br /></div><div>簡單來說，是想要在網頁畫面上有著固定的效果，但是滑到一定地方之後，就不想繼續固定時，就會使用sticky，關於上述所提到的特別值，也就是在設定黏貼定位，必須要指定top、right、 bottom 、left 這四個屬性值其中之一，否則sticky的行為就會變得跟相對定位一樣</div><div><br /></div><h2 style="text-align: left;">三者示意圖比較時間</h2><div><br /></div><div><br /></div><div><div class="separator" style="clear: both; text-align: center;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiCDO7u65eLUgtmwMTCCqHgM2noqiMG7jvZTc0M_nfai-mQGTxFzAS2_VTsF3AlL22yrVsLue_K1Y_m5HW6VU4PWHE7wsMxCGJP_1HHdx9q9w83jD6UXLE8L7mksXk8VKlUHZhWDV4nB4IG-AYoiYFs1C529zgSyTvHXnb9iymc5ZhUi6HXN-4J7vcStg/s2570/%E6%88%AA%E5%9C%96%202022-04-09%20%E4%B8%8B%E5%8D%8812.01.11.png" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" data-original-height="1518" data-original-width="2570" height="394" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiCDO7u65eLUgtmwMTCCqHgM2noqiMG7jvZTc0M_nfai-mQGTxFzAS2_VTsF3AlL22yrVsLue_K1Y_m5HW6VU4PWHE7wsMxCGJP_1HHdx9q9w83jD6UXLE8L7mksXk8VKlUHZhWDV4nB4IG-AYoiYFs1C529zgSyTvHXnb9iymc5ZhUi6HXN-4J7vcStg/w668-h394/%E6%88%AA%E5%9C%96%202022-04-09%20%E4%B8%8B%E5%8D%8812.01.11.png" width="668" /></a></div></div><div><br /></div><div><br /></div><div><br /></div><div><br /></div><div><br /></div><div><br /></div><div><br /></div><div><br /></div><div><br /></div><div><br /></div><div><br /></div><div><br /></div><div><br /></div><div><br /></div><div><br /></div><div><br /></div><div><br /></div><div><br /></div><div><br /></div><div><h2>最後來講一些我自己覺得在學習position時一些重要的地方</h2><div><ul><li>position有什麼值&nbsp; 為什麼要分這些值</li><li>預設時跟有了position之後的狀態改變</li><li>不同值所參照的容器層也不同，哪裡不同</li></ul></div><div><br /></div></div><h2 style="text-align: left;">研究position的資料來源</h2><div><a href="https://www.w3.org/TR/css-position-3/">position org規範</a><br /></div><div><a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/position">position mdn</a><br /></div><div><a href="https://ithelp.ithome.com.tw/articles/10253500">position - 金魚都能懂的CSS必學屬性</a><br /></div><div><a href="https://ithelp.ithome.com.tw/articles/10194075?sc=pt">前端新手村 Position 定位</a><br /></div><div class="separator" style="clear: both; text-align: center;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiYx12xvirOAD_SaZAoa95r2yCJq8eAslTQD2Glx2bZHgtxMrAyjZZc-VOZyCgjo8KYRQ5sBfyvEjuyOjG9-Htu48LbtFmePKdlOWZIBsfcRaojLm-vXItkpBjYwXMDce6lXfOptbOfSbxLveuuDgwVBnaxHb21_M3kDUW7sLZkS6M5BW-D54B1vDB0nQ/s2570/%E6%88%AA%E5%9C%96%202022-04-09%20%E4%B8%8B%E5%8D%8812.01.11.png" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><br /></a></div></div><p></p>]]></content>
       
       
-      <categories>
-          
-          <category> Css </category>
-          
-      </categories>
-      
       
     </entry>
     
@@ -1150,12 +1132,6 @@
       
         <content type="html"><![CDATA[<p>原文連結: <a href="https://appcs342.blogspot.com/2022/04/selector-combinators.html">https://appcs342.blogspot.com/2022/04/selector-combinators.html</a><br>移植時的最後更新日期: 2022-04-04T05:40:13.467-07:00</p><div><span style="font-family: inherit;">介紹兩個很類似的選擇器，</span></div><span style="font-family: inherit;">全名是Next-sibling combinator，簡稱加號(+)</span><div><span style="font-family: inherit;">全名是Subsequent-sibling combinator，簡稱波浪號(~)</span></div><div><span style="font-family: inherit;"><br /></span></div><div><ul style="text-align: left;"><li><span style="font-family: inherit;">加號是會影響到後方同層級的首次遇到元素</span></li><li><span style="font-family: inherit;">波浪號則是影響後方同層級的全部元素</span></li></ul><div><span style="font-family: inherit;"><br /></span></div></div><div><span style="font-family: inherit;">加號跟波浪號都是目標為要影響後方同層級，語法使用方式也都差不多</span></div><div><span style="font-family: inherit;">[選取對象A + 選取對象B] 及 [選取對象A ~ 選取對象B]。</span></div><div><span style="font-family: inherit;"><br /></span></div><div><span style="font-family: inherit;"><br /></span></div><div><span style="font-family: inherit;">看起來非常的像，不過有一些差別：</span></div><div><ul style="text-align: left;"><li>加號是只能選到A後面那一個B</li><li>波浪號是選到A後面整串同層的B</li></ul></div>]]></content>
       
-      
-      <categories>
-          
-          <category> Css </category>
-          
-      </categories>
       
       
     </entry>
@@ -1170,12 +1146,6 @@
         <content type="html"><![CDATA[<p>原文連結: <a href="https://appcs342.blogspot.com/2022/03/width-max-width-min-width.html">https://appcs342.blogspot.com/2022/03/width-max-width-min-width.html</a><br>移植時的最後更新日期: 2022-03-27T01:59:21.653-07:00</p><span id="more"></span><p>原本自己以為是很簡單的觀念，不過最近被問後發現其實並沒有很了解，像是我沒去思考過假如width跟max-width都設定數值，互相衝突後會發生什麼事情。所以我打算重新研究後，整理筆記出來。<br /><br /></p><h2 style="text-align: left;">width(寬度）</h2><div><ul style="text-align: left;"><li>用來設定物件的寬</li><li>網頁頁面一定會用到的屬性</li></ul><br /></div><h2 style="text-align: left;">max-width(最大寬度值）</h2><div><ul style="text-align: left;"><li>用來給物件設定最大寬度值</li><li>適用於尺寸限制時</li></ul><br /></div><div><h2>min-width(最小寬度值）</h2><div><ul><li>用來給物件設定最小寬度值</li><li>適用於尺寸限制時</li></ul><br /></div></div><h2 style="text-align: left;">衝突時的狀況</h2><div>結論：會以更加明確的那個狀況為優先。</div><div>舉例來說，假如給一個物件10單位的寬度（width)，又指定給這個物件最小寬度為20單位(min-width)，這時候就會產生衝突的狀況。最後的結果會是最小寬度更為優先，所以是20單位。</div><div><span style="color: red;">在這狀況下，min-width會覆蓋width的值，我自己是理解成</span><span style="color: red;">min-width意味著最少就是需要這樣的寬度值，所以假如width設定的寬度值少於</span><span style="color: red;">min-width就會失去效果。</span></div><div><span style="color: red;"><br /></span></div><div><span style="color: red;"><br /></span></div><h2 style="text-align: left;">小結</h2><div><span style="font-family: inherit;">寬度通常都會擇一使用，很少會遇到&nbsp;width / max-width / min-width 同時混再一起使用，因為這樣不只可讀性變得怪怪的，邏輯也會不太通。然後還有width因為比較基本，所以通常混用時，常常會被&nbsp;max-width / min-width 覆蓋效果，所以要讓width<span style="background-color: white;">正常發揮它的作用，最簡單的方式就是只下</span>width就好。</span><br /><br /></div><h2 style="text-align: left;">參考資料</h2><div><a href="https://ithelp.ithome.com.tw/articles/10252194">https://ithelp.ithome.com.tw/articles/10252194</a><br /></div><div><br /></div><div><a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/max-width">https://developer.mozilla.org/zh-CN/docs/Web/CSS/max-width</a><br /></div><div><br /></div>]]></content>
       
       
-      <categories>
-          
-          <category> Css </category>
-          
-      </categories>
-      
       
     </entry>
     
@@ -1188,12 +1158,6 @@
       
         <content type="html"><![CDATA[<p>原文連結: <a href="https://appcs342.blogspot.com/2022/03/img-background-image.html">https://appcs342.blogspot.com/2022/03/img-background-image.html</a><br>移植時的最後更新日期: 2022-03-26T01:01:42.352-07:00</p><p>一個是html標籤的img，一個是css的background-image，兩個都能讓網頁中顯示出圖片。</p><p>我自己目前個人遇到的狀況會使用img &gt; background-image 。</p><p><br /></p><h2 style="text-align: left;"><span style="font-size: large;"><b>img:</b></span></h2><p>會使用img的情況通常是：</p><p></p><ul style="text-align: left;"><li>網頁不只是需要單純的一張圖片而已，還需要像是超連結的功能，或是想讓圖片能夠縮小放大。</li><li>有需要使用動畫的時候，因為img的動畫表現會比background-image更好。</li><li>影印頁面時，圖片也想跟著被印出來。<br /><br /></li></ul><p></p><h2 style="text-align: left;"><span>&nbsp;</span>background-image:</h2><div>簡單來說，是像是網頁中當背景圖片的感覺，意味著background-image其實並沒有自己本身的意義存在，它沒有辦法去代表網頁中內容的任何事情。<br /><br /></div><div>會使用的狀況：</div><div><ul style="text-align: left;"><li>圖片不是內容的一部分（設計考量）。<br /></li><li>網頁需要有圖片當背景。<br /></li><li>影印頁面時，圖片不想跟著被印出來。<br /><br /><br /></li></ul><h2 style="text-align: left;">小結：</h2></div><div>img是屬於頁面內容的一部分，它是擁有含義的圖片。<br />background-image則是不屬於頁面內容的一部分，它是沒有含義，可以拿來單純當作背景的圖片。<br /></div>]]></content>
       
-      
-      <categories>
-          
-          <category> Css </category>
-          
-      </categories>
       
       
     </entry>
