@@ -1,0 +1,281 @@
+<!DOCTYPE html><html lang="zh-TW" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>JS之路 Day12 - Asynchronous Programming (非同步程式設計) | Vic's Blog</title><meta name="author" content="Vic"><meta name="copyright" content="Vic"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="前言Asynchronous的中文翻譯是非同步、異步，Synchronous的中文翻譯是同步，以下都會直接用同步、非同步來介紹。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS之路 Day12 - Asynchronous Programming (非同步程式設計)">
+<meta property="og:url" content="https://yoshuu.github.io/2022/09/27/iThome-JS12-asynchronous-programming/index.html">
+<meta property="og:site_name" content="Vic&#39;s Blog">
+<meta property="og:description" content="前言Asynchronous的中文翻譯是非同步、異步，Synchronous的中文翻譯是同步，以下都會直接用同步、非同步來介紹。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://member.ithome.com.tw/avatars/174235?s=ithelp">
+<meta property="article:published_time" content="2022-09-27T07:53:45.000Z">
+<meta property="article:modified_time" content="2023-05-09T07:28:40.205Z">
+<meta property="article:author" content="Vic">
+<meta property="article:tag" content="IT 鐵人賽">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://member.ithome.com.tw/avatars/174235?s=ithelp"><link rel="shortcut icon" href="https://member.ithome.com.tw/avatars/174235?s=ithelp"><link rel="canonical" href="https://yoshuu.github.io/2022/09/27/iThome-JS12-asynchronous-programming/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查詢的內容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '複製成功',
+    error: '複製錯誤',
+    noSupport: '瀏覽器不支援'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '剛剛',
+    min: '分鐘前',
+    hour: '小時前',
+    day: '天前',
+    month: '個月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'JS之路 Day12 - Asynchronous Programming (非同步程式設計)',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-05-09 15:28:40'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/fish.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/zyoushuo/Blog@latest/hexo/css/loading_style_1.css" ><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/zyoushuo/Blog@latest/hexo/css/loading_style_2.css" ><meta name="generator" content="Hexo 6.3.0"></head><body>
+<div id="loader">
+  
+  <div class="outer_box">
+    <div class="loader_overlay"></div>
+    <div class="loader_cogs">
+      <div class="loader_cogs__top">
+        <div class="top_part"></div>
+        <div class="top_part"></div>
+        <div class="top_part"></div>
+        <div class="top_hole"></div>
+      </div>
+      <div class="loader_cogs__left">
+        <div class="left_part"></div>
+        <div class="left_part"></div>
+        <div class="left_part"></div>
+        <div class="left_hole"></div>
+      </div>
+      <div class="loader_cogs__bottom">
+        <div class="bottom_part"></div>
+        <div class="bottom_part"></div>
+        <div class="bottom_part"></div>
+        <div class="bottom_hole"></div>
+      </div>
+      <p style="text-align: center">&nbsp;&nbsp;&nbsp;loading...</p>
+    </div>
+  </div>
+  
+</div>
+
+<script>
+  var endLoading = function () {
+    document.body.style.overflow = "auto";
+    document.getElementById("loader").classList.add("loading");
+  };
+  window.addEventListener("load", endLoading);
+</script>
+
+<div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://member.ithome.com.tw/avatars/174235?s=ithelp" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">52</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">6</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章總覽</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Vic's Blog"><img class="site-icon" src="https://member.ithome.com.tw/avatars/174235?s=ithelp"/><span class="site-name">Vic's Blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜尋</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章總覽</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">JS之路 Day12 - Asynchronous Programming (非同步程式設計)</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">發表於</span><time class="post-meta-date-created" datetime="2022-09-27T07:53:45.000Z" title="發表於 2022-09-27 15:53:45">2022-09-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新於</span><time class="post-meta-date-updated" datetime="2023-05-09T07:28:40.205Z" title="更新於 2023-05-09 15:28:40">2023-05-09</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/JavaScript/">JavaScript</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="JS之路 Day12 - Asynchronous Programming (非同步程式設計)"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">閱讀量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><code>Asynchronous</code>的中文翻譯是非同步、異步，<code>Synchronous</code>的中文翻譯是同步，以下都會直接用同步、非同步來介紹。</p>
+<span id="more"></span>
+
+<p>非同步程式設計是<code>JavaScript</code>在學習時一個很大的重點，不光是容易誤解，不好理解，也因為實際上要常常使用到。</p>
+<p>這一篇不講太多專業術語跟程式範例，會試著用很白話的方式把非同步這件事情給講清楚，那就直接開始進入今天的主題！</p>
+<h2 id="JavaScript是單一執行緒"><a href="#JavaScript是單一執行緒" class="headerlink" title="JavaScript是單一執行緒"></a><code>JavaScript</code>是單一執行緒</h2><p>這是我覺得在了解同步跟非同步之前要先理解的第一個點，先完全不要管什麼是同步，什麼是非同步，一開始請先知道這個：</p>
+<p><strong>Javascript 程式執行，一次只能執行一件事情</strong>。</p>
+<p>就像是一家餐廳，就只有一個廚師，那他就只能一次煮一道菜，假如有兩個廚師，就是同時煮兩道菜，很多廚師可以同時煮很多菜那就是多執行緒，可以一次同時進行很多事情。</p>
+<p>無論如何，要記住這家叫做「Javascript」的餐廳，永遠只有一個廚師(執行緒)。</p>
+<h2 id="JavaScript-同步跟非同步"><a href="#JavaScript-同步跟非同步" class="headerlink" title="JavaScript 同步跟非同步"></a><code>JavaScript</code> 同步跟非同步</h2><p>剛開始學習時，同步會讓人感覺是，全部的動作同時開始進行，所以容易誤會(誤會同步&#x3D;同時)。<br>後來去查閱一些資料後發現其實同步是 &#x3D;&gt; 一次做一件事情。<br>既然同步是一次做一件事情，那非同步不就是一次做很多事情？</p>
+<p>所以會發現到說很多教學文章會這樣寫：</p>
+<blockquote>
+<p>同步：一次就只做一件事情<br>非同步：一次同時做很多件事情</p>
+</blockquote>
+<p>使用”同時間”能處理事情的多寡來區分 JS 的同步跟非同步的文章真的很多。<br>可能這講法也沒有錯，但就會發生衝突，對剛學習沒多久的人造成心靈打擊，造成懂的人看得懂，不懂的人看不懂。</p>
+<p>而我的理解 &#x3D;&gt;<br>單執行緒的<code>JavaScript</code>就像是餐廳的只有一個廚師，假如要說非同步是一次同時做很多件事情，就好似說突然冒出一堆廚師一樣，最主要發生的衝突，就是上面說的：</p>
+<p><strong>Javascript 程式執行，一次只能做一件事情</strong>。</p>
+<p>也許可以用很多個廚師，同時做很多事情的方法來做到非同步，但我<code>JavaScript</code>就只有一個廚師，怎麼辦呢？</p>
+<p>先來看看另一個概念吧。</p>
+<h2 id="平行-Parallelism-與並行-Concurrency"><a href="#平行-Parallelism-與並行-Concurrency" class="headerlink" title="平行(Parallelism)與並行(Concurrency)"></a>平行(Parallelism)與並行(Concurrency)</h2><p>這個概念是我從<a target="_blank" rel="noopener" href="https://www.ithome.com.tw/voice/91464">執行資料平行處理的效能考量</a>看到的，我覺得可以很好的解釋<code>JavaScript</code>如何在自身只能是單執行緒的情況下，達成到非同步的效果，同時又不會跟單執行緒的特性(一次做一件事情)發生衝突。</p>
+<p>以下節錄文章概念：</p>
+<blockquote>
+<p>平行（Parallelism）與並行（Concurrency）不同，如果兩個任務分配到一個 CPU 核心，在取得的時間片段中交互執行，稱之為並行。如果有兩個核心，兩個任務各分配到其中之一同時執行，稱之為平行。現今開發者對於並行設計應不陌生，利用並行運算處理多個流程，讓客戶端以為任務「同時」執行，或者是某任務被阻斷（Block）之時，切換另一任務執行，避免等待而浪費 CPU 執行時間，用以提升整體任務執行效率。</p>
+</blockquote>
+<p>很好的解釋了一些盲點區域，上面有提到很多教學會講說非同步是一次同時做很多事情，其實那就是一種平行處理，確實也是一種非同步，但卻永遠不可能是<code>JavaScript</code>的非同步。</p>
+<p>因為<code>JavaScript</code>這間餐廳的廚師就只有一個，要有很多人才能平行耶，我畫示意圖比較清楚。</p>
+<p>多人廚師 &#x3D;&gt; 平行處理 &#x3D;&gt; 同時做很多菜 &#x3D;&gt; 大家都很開心：<br><img src="https://i.imgur.com/GBZWDPq.png"></p>
+<p>只有一個廚師 &#x3D;&gt; 平行處理 &#x3D;&gt; 同時做很多菜 &#x3D;&gt; 廚師不開心 ：<br><img src="https://i.imgur.com/5ETGG5M.png"></p>
+<p>那就一個個慢慢做如何？<br><img src="https://i.imgur.com/qH8ox5q.png"><br>客人不開心。<br>而且中間要是過程有一個卡住，之後的菜也就都不用做了。</p>
+<p>欸，那該怎麼辦，我大<code>JavaScript</code>餐廳就是只想請一個廚師，但又不想要廚師只能一個個做，那會花超久時間，聰明的大<code>JavaScript</code>餐廳想到了一個好辦法，剛剛那個是平行處理，那何不來試試並行處理？</p>
+<p><strong>並行處理:</strong><br>交互執行，稱之為並行，要怎麼辦到這件事情，簡單來說就是不卡住，那是什麼意思？比如來說小白今天要做兩件事情，一個是烤土司一個是倒牛奶，而小白今天就只有一個人，所以沒辦法使用平行處理，除非小白會影分身。</p>
+<p>除了慢慢來，先烤完吐司再倒牛奶之外，還有另外一種選擇，你可以先把你的吐司塞到烤土司機之後，不要在那邊傻傻等它，按下按鈕開始烤後，就衝去冰箱拿牛奶出來倒，倒完再看吐司好了沒。</p>
+<p><strong>這種做完後不停留到完全結束，就直接去做下一步的處理方式其實就是並行處理。</strong></p>
+<p>也因為這樣，所以看起來結果會很像是同時開始做，但是並沒有，可以來比較差異時間，請小白為我們示範一下，示意圖有請：</p>
+<p><img src="https://i.imgur.com/gZM3DuZ.png"></p>
+<p>為什麼有一堆人會覺得 JS 非同步就是「同時」做很多事情，我覺得關鍵這就是在這邊，但因為單執行緒的觀念，就勢必不可能同時(平行處理)，所以 JS 所謂的「非同步」操作，其實是比較偏向示意圖的第三種，也就是並行處理，這也是我個人所理解的 Asynchronous Programming (非同步程式設計)。</p>
+<h2 id="阻塞與非阻塞"><a href="#阻塞與非阻塞" class="headerlink" title="阻塞與非阻塞"></a>阻塞與非阻塞</h2><p>根據上面的想法，我認為同步在處理事件的流程會被「卡住」，卡住的意思是說，當遇到沒辦法馬上執行完成的東西，就會整個停住，下一件要做的事情就會停擺。</p>
+<p>而非同步在處理事件的流程不會被「卡住」，所以因為不會被卡住，所以看起來像是「一次同時做很多件事情」，但實際上沒有。</p>
+<p>而這卡住不卡住其實比較跟阻塞(blocking)與非阻塞(non-blocking)有關，詳細的可以去看 Node.js 的官方文件有講到這一塊：<a target="_blank" rel="noopener" href="https://nodejs.org/en/docs/guides/blocking-vs-non-blocking/">Overview of Blocking vs Non-Blocking</a></p>
+<p>這邊只簡單介紹：</p>
+<ul>
+<li>阻塞（blocking）&#x3D;&gt; 代表執行時程式會卡在那一行，直到有結果。</li>
+<li>非阻塞（non-blocking）&#x3D;&gt; 代表執行時不會卡住，沒有看到結果也會繼續執行下去。</li>
+</ul>
+<p>很像剛剛在描述同步跟非同步吧？其實在<code>JavaScript</code>當中，可以把兩個劃上等號，剛剛 Node.js 的官方文件有一段是這樣講的：<br><img src="https://i.imgur.com/MVqKzMb.png"><br>圖片來源：<a target="_blank" rel="noopener" href="https://nodejs.org/en/docs/guides/blocking-vs-non-blocking/">Node.js 官方文件</a><br>這段的意思就是，阻塞的方法會同步的方式執行，而非阻塞的方法會非同步的方式執行，所以我會把兩種當作是同一種東西，注意僅限於<code>JavaScript</code>，其他語言可能不一定，要是全部都一模一樣那幹嘛分兩個不一樣的名稱對吧？</p>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>準備要來下結論了，前面有提過到的一次做很多事情，看完上面的文章，相信你已經知道那並不是<code>JavaScript</code>非同步的特色，<code>JavaScript</code>永遠不會一次做很多事情，而實際上是怎麼在<code>JavaScript</code>做到非同步這件事情的，這就是明天要來講的主題，我們明天見啦～</p>
+<h2 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h2><p>[1] <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Introducing">MDN - Introducing asynchronous JavaScript</a><br>[2] <a target="_blank" rel="noopener" href="https://www.w3schools.com/js/js_asynchronous.asp">W3Schools - Asynchronous JavaScript</a><br>[3] <a target="_blank" rel="noopener" href="https://github.com/getify/You-Dont-Know-JS/blob/1st-ed/async%20%26%20performance/ch1.md">You Don’t Know JS - Asynchrony</a><br>[4] <a target="_blank" rel="noopener" href="https://chanchandev.com/js/Async/async-sync-intro/2534378084/">Javascript 非同步 &amp; Event Loop！10 分鐘輕鬆圖解學習！</a><br>[5] <a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10206211">你懂 JavaScript 嗎？#22 非同步：現在和以後</a><br>[6] <a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10194569">重新認識 JavaScript: Day 26 同步與非同步</a><br>[7] <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=8aGhZQkoFbQ&ab_channel=JSConf">所以說 event loop 到底是什麼玩意兒？| Philip Roberts | JSConf EU</a><br>[8] <a target="_blank" rel="noopener" href="https://blog.huli.tw/2019/10/04/javascript-async-sync-and-callback/">JavaScript 中的同步與非同步（上）：先成為 callback 大師吧！</a><br>[9] <a target="_blank" rel="noopener" href="https://eyesofkids.gitbooks.io/javascript-start-from-es6/content/part4/eventloop.html">異步程式設計與事件迴圈</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://yoshuu.github.io">Vic</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章連結: </span><span class="post-copyright-info"><a href="https://yoshuu.github.io/2022/09/27/iThome-JS12-asynchronous-programming/">https://yoshuu.github.io/2022/09/27/iThome-JS12-asynchronous-programming/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版權聲明: </span><span class="post-copyright-info">本部落格所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 許可協議。轉載請註明來自 <a href="https://yoshuu.github.io" target="_blank">Vic's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/IT-%E9%90%B5%E4%BA%BA%E8%B3%BD/">IT 鐵人賽</a></div><div class="post_share"><div class="social-share" data-image="https://member.ithome.com.tw/avatars/174235?s=ithelp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/09/28/iThome-JS13-event-loop/" title="JS之路 Day13 - Event Loop (事件循環)"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">JS之路 Day13 - Event Loop (事件循環)</div></div></a></div><div class="next-post pull-right"><a href="/2022/09/26/iThome-JS11-callback-function/" title="JS之路 Day11 - Callback Funtion(回呼函式)"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">JS之路 Day11 - Callback Funtion(回呼函式)</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相關推薦</span></div><div class="relatedPosts-list"><div><a href="/2022/09/16/iThome-JS01-prologue-of-beginning-and-end/" title="JS之路 Day01 - 開始與結束的序言"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-16</div><div class="title">JS之路 Day01 - 開始與結束的序言</div></div></a></div><div><a href="/2022/09/19/iThome-JS04-prototypal-inheritance/" title="JS之路 Day04 - Prototypal Inheritance(原型繼承)"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-19</div><div class="title">JS之路 Day04 - Prototypal Inheritance(原型繼承)</div></div></a></div><div><a href="/2022/09/18/iThome-JS03-prototype-chain/" title="JS之路 Day03 - Prototype Chain(原型鏈)"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-18</div><div class="title">JS之路 Day03 - Prototype Chain(原型鏈)</div></div></a></div><div><a href="/2022/09/17/iThome-JS02-prototype/" title="JS之路 Day02 - Prototype (原型)"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-17</div><div class="title">JS之路 Day02 - Prototype (原型)</div></div></a></div><div><a href="/2022/09/20/iThome-JS05-constructor-function/" title="JS之路 Day05 - Constructor Function(構造函式)"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-20</div><div class="title">JS之路 Day05 - Constructor Function(構造函式)</div></div></a></div><div><a href="/2022/09/23/iThome-JS08-what-is-set/" title="JS之路 Day08 - What is Set ?"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-23</div><div class="title">JS之路 Day08 - What is Set ?</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 評論</span></div></div><div class="comment-wrap"><div><div id="utterances-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://member.ithome.com.tw/avatars/174235?s=ithelp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Vic</div><div class="author-info__description">Chase Excellence, success will follow. 🍎</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">52</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/yoshuu"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://www.facebook.com/profile.php?id=100010997769542" target="_blank" title="Facebook"><i class="fa-brands fa-square-facebook" style="color: #000;"></i></a><a class="social-icon" href="https://yoshuu.github.io/about/" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #000;"></i></a><a class="social-icon" href="https://www.instagram.com/appcs342/" target="_blank" title="Instagram"><i class="fa-brands fa-instagram" style="color: #000;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">這裡主要分享軟體程式技術文章，期望透過分享和堅持變得越來越好，目標是變卓越邁向大師，歡迎各種交流。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目錄</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JavaScript%E6%98%AF%E5%96%AE%E4%B8%80%E5%9F%B7%E8%A1%8C%E7%B7%92"><span class="toc-number">2.</span> <span class="toc-text">JavaScript是單一執行緒</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JavaScript-%E5%90%8C%E6%AD%A5%E8%B7%9F%E9%9D%9E%E5%90%8C%E6%AD%A5"><span class="toc-number">3.</span> <span class="toc-text">JavaScript 同步跟非同步</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B9%B3%E8%A1%8C-Parallelism-%E8%88%87%E4%B8%A6%E8%A1%8C-Concurrency"><span class="toc-number">4.</span> <span class="toc-text">平行(Parallelism)與並行(Concurrency)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%98%BB%E5%A1%9E%E8%88%87%E9%9D%9E%E9%98%BB%E5%A1%9E"><span class="toc-number">5.</span> <span class="toc-text">阻塞與非阻塞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B8%BD%E7%B5%90"><span class="toc-number">6.</span> <span class="toc-text">總結</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#reference"><span class="toc-number">7.</span> <span class="toc-text">reference</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2023 By Vic</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主題 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">未來的事情，誰也不知道。正因為如此，就如同再次相見本身，未來才有無限的可能。</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="閱讀模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="淺色和深色模式轉換"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="單欄和雙欄切換"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="設定"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目錄"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直達評論"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到頂部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>function loadUtterances () {
+  let ele = document.createElement('script')
+  ele.setAttribute('id', 'utterances_comment')
+  ele.setAttribute('src', 'https://utteranc.es/client.js')
+  ele.setAttribute('repo', 'yoshuu/yoshuu.github.io')
+  ele.setAttribute('issue-term', 'title')
+  let nowTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'photon-dark' : 'github-light'
+  ele.setAttribute('theme', nowTheme)
+  ele.setAttribute('crossorigin', 'anonymous')
+  ele.setAttribute('async', 'true')
+  document.getElementById('utterances-wrap').insertAdjacentElement('afterbegin',ele)
+}
+
+function utterancesTheme () {
+  const iframe = document.querySelector('.utterances-frame')
+  if (iframe) {
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'photon-dark' : 'github-light'
+    const message = {
+      type: 'set-theme',
+      theme: theme
+    };
+    iframe.contentWindow.postMessage(message, 'https://utteranc.es');
+  }
+}
+
+if ('Utterances' === 'Utterances' || !false) {
+  if (false) btf.loadComment(document.getElementById('utterances-wrap'), loadUtterances)
+  else loadUtterances()
+} else {
+  function loadOtherComment () {
+    loadUtterances()
+  }
+}</script></div><script type="text/javascript" src="https://unpkg.zhimg.com/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/gh/xiabo2/CDN@latest/fishes.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="false" data-text="🍎,🍏" data-fontsize="30px" data-random="true" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜尋</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  資料庫載入中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜尋文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

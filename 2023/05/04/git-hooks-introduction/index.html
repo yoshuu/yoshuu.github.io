@@ -1,0 +1,298 @@
+<!DOCTYPE html><html lang="zh-TW" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>初探Git Hooks，優化Git工作流 | Vic's Blog</title><meta name="author" content="Vic"><meta name="copyright" content="Vic"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="git是現在主流的版控控制，寫軟體的人基本上都知道，但關於如何優化工作流以及什麼是git hooks知道的人可能就不多，因為這個部分是一種「優化」，使用了會更好，但是不用也沒關係，那我研究後覺得git hooks學會之後好處很多，那下面會儘量用好懂的方式來記錄跟介紹。 不講腳本寫法，不講複雜應用，只講整體的概念以及簡單的小應用來幫助理解概念。但還是要有對於git的簡單知識，不然可能看不懂這篇。 這">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初探Git Hooks，優化Git工作流">
+<meta property="og:url" content="https://yoshuu.github.io/2023/05/04/git-hooks-introduction/index.html">
+<meta property="og:site_name" content="Vic&#39;s Blog">
+<meta property="og:description" content="git是現在主流的版控控制，寫軟體的人基本上都知道，但關於如何優化工作流以及什麼是git hooks知道的人可能就不多，因為這個部分是一種「優化」，使用了會更好，但是不用也沒關係，那我研究後覺得git hooks學會之後好處很多，那下面會儘量用好懂的方式來記錄跟介紹。 不講腳本寫法，不講複雜應用，只講整體的概念以及簡單的小應用來幫助理解概念。但還是要有對於git的簡單知識，不然可能看不懂這篇。 這">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://member.ithome.com.tw/avatars/174235?s=ithelp">
+<meta property="article:published_time" content="2023-05-04T12:20:00.000Z">
+<meta property="article:modified_time" content="2023-05-08T14:11:34.949Z">
+<meta property="article:author" content="Vic">
+<meta property="article:tag" content="git">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://member.ithome.com.tw/avatars/174235?s=ithelp"><link rel="shortcut icon" href="https://member.ithome.com.tw/avatars/174235?s=ithelp"><link rel="canonical" href="https://yoshuu.github.io/2023/05/04/git-hooks-introduction/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查詢的內容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '複製成功',
+    error: '複製錯誤',
+    noSupport: '瀏覽器不支援'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '剛剛',
+    min: '分鐘前',
+    hour: '小時前',
+    day: '天前',
+    month: '個月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '初探Git Hooks，優化Git工作流',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-05-08 22:11:34'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/fish.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/zyoushuo/Blog@latest/hexo/css/loading_style_1.css" ><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/zyoushuo/Blog@latest/hexo/css/loading_style_2.css" ><meta name="generator" content="Hexo 6.3.0"></head><body>
+<div id="loader">
+  
+  <div class="outer_box">
+    <div class="loader_overlay"></div>
+    <div class="loader_cogs">
+      <div class="loader_cogs__top">
+        <div class="top_part"></div>
+        <div class="top_part"></div>
+        <div class="top_part"></div>
+        <div class="top_hole"></div>
+      </div>
+      <div class="loader_cogs__left">
+        <div class="left_part"></div>
+        <div class="left_part"></div>
+        <div class="left_part"></div>
+        <div class="left_hole"></div>
+      </div>
+      <div class="loader_cogs__bottom">
+        <div class="bottom_part"></div>
+        <div class="bottom_part"></div>
+        <div class="bottom_part"></div>
+        <div class="bottom_hole"></div>
+      </div>
+      <p style="text-align: center">&nbsp;&nbsp;&nbsp;loading...</p>
+    </div>
+  </div>
+  
+</div>
+
+<script>
+  var endLoading = function () {
+    document.body.style.overflow = "auto";
+    document.getElementById("loader").classList.add("loading");
+  };
+  window.addEventListener("load", endLoading);
+</script>
+
+<div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://member.ithome.com.tw/avatars/174235?s=ithelp" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">52</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">6</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章總覽</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Vic's Blog"><img class="site-icon" src="https://member.ithome.com.tw/avatars/174235?s=ithelp"/><span class="site-name">Vic's Blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜尋</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章總覽</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">初探Git Hooks，優化Git工作流</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">發表於</span><time class="post-meta-date-created" datetime="2023-05-04T12:20:00.000Z" title="發表於 2023-05-04 20:20:00">2023-05-04</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新於</span><time class="post-meta-date-updated" datetime="2023-05-08T14:11:34.949Z" title="更新於 2023-05-08 22:11:34">2023-05-08</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%BB%9F%E9%AB%94%E8%88%87%E6%93%8D%E4%BD%9C/">軟體與操作</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="初探Git Hooks，優化Git工作流"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">閱讀量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><p>git是現在主流的版控控制，寫軟體的人基本上都知道，但關於如何優化工作流以及什麼是git hooks知道的人可能就不多，因為這個部分是一種「優化」，使用了會更好，但是不用也沒關係，那我研究後覺得git hooks學會之後好處很多，那下面會儘量用好懂的方式來記錄跟介紹。</p>
+<p>不講腳本寫法，不講複雜應用，只講整體的概念以及簡單的小應用來幫助理解概念。<br>但還是要有對於git的簡單知識，不然可能看不懂這篇。</p>
+<p>這篇文章主要會有以下這三個大重點：</p>
+<ul>
+<li>什麼是git hooks</li>
+<li>為什麼要使用git hooks</li>
+<li>git hook基本的應用有哪些</li>
+</ul>
+<h2 id="什麼是git-hooks"><a href="#什麼是git-hooks" class="headerlink" title="什麼是git hooks"></a>什麼是git hooks</h2><p>用一句話來講解這個概念，就是「每次使用了git的資料庫中發生特別事件時(像生命週期)自動運行的腳本」。</p>
+<p>生命週期就是像人的一生中，有嬰兒、壯年，生、老、病、死，那git的特別事件我覺得也像是生命週期一樣，就是git的一些重要環節上代表各個git的生命週期，這個稍微就會解釋。</p>
+<p>腳本就是一種程式的文件，我會把它想像是可以做某一種事情的程式，像是玩遊戲的時候，假如覺得一直在做一些重複性的事情很煩，那就可以寫一個滑鼠自動一直點的腳本。</p>
+<p>而使用了git的資料庫的話，就是一個乾淨的專案裡面，只要下一個指令<code>git init</code>，那這個專案就會被加入到git的版控中，然後專案目錄下也會多出一個.git的隱藏檔。</p>
+<p>好，然後下一個問題我想就是那該如何去之後這個腳本會怎麼運行？ 我得去哪裡控制它？</p>
+<p>首先，會在它git專屬的隱藏檔裡面，在<code>.git/hooks</code>的位置，可以在裡面去放入腳本來去進行控制的動作，但要注意，一般來說是觀測不到的，因為git的.git隱藏檔是預設看不到，所以要使用git hooks的技術，第一步得先找到git hooks檔案所需要放置的位置。</p>
+<p>以下是打開git隱藏檔，找出git hooks的方式，我是用vscode，所以只講它的情境：</p>
+<p><img src="https://hackmd.io/_uploads/HkRnYDUVn.png"><br>一開始打開vscode，</p>
+<p>&#x3D;&gt; 設定 (右下角齒輪裡面，蠻明顯的，按下去再使用者那邊找)</p>
+<p>&#x3D;&gt; 找Files: Exclude</p>
+<p>&#x3D;&gt; 如上圖，刪除裡面.git選項</p>
+<p>這樣一來，你就會發現隱藏檔露出了它的廬山真面目，但注意的是，因為這種改動從設定(使用者)的話是影響整個專案，而之所以git隱藏檔要隱藏起來，是因為不小心亂改到是很危險的，所以如果用這種方式改的話，那之後所有的專案都可以看到的。</p>
+<p>這邊也提供另外一個技巧，如果你今天只想for自己的這個專案可以看到的git隱藏檔，可以這樣做。</p>
+<p>一樣進到設定，但不是使用者，而是它右邊的工作區，點擊進去工作區之中的<code>settings.json</code>，加上這一段程式碼就ok了。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;files.exclude&quot;:&#123;</span><br><span class="line">    &quot;**/.git&quot;: false,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>當成功的把git的隱藏檔顯露出來後，就可以觀測到git hooks的所在。</p>
+<p><img src="https://hackmd.io/_uploads/rkxunw8Nh.png"></p>
+<p>一個名字叫做hooks的資料夾，裡面擺了很多的git生命週期事件的檔案，等等會把這個檔案跟git的真正對應指令做個比較圖，先講這邊要如何去修改跟撰寫。</p>
+<p>其實很簡單，就是把這個檔案的<code>sample</code>給刪除，直接去更改裡面就會生效了，我的理解是<code>sample</code>是要讓它預設為沒作用，那拿掉就變成有作用。</p>
+<p><img src="https://hackmd.io/_uploads/ryn6aDIVn.png"></p>
+<p>另外裡面打開會長這個，除了最上面的<code>#!/bin/sh</code>之外其他都刪除也沒關係，我都會先把預設的都刪掉然後再自己寫新的，還有就是裡面寫的腳本可以用任何的程式語言去寫，像是node.js也是完全沒問題。</p>
+<p>接下來這邊最後就來講裡面的各種檔案對應的git指令吧：<br><img src="https://hackmd.io/_uploads/ryG3AD8N3.png"></p>
+<p>有很多，但我只列舉git的最常用的那幾個，像是耳熟能詳的<code>git add</code>、<code>git commit</code>這種，而我們想要利用git hooks做的事情，其實就是當我們在使用這些git指令的時候，可以在那個時期做事情而已，也就是執行腳本。</p>
+<p>會發現hit hooks裡面的特定檔案事件會把git指令分成執行前以及執行後，初看會覺得似乎沒有必要，但這卻是必須的。</p>
+<p>我來舉例一個情境，假如你使用腳本，是為了在<code>git commit</code>之前去做檢查，要是commit訊息中，沒有某些字，你要用git hooks腳本的方式，阻止coomit訊息的發送，那麼同樣的腳本，執行前跟執行後就分成兩種不同的情境。</p>
+<p><code>git commit</code>執行之前的話，那代表還沒有成功commit，所以腳本檢查完去阻止，是可以成功擋下的，<br>但是在<code>git commit</code>執行之後的話，它git生命週期的點已經是commit結束之後了，就算可以檢查得出錯誤，但也沒辦法阻止發生，這是它一個很大的差別。</p>
+<p>所以說，執行前有它的情境，執行後也有它的用處，這是兩種不同的卻又都有需求，兩個都要有很合理。</p>
+<h2 id="為什麼要使用git-hooks"><a href="#為什麼要使用git-hooks" class="headerlink" title="為什麼要使用git hooks"></a>為什麼要使用git hooks</h2><p>關於這個部分，我有整理出了幾點：</p>
+<ol>
+<li>自動化流程</li>
+<li>強制規範</li>
+<li>安全性</li>
+</ol>
+<p>第一，自動化流程的意思是使用Git hooks可以自動化許多重複性、瑣碎的工作。</p>
+<p>沒有也可以，但你就是要手動一直做很多重複事情，軟體開發時總是會遇到這種事情，像是運行單元測試、檢查代碼風格、自動化部署等等，會發現這些事情可能超級耗時間，而且因為是手動去執行的，所以會發生一些像是忘記執行，或是少執行了一些步驟，然後導致整個在使用版控的流程發生錯誤。</p>
+<p>git hooks只要把這個自動化的流程流程寫成腳本，放進去git的生命週期，像是每次push之後都要做一個自動化部署，直接幫你省一大堆時間，開發效率直線上升。</p>
+<p>接著是強制規範的部分，Git hooks可以強制做一些規範，像是說查程式碼風格、檢查文件格式、防止不必要的合併等等，甚至連git commit訊息都可以去規定它要怎麼寫，用了就回不去了，實在是太方便。</p>
+<p>這樣做可以確保假如有在協作的話，大家全部人的風格都符合同一個標準，有一致性的同時也拉高了可讀性，讓寫code變成更愉快的同時，程式碼也是變的用容易維護以及修改。</p>
+<p>最後是安全性，Git hooks可以幫助保持資料庫的安全性，例如說防止提交敏感資訊、防止執行有害的程式碼等等。</p>
+<p>像是如果有不能被傳上去的禁止字樣，或是可怕的程式碼寫法，直接上傳上去是會造成困擾的，這個部分跟強制規範規範其實有點類似，主要就是在提交程式碼之前，再次做個檢查，看看這些程式中有沒有包含危險不安全的東西存在，有的話就馬上警告，確保整個專案都是安全的狀態。</p>
+<p>總之，做個小結論，使用Git hook可以幫助自動化流程、強制規範和提高安全性，從而提高開發效率、確保品質和減少風險，不用可以，用了會更好，這是我覺得它的優點。</p>
+<h2 id="git-hook基本的應用有哪些"><a href="#git-hook基本的應用有哪些" class="headerlink" title="git hook基本的應用有哪些"></a>git hook基本的應用有哪些</h2><p><img src="https://hackmd.io/_uploads/ry_nrdINh.png"></p>
+<p>這邊最基礎的話，從<code>pre-commit</code>開始寫起git hooks，也就是所謂的<code>git commit</code>執行之前的腳本，跟前面說的一樣，除了最上面那行之外，其他全部刪掉，自己寫。</p>
+<p>我這邊寫的意思是，當coomit的指令下出去，指令之後，執行之前會去跑這個腳本觸發，功能是會呼叫一次我的名字，”hello vic”這樣。</p>
+<p>有用到了兩個我覺得要知道的語法，介紹一下什麼是<code>Echo</code>及<code>exit</code>。</p>
+<p><code>Echo</code>命令用來將後方參數輸出到console，就是把寫的東西印出來。<br><code>exit</code>命令如果是0的話會讓commit繼續，若exit後為非0，例如exit 1則會終止commit。</p>
+<p><img src="https://hackmd.io/_uploads/B14dDuL4n.png"></p>
+<p>然後是稍微讓大家了解概念的應用，也就是執行腳本這件事情，專案當中，可能就已經使用了很多<code>lint</code>系列的套件，這些套件就是專門用來負責處理程式的格式、風格，所以其實可以把它們直接加上git hooks就好了。</p>
+<p>舉例來說，假如專案中有在使用<code>eslint</code>，通常Node.js專案會在package.json的scripts欄位下設定lint腳本，來呼叫lint工具去檢查JavaScript等程式碼的語法。</p>
+<p>那我可以把它搭配做使用，在git hooks當中的pre-commit腳本中去執行npm run lint。</p>
+<p>這樣就會達成效果是commit指令下去之後，會在commit執行之前，幫我得程式碼做一個檢查的動作，這也是我目前比較常用的做法，然後commit的話也有專門的commitlint可以做使用，所以其實不用真的會寫git hooks的腳本也沒關係。</p>
+<h2 id="小結"><a href="#小結" class="headerlink" title="小結"></a>小結</h2><p>以上大致就是我在研究git hooks之後，想分享及做的筆記心得，下次可能會想研究git hooks的工具搭配，因為其實要打開隱藏檔這件事情真的是比較麻煩的，而且由於.git隱藏檔不吃版控的關係，我找了一些奇怪的方式才能追蹤到推遠端，覺得應該可以用更好的方式。</p>
+<p>有一個叫做<code>Husky</code>的工具，據說使用它可以讓git hooks這件事情變得更加簡單，下一個研究的目標就會是它，研究完我會再把我的心得研究丟blog。</p>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><h3 id="影片類"><a href="#影片類" class="headerlink" title="影片類"></a>影片類</h3><p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=zKR3I9t9KF0&ab_channel=%E7%B0%A1%E7%9D%BF%E5%AD%B8%E5%A0%82">(2) [Git#8] 用pre-commit檢查提交時的分支是否正確 - YouTube</a><br><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=ZQFvw3Rfhpg&t=251s&ab_channel=PJCHENder">透過工具建立有規範的 git commit message 吧 - YouTube</a></p>
+<h3 id="文章類"><a href="#文章類" class="headerlink" title="文章類"></a>文章類</h3><p><a target="_blank" rel="noopener" href="https://git-scm.com/book/zh-tw/v2/Customizing-Git-Git-Hooks">Git - Git 鉤子</a><br><a target="_blank" rel="noopener" href="https://matthung0807.blogspot.com/2021/08/what-is-git-hooks.html">菜鳥工程師 肉豬: Git 什麼是Git Hooks？</a><br><a target="_blank" rel="noopener" href="https://github.com/aitemr/awesome-git-hooks">aitemr&#x2F;awesome-git-hooks: 😎 A collection of awesome Git Hooks</a><br><a target="_blank" rel="noopener" href="https://www.freecodecamp.org/chinese/news/git-hooks-script/">手写 git hooks 脚本（pre-commit、commit-msg）</a><br><a target="_blank" rel="noopener" href="https://hackmd.io/@s716134/githook01#fn1">探索藏在Git當中的Git Hook - HackMD</a><br><a target="_blank" rel="noopener" href="https://magiclen.org/git-hooks/">如何在執行git commit前自動進行檢查？Git Hooks的基本用法 | MagicLen</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://yoshuu.github.io">Vic</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章連結: </span><span class="post-copyright-info"><a href="https://yoshuu.github.io/2023/05/04/git-hooks-introduction/">https://yoshuu.github.io/2023/05/04/git-hooks-introduction/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版權聲明: </span><span class="post-copyright-info">本部落格所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 許可協議。轉載請註明來自 <a href="https://yoshuu.github.io" target="_blank">Vic's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/git/">git</a></div><div class="post_share"><div class="social-share" data-image="https://member.ithome.com.tw/avatars/174235?s=ithelp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2023/04/27/f2e-cookies-vs-local-storage-vs-session-storage.md/" title="前端資料本地儲存的方式"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">前端資料本地儲存的方式</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 評論</span></div></div><div class="comment-wrap"><div><div id="utterances-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://member.ithome.com.tw/avatars/174235?s=ithelp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Vic</div><div class="author-info__description">Chase Excellence, success will follow. 🍎</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">52</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/yoshuu"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://www.facebook.com/profile.php?id=100010997769542" target="_blank" title="Facebook"><i class="fa-brands fa-square-facebook" style="color: #000;"></i></a><a class="social-icon" href="https://yoshuu.github.io/about/" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #000;"></i></a><a class="social-icon" href="https://www.instagram.com/appcs342/" target="_blank" title="Instagram"><i class="fa-brands fa-instagram" style="color: #000;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">這裡主要分享軟體程式技術文章，期望透過分享和堅持變得越來越好，目標是變卓越邁向大師，歡迎各種交流。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目錄</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AFgit-hooks"><span class="toc-number">1.</span> <span class="toc-text">什麼是git hooks</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%82%BA%E4%BB%80%E9%BA%BC%E8%A6%81%E4%BD%BF%E7%94%A8git-hooks"><span class="toc-number">2.</span> <span class="toc-text">為什麼要使用git hooks</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#git-hook%E5%9F%BA%E6%9C%AC%E7%9A%84%E6%87%89%E7%94%A8%E6%9C%89%E5%93%AA%E4%BA%9B"><span class="toc-number">3.</span> <span class="toc-text">git hook基本的應用有哪些</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%B5%90"><span class="toc-number">4.</span> <span class="toc-text">小結</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">5.</span> <span class="toc-text">參考資料</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BD%B1%E7%89%87%E9%A1%9E"><span class="toc-number">5.1.</span> <span class="toc-text">影片類</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E7%AB%A0%E9%A1%9E"><span class="toc-number">5.2.</span> <span class="toc-text">文章類</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2023 By Vic</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主題 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">未來的事情，誰也不知道。正因為如此，就如同再次相見本身，未來才有無限的可能。</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="閱讀模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="淺色和深色模式轉換"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="單欄和雙欄切換"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="設定"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目錄"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直達評論"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到頂部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>function loadUtterances () {
+  let ele = document.createElement('script')
+  ele.setAttribute('id', 'utterances_comment')
+  ele.setAttribute('src', 'https://utteranc.es/client.js')
+  ele.setAttribute('repo', 'yoshuu/yoshuu.github.io')
+  ele.setAttribute('issue-term', 'title')
+  let nowTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'photon-dark' : 'github-light'
+  ele.setAttribute('theme', nowTheme)
+  ele.setAttribute('crossorigin', 'anonymous')
+  ele.setAttribute('async', 'true')
+  document.getElementById('utterances-wrap').insertAdjacentElement('afterbegin',ele)
+}
+
+function utterancesTheme () {
+  const iframe = document.querySelector('.utterances-frame')
+  if (iframe) {
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'photon-dark' : 'github-light'
+    const message = {
+      type: 'set-theme',
+      theme: theme
+    };
+    iframe.contentWindow.postMessage(message, 'https://utteranc.es');
+  }
+}
+
+if ('Utterances' === 'Utterances' || !false) {
+  if (false) btf.loadComment(document.getElementById('utterances-wrap'), loadUtterances)
+  else loadUtterances()
+} else {
+  function loadOtherComment () {
+    loadUtterances()
+  }
+}</script></div><script type="text/javascript" src="https://unpkg.zhimg.com/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/gh/xiabo2/CDN@latest/fishes.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="false" data-text="🍎,🍏" data-fontsize="30px" data-random="true" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜尋</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  資料庫載入中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜尋文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
