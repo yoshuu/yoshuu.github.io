@@ -1,0 +1,285 @@
+<!DOCTYPE html><html lang="zh-TW" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>使用Husky，讓Git Hooks變得簡單 | Vic's Blog</title><meta name="author" content="Vic"><meta name="copyright" content="Vic"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="在git hooks的使用中，其實除了原生的方式外有個更方便的工具已經出來。 那有關於什麼是git hooks可以看我上禮拜寫的文章。初探Git Hooks，優化Git工作流 | Vic’s Blog 在這邊簡單來說，git hooks 是每次 Git 存儲庫中發生特定事件時自動運行的腳本。 我想要做git的特定事件，像是push、merge、commit的執行前後，想做一些事情比如檢查，那就得靠">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Husky，讓Git Hooks變得簡單">
+<meta property="og:url" content="https://yoshuu.github.io/2023/05/11/a/index.html">
+<meta property="og:site_name" content="Vic&#39;s Blog">
+<meta property="og:description" content="在git hooks的使用中，其實除了原生的方式外有個更方便的工具已經出來。 那有關於什麼是git hooks可以看我上禮拜寫的文章。初探Git Hooks，優化Git工作流 | Vic’s Blog 在這邊簡單來說，git hooks 是每次 Git 存儲庫中發生特定事件時自動運行的腳本。 我想要做git的特定事件，像是push、merge、commit的執行前後，想做一些事情比如檢查，那就得靠">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://member.ithome.com.tw/avatars/174235?s=ithelp">
+<meta property="article:published_time" content="2023-05-11T12:10:04.000Z">
+<meta property="article:modified_time" content="2023-05-14T14:31:42.794Z">
+<meta property="article:author" content="Vic">
+<meta property="article:tag" content="git">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://member.ithome.com.tw/avatars/174235?s=ithelp"><link rel="shortcut icon" href="https://member.ithome.com.tw/avatars/174235?s=ithelp"><link rel="canonical" href="https://yoshuu.github.io/2023/05/11/a/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查詢的內容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '複製成功',
+    error: '複製錯誤',
+    noSupport: '瀏覽器不支援'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '剛剛',
+    min: '分鐘前',
+    hour: '小時前',
+    day: '天前',
+    month: '個月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '使用Husky，讓Git Hooks變得簡單',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-05-14 22:31:42'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/fish.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/zyoushuo/Blog@latest/hexo/css/loading_style_1.css" ><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/zyoushuo/Blog@latest/hexo/css/loading_style_2.css" ><meta name="generator" content="Hexo 6.3.0"></head><body>
+<div id="loader">
+  
+  <div class="outer_box">
+    <div class="loader_overlay"></div>
+    <div class="loader_cogs">
+      <div class="loader_cogs__top">
+        <div class="top_part"></div>
+        <div class="top_part"></div>
+        <div class="top_part"></div>
+        <div class="top_hole"></div>
+      </div>
+      <div class="loader_cogs__left">
+        <div class="left_part"></div>
+        <div class="left_part"></div>
+        <div class="left_part"></div>
+        <div class="left_hole"></div>
+      </div>
+      <div class="loader_cogs__bottom">
+        <div class="bottom_part"></div>
+        <div class="bottom_part"></div>
+        <div class="bottom_part"></div>
+        <div class="bottom_hole"></div>
+      </div>
+      <p style="text-align: center">&nbsp;&nbsp;&nbsp;loading...</p>
+    </div>
+  </div>
+  
+</div>
+
+<script>
+  var endLoading = function () {
+    document.body.style.overflow = "auto";
+    document.getElementById("loader").classList.add("loading");
+  };
+  window.addEventListener("load", endLoading);
+</script>
+
+<div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://member.ithome.com.tw/avatars/174235?s=ithelp" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">53</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">6</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章總覽</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Vic's Blog"><img class="site-icon" src="https://member.ithome.com.tw/avatars/174235?s=ithelp"/><span class="site-name">Vic's Blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜尋</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章總覽</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">使用Husky，讓Git Hooks變得簡單</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">發表於</span><time class="post-meta-date-created" datetime="2023-05-11T12:10:04.000Z" title="發表於 2023-05-11 20:10:04">2023-05-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新於</span><time class="post-meta-date-updated" datetime="2023-05-14T14:31:42.794Z" title="更新於 2023-05-14 22:31:42">2023-05-14</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%BB%9F%E9%AB%94%E8%88%87%E6%93%8D%E4%BD%9C/">軟體與操作</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="使用Husky，讓Git Hooks變得簡單"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">閱讀量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><p>在git hooks的使用中，其實除了原生的方式外有個更方便的工具已經出來。</p>
+<p>那有關於什麼是git hooks可以看我上禮拜寫的文章。<br><a href="https://yoshuu.github.io/2023/05/04/git-hooks-introduction/">初探Git Hooks，優化Git工作流 | Vic’s Blog</a></p>
+<p>在這邊簡單來說，git hooks 是每次 Git 存儲庫中發生特定事件時自動運行的腳本。</p>
+<p>我想要做git的特定事件，像是<code>push</code>、<code>merge</code>、<code>commit</code>的執行前後，想做一些事情比如檢查，那就得靠git hooks的幫忙。</p>
+<p>但那卻不是一件容易的事情，對很多人來說連找出.git隱藏檔都是困難的事情，更不用說自己寫腳本。</p>
+<p>而husky就是為此而生，它讓操作git hooks變的更加簡單。</p>
+<p>在Git專案中使用husky统一管理hooks，變成不難上手，性價比很高的一件事情。</p>
+<p>這篇不會講解husky內部究竟是怎麼實現的，原始碼的解析，會著重在如何使用，以及理解為什麼需要有這個工具上，但研究的時候有幾篇提到這個部分，連結也會放在參考連結。</p>
+<p>官網的安裝及使用說明得非常清楚，連結已放在最下面的參考資料，這邊我紀錄的是我自己比較偏好的方式，我選擇Automatic（自動）的安裝方式，這也是官網所推薦，接著我會選擇裡面其中的<code>npm</code>方式，其實還有<code>Yarn</code>及<code>pnpm</code>，也都不錯，可以試試看。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 安裝</span><br><span class="line">npx husky-init &amp;&amp; npm install</span><br><span class="line"></span><br><span class="line">// 刪除</span><br><span class="line">npm uninstall husky &amp;&amp; git config --unset core.hooksPath</span><br><span class="line"></span><br><span class="line">// 添加hook</span><br><span class="line">npx husky add .husky/commit-msg &#x27;npx --no -- commitlint --edit &quot;$1&quot;&#x27;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<p><code>husky-init</code>的這個指令可以理解成快速化初始husky所需項目的一次性懶人包。</p>
+<p><img src="https://hackmd.io/_uploads/HyBnBwANh.png"><br>它會加上 Husky 的相依並在 <code>prepare</code> 中加上 <code>husky install</code> ，這樣一來在 <code>npm install</code> 運行時就會執行 Husky 的安裝程序。</p>
+<p>這也是剛剛安裝時後面還得補上<code>npm install</code>的原因。</p>
+<h2 id="安裝完後husky"><a href="#安裝完後husky" class="headerlink" title="安裝完後husky"></a>安裝完後husky</h2><p>如果是使用Automatic（自動）的安裝方式，那安裝完後，就會有一個預設初始的<code>pre-commit</code>可以來做使用。</p>
+<p><code>pre-commit</code>就是在<code>git commit</code>執行之前可以做的腳本，裡面一開始只會有<code>npm test</code>而已，可以在自己改掉。</p>
+<p>簡單來說，專案就會多出一個叫做husky的資料夾，裡面可以看到<code>pre-commit</code>的<code>hook</code>（腳本），可以直接修改這邊做操作。</p>
+<p><img src="https://hackmd.io/_uploads/ryGLPvAE2.png"></p>
+<p>如果要添加<code>hook</code>的話，就直接<code>husky add</code>就好，上面有打示範的指令，跟原生git hooks不一樣，不會一開始就把所有存在的hooks都列出來，所以假如不知道自己需要的那個hooks是什麼可以需要查一下。</p>
+<h2 id="使用情境"><a href="#使用情境" class="headerlink" title="使用情境"></a>使用情境</h2><p>那用預設的<code>pre-commit</code>來說，在<code>git commit</code>執行之前所運行的腳本，我所想得到的幾種運用：</p>
+<ol>
+<li>使用<code>eslint</code>，做<code>git commit</code>執行前專案中語法的檢查。</li>
+<li>使用<code>prettier</code>，做<code>git commit</code>執行前專案中程式碼格式的檢查。</li>
+<li>使用<code>commitlint</code>，做<code>git commit</code>執行前<code>commit</code>訊息的檢查。</li>
+</ol>
+<p><code>commitlint</code>很酷，使用它就等於<code>commit</code>訊息有了統一的規範，要注意，第三點不在<code>pre-commit</code>的管轄中，應該要放在<code>commit-msg</code>裡面。</p>
+<p><code>commitlint</code>的話，腳本的部分如何搭配husky的話，也不用自己寫，直接照著官網做就ok了，它會有一個預設的通用規則，然後還可以照著自己想要的rules去新增。</p>
+<p>通用的規則就會像是每個<code>commit</code>訊息都得要有個type等等，比如說：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">feat(blog): add vic blog</span><br></pre></td></tr></table></figure>
+
+<p>官網連結：<a target="_blank" rel="noopener" href="https://github.com/conventional-changelog/commitlint">conventional-changelog&#x2F;commitlint: 📓 Lint commit messages</a></p>
+<p>那最後來演示如果是<code>eslint</code>，怎麼使用husky。</p>
+<p>這個部分用四個我做練習的圖片來介紹。</p>
+<p>第一步：<br><img src="https://hackmd.io/_uploads/HygqDhPC4h.png"></p>
+<p>第二步：<br><img src="https://hackmd.io/_uploads/Syai3PAN2.png"></p>
+<p>第三步：<br><img src="https://hackmd.io/_uploads/HJB6hv04n.png"></p>
+<p>最後步：<br><img src="https://hackmd.io/_uploads/rJck6P0Vn.png"></p>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>主要兩個地方做優化</p>
+<ol>
+<li>易用性</li>
+<li>可制定性 &#x3D;&gt; 更方便，更客製</li>
+</ol>
+<p>Husky 通過很簡單的方式，就能夠在專案中添加 Git Hooks，而不需要手動撰寫腳本，直接就拉低了整體使用門檻。</p>
+<p>一直以來，Git Hooks 必須保存在 <code>.git/hooks</code> 目錄中，這使得它們難以在團隊中共享，隱藏檔無法被追蹤不能推到遠端，但Husky就不用那麼麻煩，因為已經變成了在<code>.husky/hooks</code>目錄裡面。</p>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://typicode.github.io/husky/#/">Husky - Git hooks</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/7205849733134352442">如何用husky来管理代码规范 - 掘金</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6978462327796400136">Husky，这只哈士奇是什么？ - 掘金</a></li>
+<li><a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10278411">20 - Husky - Git Hooks 工具 - iT 邦幫忙::一起幫忙解決難題，拯救 IT 人的一天</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://yoshuu.github.io">Vic</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章連結: </span><span class="post-copyright-info"><a href="https://yoshuu.github.io/2023/05/11/a/">https://yoshuu.github.io/2023/05/11/a/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版權聲明: </span><span class="post-copyright-info">本部落格所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 許可協議。轉載請註明來自 <a href="https://yoshuu.github.io" target="_blank">Vic's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/git/">git</a></div><div class="post_share"><div class="social-share" data-image="https://member.ithome.com.tw/avatars/174235?s=ithelp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2023/05/04/git-hooks-introduction/" title="初探Git Hooks，優化Git工作流"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">初探Git Hooks，優化Git工作流</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相關推薦</span></div><div class="relatedPosts-list"><div><a href="/2023/05/04/git-hooks-introduction/" title="初探Git Hooks，優化Git工作流"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-05-04</div><div class="title">初探Git Hooks，優化Git工作流</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 評論</span></div></div><div class="comment-wrap"><div><div id="utterances-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://member.ithome.com.tw/avatars/174235?s=ithelp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Vic</div><div class="author-info__description">Chase Excellence, success will follow. 🍎</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">53</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/yoshuu"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://www.facebook.com/profile.php?id=100010997769542" target="_blank" title="Facebook"><i class="fa-brands fa-square-facebook" style="color: #000;"></i></a><a class="social-icon" href="https://yoshuu.github.io/about/" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #000;"></i></a><a class="social-icon" href="https://www.instagram.com/appcs342/" target="_blank" title="Instagram"><i class="fa-brands fa-instagram" style="color: #000;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">這裡主要分享軟體程式技術文章，期望透過分享和堅持變得越來越好，目標是變卓越邁向大師，歡迎各種交流。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目錄</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D%E5%AE%8C%E5%BE%8Chusky"><span class="toc-number">1.</span> <span class="toc-text">安裝完後husky</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%83%85%E5%A2%83"><span class="toc-number">2.</span> <span class="toc-text">使用情境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B8%BD%E7%B5%90"><span class="toc-number">3.</span> <span class="toc-text">總結</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">4.</span> <span class="toc-text">參考資料</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2023 By Vic</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主題 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">未來的事情，誰也不知道。正因為如此，就如同再次相見本身，未來才有無限的可能。</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="閱讀模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="淺色和深色模式轉換"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="單欄和雙欄切換"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="設定"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目錄"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直達評論"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到頂部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>function loadUtterances () {
+  let ele = document.createElement('script')
+  ele.setAttribute('id', 'utterances_comment')
+  ele.setAttribute('src', 'https://utteranc.es/client.js')
+  ele.setAttribute('repo', 'yoshuu/yoshuu.github.io')
+  ele.setAttribute('issue-term', 'title')
+  let nowTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'photon-dark' : 'github-light'
+  ele.setAttribute('theme', nowTheme)
+  ele.setAttribute('crossorigin', 'anonymous')
+  ele.setAttribute('async', 'true')
+  document.getElementById('utterances-wrap').insertAdjacentElement('afterbegin',ele)
+}
+
+function utterancesTheme () {
+  const iframe = document.querySelector('.utterances-frame')
+  if (iframe) {
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'photon-dark' : 'github-light'
+    const message = {
+      type: 'set-theme',
+      theme: theme
+    };
+    iframe.contentWindow.postMessage(message, 'https://utteranc.es');
+  }
+}
+
+if ('Utterances' === 'Utterances' || !false) {
+  if (false) btf.loadComment(document.getElementById('utterances-wrap'), loadUtterances)
+  else loadUtterances()
+} else {
+  function loadOtherComment () {
+    loadUtterances()
+  }
+}</script></div><script type="text/javascript" src="https://unpkg.zhimg.com/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/gh/xiabo2/CDN@latest/fishes.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="false" data-text="🍎,🍏" data-fontsize="30px" data-random="true" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜尋</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  資料庫載入中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜尋文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

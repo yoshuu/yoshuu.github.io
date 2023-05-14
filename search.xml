@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>使用Husky，讓Git Hooks變得簡單</title>
+      <link href="/2023/05/11/a/"/>
+      <url>/2023/05/11/a/</url>
+      
+        <content type="html"><![CDATA[<p>在git hooks的使用中，其實除了原生的方式外有個更方便的工具已經出來。</p><p>那有關於什麼是git hooks可以看我上禮拜寫的文章。<br><a href="https://yoshuu.github.io/2023/05/04/git-hooks-introduction/">初探Git Hooks，優化Git工作流 | Vic’s Blog</a></p><p>在這邊簡單來說，git hooks 是每次 Git 存儲庫中發生特定事件時自動運行的腳本。</p><p>我想要做git的特定事件，像是<code>push</code>、<code>merge</code>、<code>commit</code>的執行前後，想做一些事情比如檢查，那就得靠git hooks的幫忙。</p><p>但那卻不是一件容易的事情，對很多人來說連找出.git隱藏檔都是困難的事情，更不用說自己寫腳本。</p><p>而husky就是為此而生，它讓操作git hooks變的更加簡單。</p><p>在Git專案中使用husky统一管理hooks，變成不難上手，性價比很高的一件事情。</p><p>這篇不會講解husky內部究竟是怎麼實現的，原始碼的解析，會著重在如何使用，以及理解為什麼需要有這個工具上，但研究的時候有幾篇提到這個部分，連結也會放在參考連結。</p><p>官網的安裝及使用說明得非常清楚，連結已放在最下面的參考資料，這邊我紀錄的是我自己比較偏好的方式，我選擇Automatic（自動）的安裝方式，這也是官網所推薦，接著我會選擇裡面其中的<code>npm</code>方式，其實還有<code>Yarn</code>及<code>pnpm</code>，也都不錯，可以試試看。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 安裝</span><br><span class="line">npx husky-init &amp;&amp; npm install</span><br><span class="line"></span><br><span class="line">// 刪除</span><br><span class="line">npm uninstall husky &amp;&amp; git config --unset core.hooksPath</span><br><span class="line"></span><br><span class="line">// 添加hook</span><br><span class="line">npx husky add .husky/commit-msg &#x27;npx --no -- commitlint --edit &quot;$1&quot;&#x27;</span><br><span class="line"></span><br></pre></td></tr></table></figure><p><code>husky-init</code>的這個指令可以理解成快速化初始husky所需項目的一次性懶人包。</p><p><img src="https://hackmd.io/_uploads/HyBnBwANh.png"><br>它會加上 Husky 的相依並在 <code>prepare</code> 中加上 <code>husky install</code> ，這樣一來在 <code>npm install</code> 運行時就會執行 Husky 的安裝程序。</p><p>這也是剛剛安裝時後面還得補上<code>npm install</code>的原因。</p><h2 id="安裝完後husky"><a href="#安裝完後husky" class="headerlink" title="安裝完後husky"></a>安裝完後husky</h2><p>如果是使用Automatic（自動）的安裝方式，那安裝完後，就會有一個預設初始的<code>pre-commit</code>可以來做使用。</p><p><code>pre-commit</code>就是在<code>git commit</code>執行之前可以做的腳本，裡面一開始只會有<code>npm test</code>而已，可以在自己改掉。</p><p>簡單來說，專案就會多出一個叫做husky的資料夾，裡面可以看到<code>pre-commit</code>的<code>hook</code>（腳本），可以直接修改這邊做操作。</p><p><img src="https://hackmd.io/_uploads/ryGLPvAE2.png"></p><p>如果要添加<code>hook</code>的話，就直接<code>husky add</code>就好，上面有打示範的指令，跟原生git hooks不一樣，不會一開始就把所有存在的hooks都列出來，所以假如不知道自己需要的那個hooks是什麼可以需要查一下。</p><h2 id="使用情境"><a href="#使用情境" class="headerlink" title="使用情境"></a>使用情境</h2><p>那用預設的<code>pre-commit</code>來說，在<code>git commit</code>執行之前所運行的腳本，我所想得到的幾種運用：</p><ol><li>使用<code>eslint</code>，做<code>git commit</code>執行前專案中語法的檢查。</li><li>使用<code>prettier</code>，做<code>git commit</code>執行前專案中程式碼格式的檢查。</li><li>使用<code>commitlint</code>，做<code>git commit</code>執行前<code>commit</code>訊息的檢查。</li></ol><p><code>commitlint</code>很酷，使用它就等於<code>commit</code>訊息有了統一的規範，要注意，第三點不在<code>pre-commit</code>的管轄中，應該要放在<code>commit-msg</code>裡面。</p><p><code>commitlint</code>的話，腳本的部分如何搭配husky的話，也不用自己寫，直接照著官網做就ok了，它會有一個預設的通用規則，然後還可以照著自己想要的rules去新增。</p><p>通用的規則就會像是每個<code>commit</code>訊息都得要有個type等等，比如說：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">feat(blog): add vic blog</span><br></pre></td></tr></table></figure><p>官網連結：<a href="https://github.com/conventional-changelog/commitlint">conventional-changelog&#x2F;commitlint: 📓 Lint commit messages</a></p><p>那最後來演示如果是<code>eslint</code>，怎麼使用husky。</p><p>這個部分用四個我做練習的圖片來介紹。</p><p>第一步：<br><img src="https://hackmd.io/_uploads/HygqDhPC4h.png"></p><p>第二步：<br><img src="https://hackmd.io/_uploads/Syai3PAN2.png"></p><p>第三步：<br><img src="https://hackmd.io/_uploads/HJB6hv04n.png"></p><p>最後步：<br><img src="https://hackmd.io/_uploads/rJck6P0Vn.png"></p><h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>主要兩個地方做優化</p><ol><li>易用性</li><li>可制定性 &#x3D;&gt; 更方便，更客製</li></ol><p>Husky 通過很簡單的方式，就能夠在專案中添加 Git Hooks，而不需要手動撰寫腳本，直接就拉低了整體使用門檻。</p><p>一直以來，Git Hooks 必須保存在 <code>.git/hooks</code> 目錄中，這使得它們難以在團隊中共享，隱藏檔無法被追蹤不能推到遠端，但Husky就不用那麼麻煩，因為已經變成了在<code>.husky/hooks</code>目錄裡面。</p><h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul><li><a href="https://typicode.github.io/husky/#/">Husky - Git hooks</a></li><li><a href="https://juejin.cn/post/7205849733134352442">如何用husky来管理代码规范 - 掘金</a></li><li><a href="https://juejin.cn/post/6978462327796400136">Husky，这只哈士奇是什么？ - 掘金</a></li><li><a href="https://ithelp.ithome.com.tw/articles/10278411">20 - Husky - Git Hooks 工具 - iT 邦幫忙::一起幫忙解決難題，拯救 IT 人的一天</a></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 軟體與操作 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> git </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>初探Git Hooks，優化Git工作流</title>
       <link href="/2023/05/04/git-hooks-introduction/"/>
       <url>/2023/05/04/git-hooks-introduction/</url>
