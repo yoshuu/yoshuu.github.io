@@ -1144,6 +1144,25 @@
     
     
     <entry>
+      <title>git 修改歷史踩雷紀錄</title>
+      <link href="/2022/07/11/git-rebase-modify-record/"/>
+      <url>/2022/07/11/git-rebase-modify-record/</url>
+      
+        <content type="html"><![CDATA[<h2 id="學習時參考資料"><a href="#學習時參考資料" class="headerlink" title="學習時參考資料"></a>學習時參考資料</h2><p>github官方文檔:<br><a href="https://docs.github.com/cn/pull-requests/committing-changes-to-your-project/creating-and-editing-commits/changing-a-commit-message">https://docs.github.com/cn/pull-requests/committing-changes-to-your-project/creating-and-editing-commits/changing-a-commit-message</a></p><p>高見龍  為你自己學 Git :<br><a href="https://gitbook.tw/chapters/rewrite-history/change-commit-message">https://gitbook.tw/chapters/rewrite-history/change-commit-message</a></p><h2 id="主要關鍵核心-git-rebase"><a href="#主要關鍵核心-git-rebase" class="headerlink" title="主要關鍵核心 : git rebase"></a>主要關鍵核心 : git rebase</h2><p>除了git rebase之外也有其他可以使用 –amend 參數來進行 Commit<br>可以用來更改最後一個的commit紀錄，這部分詳情可以看這篇，講的很完善:<br><a href="https://gitbook.tw/chapters/using-git/amend-commit1">https://gitbook.tw/chapters/using-git/amend-commit1</a></p><p>但假如可能不只一筆自己想要更改的commit訊息，可能很多，那就會需要用到rebase的指令互動模式。</p><p><code>git rebase -i</code> 或是 <code>git rebase --interactive</code> </p><p>-i  &#x3D;  –interactive</p><p>互動指令&#x3D;&gt;</p><p><img src="https://i.imgur.com/HuhAr9p.png"></p><ul><li>pick：預設都是這個指令，代表會使用這個 Commit。</li><li>reword：使用這個 Commit，但是執行到此 Commit 時會開啟 vim 供更改 Commit 訊息。</li><li>edit：使用這個 Commit，但是執行到此 Commit 時會暫停，直到執行 git rebase –continue。</li><li>squash：將這個 Commit 與前一個 Commit 合併，訊息也會合併。</li><li>fixup：與 squash 相同，但會捨棄這個 Commit 的訊息。</li><li>drop：刪除這個 Commit，結果同直接刪除行。</li></ul><h2 id="自己實作"><a href="#自己實作" class="headerlink" title="自己實作"></a>自己實作</h2><p><img src="https://i.imgur.com/Z0yzvsy.png"></p><p>把這兩個歷史紀錄給合併成一個，會變這樣</p><p>使用的是：squash</p><p>失敗 卡住 出不去</p><p>無法再次執行rebase問題<br><img src="https://i.imgur.com/IKJz3LD.png"></p><p>git-rebase-todo 問題<br><img src="https://i.imgur.com/QeVl03K.png"></p><p>出去的問題解決了：電腦問題，一時鍵盤沒反應</p><h3 id="失敗紀錄"><a href="#失敗紀錄" class="headerlink" title="失敗紀錄"></a>失敗紀錄</h3><p>失敗過程：<br>使用git rebase修改完後，第一時間退出來並沒有進到下一步的編輯模式，而是直接退出到最初的狀態，歷史紀錄沒有發生任何變化，並且無法再次進行rebase，按照git給的提示(You can fix this with ‘git rebase –edit-todo’ and then run ‘git rebase –continue’)使用了git rebase –edit-todo，一番操作下來把整個歷史都給消逝殆盡。</p><p>最初狀態：<br><img src="https://i.imgur.com/e4PmWEW.png"></p><p>失敗後狀態：<br><img src="https://i.imgur.com/2tkfZ2G.png"></p><h3 id="那是如何解決"><a href="#那是如何解決" class="headerlink" title="那是如何解決"></a>那是如何解決</h3><p>首先我先去佳萱求助</p><p>&#x3D;&gt;解決不了，一起再找ttn，最後解決了</p><p>核心失敗結論：我使用了兩個S 還有亂使用一些自己不懂的指令 所以最終毀掉全部 </p><p>ttn解決思路：</p><ol><li>最新狀況已經沒救了，先還原到還沒毀滅的歷史</li></ol><ul><li><p>先使用 git reflog 查清楚歷史脈絡<br> <img src="https://i.imgur.com/x1CZogt.png"></p></li><li><p>再使用git reset跳回還沒有毀滅的世界線，並且使用git log再次確認已跳回</p><blockquote><p>這邊要特別注意的是，使用了–hard參數之後，假如你有東西還尚未保存，那當你成功跳躍世界線後，那些東西也會一起跟你說再見。</p></blockquote></li></ul><p><img src="https://i.imgur.com/I2ldOUE.png"></p><ol start="2"><li>恢復正常再來一次，反正壞掉沒差</li></ol><ul><li><p>要先用git rebase –abort 把之前互動的消失掉</p></li><li><p>git rebase -i再來一次</p></li><li><p>成功後再檢查一下</p></li></ul><p><img src="https://i.imgur.com/XZVXu2F.png"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Git </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>JavaScript的throw用法</title>
       <link href="/2022/06/14/javascript-throw-usage/"/>
       <url>/2022/06/14/javascript-throw-usage/</url>
