@@ -1144,6 +1144,31 @@
     
     
     <entry>
+      <title>問題＿為什麼charCodeAt()裡面要帶0</title>
+      <link href="/2022/08/03/question-why-charCodeAt-inside-is-zero/"/>
+      <url>/2022/08/03/question-why-charCodeAt-inside-is-zero/</url>
+      
+        <content type="html"><![CDATA[<p>事情的起因是因為我看到了這段code想要理解下方這段程式碼：<br><img src="https://i.imgur.com/X5foIwp.png"></p><p>但我發現我自己已經忘記我當初為什麼裡面要帶0了</p><p>這個問題看mdn後馬上被秒解了 &#x3D;&gt;</p><p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/charCodeAt">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/charCodeAt</a></p><p>附可複製貼上的程式碼：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">caesarcipher</span>(<span class="params">n, s</span>)&#123;</span><br><span class="line">    <span class="keyword">let</span> code = s.<span class="title function_">charCodeAt</span>(<span class="number">0</span>) - <span class="number">97</span>;</span><br><span class="line">    <span class="keyword">let</span> newCode = (code + n) % <span class="number">26</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">String</span>.<span class="title function_">fromCharCode</span>(newCode + <span class="number">97</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure><h2 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h2><p>裡面是放<strong>index</strong>的意思<br>所以原理是這樣</p><p>假如我今天字串是”abc”</p><p>那麼charCodeAt(0) 抓取到的值就想是a 答案會是97<br>那麼charCodeAt(1) 抓取到的值就想是b 答案會是98<br>那麼charCodeAt(2) 抓取到的值就想是c 答案會是99</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> JavaScript </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> question </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>git 修改歷史踩雷紀錄</title>
       <link href="/2022/07/11/git-rebase-modify-record/"/>
       <url>/2022/07/11/git-rebase-modify-record/</url>
