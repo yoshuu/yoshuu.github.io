@@ -123,6 +123,25 @@
     
     
     <entry>
+      <title>hexo換主題，改成butterfly</title>
+      <link href="/2023/04/24/hexo-become-butterfly/"/>
+      <url>/2023/04/24/hexo-become-butterfly/</url>
+      
+        <content type="html"><![CDATA[<p>之前用的主題沒有很喜歡，所以想要試試看其他的主題。</p><p>這次選擇的是butterfly。</p><p><a href="https://github.com/jerryc127/hexo-theme-butterfly">jerryc127&#x2F;hexo-theme-butterfly: 🦋 A Hexo Theme: Butterfly</a></p><p>這個主題也是屬於比較熱門的，所以比較不用擔心發生一些沒人發現的錯誤，基本上越多人使用的話，會踩的雷，其他人已經都幫我踩過了。</p><p>會選擇這主題除了是熱門的之外，它整體的特效外觀也是我比較喜歡的，名字也聽著順耳(蝴蝶)，選擇好主題之後，就開始研究如何無痛轉換過去。</p><p>紀錄一些比較印象深的點。</p><h2 id="使用hexo-g-d-失敗，沒辦法成功部署"><a href="#使用hexo-g-d-失敗，沒辦法成功部署" class="headerlink" title="使用hexo g -d 失敗，沒辦法成功部署"></a>使用hexo g -d 失敗，沒辦法成功部署</h2><p>使用新的主題重新部署之後，專門部署的那個github repo就被重新清空重新開始，這是一開始我沒遇想到的，會這麼做主要是我想看看網站資料會不會繼承，結果看起來是不會的。</p><p>然後就部署時遇到了問題，如圖下：</p><p><img src="https://hackmd.io/_uploads/SJf6H--r2.png"></p><p>後來去網路上找到這篇：<br><a href="https://blog.csdn.net/qq_21808961/article/details/84476504">(7条消息) hexo d命令报错 ERROR Deployer not found: git_蓝蓝223的博客-CSDN博客</a></p><p>下這一串指令就好了</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure><p><img src="https://i.imgur.com/7CK24lC.png"></p><h2 id="切換主題想要試試結果大報錯"><a href="#切換主題想要試試結果大報錯" class="headerlink" title="切換主題想要試試結果大報錯"></a>切換主題想要試試結果大報錯</h2><p>錯誤內容：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">extends includes/layout.pug block content include ./includes/mixins/post-ui.pug #recent-posts.recent-posts +postUI include includes/pagination.pug</span><br></pre></td></tr></table></figure><p>去網路上找結果，找到這篇完美解決我的問題：<br><a href="https://www.jianshu.com/p/aa936a8369fb">使用hexo theme Butterfly 报错 - 簡書</a></p><p>就是安裝這個然後打開就好了</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-renderer-pug hexo-renderer-stylus --save</span><br></pre></td></tr></table></figure><h2 id="我再度測試換成另外一個網址去部署，但是錯掉了"><a href="#我再度測試換成另外一個網址去部署，但是錯掉了" class="headerlink" title="我再度測試換成另外一個網址去部署，但是錯掉了"></a>我再度測試換成另外一個網址去部署，但是錯掉了</h2><p><img src="https://i.imgur.com/82JfPfc.png"></p><p>我決定先不管這個了。</p><h2 id="首先我想加大最右邊的滑動條，預設的太小"><a href="#首先我想加大最右邊的滑動條，預設的太小" class="headerlink" title="首先我想加大最右邊的滑動條，預設的太小"></a>首先我想加大最右邊的滑動條，預設的太小</h2><p><img src="https://i.imgur.com/8XckObq.png"></p><p>參考：<a href="https://zhuanlan.zhihu.com/p/259728821">hexo-matery主题美化(四) - 知乎</a></p><h2 id="就不一個一個寫了，我設置主要參考文章"><a href="#就不一個一個寫了，我設置主要參考文章" class="headerlink" title="就不一個一個寫了，我設置主要參考文章"></a>就不一個一個寫了，我設置主要參考文章</h2><p><a href="https://blog.boshkuo.com/hexo-advanced-supplementary-3/">Hexo 進階補充系列(3) - 更換 NexT 主題： Butterfly 主題客製化設定 | Bosh’s Blog</a></p><h2 id="喂魚功能"><a href="#喂魚功能" class="headerlink" title="喂魚功能"></a>喂魚功能</h2><p>看了很多網頁，但是一直失敗，失敗的點我後來發現在於引入jq的問題，後來似乎弄成最新的之後有好點。</p><p>成功的第一次，是看這個文章：</p><p><a href="https://cnhuazhu.top/butterfly/2021/02/19/Hexo%E9%AD%94%E6%94%B9/Hexo%E9%A1%B5%E8%84%9A%E5%85%BB%E9%B1%BC%E6%95%88%E6%9E%9C/">Hexo页脚养鱼效果 | 花猪のBlog</a></p><p>相關對我有幫助的文章：</p><p><a href="https://weilining.github.io/204.html">如何在页脚养鱼 | Ln’s Blog</a></p><p><a href="https://cloud.tencent.com/developer/article/1943698">Hexo页脚养鱼效果 - 腾讯云开发者社区-腾讯云</a></p><h2 id="最左邊滾動條優化"><a href="#最左邊滾動條優化" class="headerlink" title="最左邊滾動條優化"></a>最左邊滾動條優化</h2><p>我是參考這篇：<br><a href="https://qidaink-vercel-pages.vercel.app/post/1030f44e.html">【Butterfly】Butterfly自定义1-图片与滚动条 | 云与海</a></p><h2 id="改變加載動畫"><a href="#改變加載動畫" class="headerlink" title="改變加載動畫"></a>改變加載動畫</h2><p>我是參考這篇：<br><a href="https://lihang.games/2022/06/26/Hexo-Butterfly%E5%8A%A0%E8%BD%BD%E5%8A%A8%E7%94%BB%E7%9A%84%E9%AD%94%E6%94%B9/">Hexo-Butterfly加载动画的魔改 | H</a></p><p><a href="https://cloud.tencent.com/developer/article/1943725">Hexo站点加载动画修改（齿轮效果） - 腾讯云开发者社区-腾讯云</a></p><p><a href="https://akilar.top/posts/3d221bf2/">Loading Animation | Akilarの糖果屋</a></p><h2 id="研究歸檔一頁化"><a href="#研究歸檔一頁化" class="headerlink" title="研究歸檔一頁化"></a>研究歸檔一頁化</h2><p><a href="https://ouoholly.github.io/archives/">歸檔 | 我的倉庫 | ouoholly</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Hexo </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>程式語言的性格解密：靜態 vs. 動態、強 vs. 弱、靜態 vs. 動態作用域</title>
       <link href="/2023/04/20/javascirpt-the-character-of-the-program/"/>
       <url>/2023/04/20/javascirpt-the-character-of-the-program/</url>
