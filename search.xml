@@ -4,25 +4,6 @@
   
     
     <entry>
-      <title>問題＿遇到錯誤 Error Cannot find module &#39;request&#39;</title>
-      <link href="/2023/08/10/question-error-cannot-find-module-request/"/>
-      <url>/2023/08/10/question-error-cannot-find-module-request/</url>
-      
-        <content type="html"><![CDATA[<p>在練習api時候遇到的 </p><p>照著範例貼的也會報錯，無奈</p><p>後來解決方式是照著這一篇：<br><a href="https://stackoverflow.com/questions/16482600/node-js-cannot-find-module-request">https://stackoverflow.com/questions/16482600/node-js-cannot-find-module-request</a></p><p>使用<code>npm install request --save</code></p><p>問題就解決了</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> JavaScript </category>
-          
-      </categories>
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>寫程式資淺比資深厲害的地方</title>
       <link href="/2023/05/16/junior-is-better-than-senior/"/>
       <url>/2023/05/16/junior-is-better-than-senior/</url>
@@ -1113,6 +1094,33 @@
     
     
     <entry>
+      <title>問題＿mac 顯示隱藏檔</title>
+      <link href="/2022/09/17/question-mac-shows-hidden-files/"/>
+      <url>/2022/09/17/question-mac-shows-hidden-files/</url>
+      
+        <content type="html"><![CDATA[<p>解答來源： <a href="https://gist.github.com/j796160836/262083cdbad0d45eefcd">https://gist.github.com/j796160836/262083cdbad0d45eefcd</a></p><p>顯示隱藏檔案：<br>defaults write com.apple.finder AppleShowAllFiles TRUE;\killall Finder</p><p>不顯示隱藏檔案：<br>defaults write com.apple.finder AppleShowAllFiles FALSE;\killall Finder</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 軟體與操作 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> mac </tag>
+            
+            <tag> question </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>JS之路 Day01 - 開始與結束的序言</title>
       <link href="/2022/09/16/iThome-JS01-prologue-of-beginning-and-end/"/>
       <url>/2022/09/16/iThome-JS01-prologue-of-beginning-and-end/</url>
@@ -1157,6 +1165,25 @@
             <tag> mac </tag>
             
         </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>問題＿遇到錯誤 Error Cannot find module &#39;request&#39;</title>
+      <link href="/2022/08/10/question-error-cannot-find-module-request/"/>
+      <url>/2022/08/10/question-error-cannot-find-module-request/</url>
+      
+        <content type="html"><![CDATA[<p>在練習api時候遇到的 </p><p>照著範例貼的也會報錯，無奈</p><p>後來解決方式是照著這一篇：<br><a href="https://stackoverflow.com/questions/16482600/node-js-cannot-find-module-request">https://stackoverflow.com/questions/16482600/node-js-cannot-find-module-request</a></p><p>使用<code>npm install request --save</code></p><p>問題就解決了</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> JavaScript </category>
+          
+      </categories>
+      
       
     </entry>
     
