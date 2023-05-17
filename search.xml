@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>問題＿遇到錯誤 Error Cannot find module &#39;request&#39;</title>
+      <link href="/2023/08/10/question-error-cannot-find-module-request/"/>
+      <url>/2023/08/10/question-error-cannot-find-module-request/</url>
+      
+        <content type="html"><![CDATA[<p>在練習api時候遇到的 </p><p>照著範例貼的也會報錯，無奈</p><p>後來解決方式是照著這一篇：<br><a href="https://stackoverflow.com/questions/16482600/node-js-cannot-find-module-request">https://stackoverflow.com/questions/16482600/node-js-cannot-find-module-request</a></p><p>使用<code>npm install request --save</code></p><p>問題就解決了</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> JavaScript </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>寫程式資淺比資深厲害的地方</title>
       <link href="/2023/05/16/junior-is-better-than-senior/"/>
       <url>/2023/05/16/junior-is-better-than-senior/</url>
@@ -1163,6 +1182,25 @@
             <tag> question </tag>
             
         </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>問題＿使用function裡面使用for of後，沒辦法直接return</title>
+      <link href="/2022/07/21/question-for-of-can-not-return/"/>
+      <url>/2022/07/21/question-for-of-can-not-return/</url>
+      
+        <content type="html"><![CDATA[<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">isIndex</span>(<span class="params">input</span>) &#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> [index, element] <span class="keyword">of</span> input.<span class="title function_">entries</span>()) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="title function_">isPrime</span>(element)) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`質數為<span class="subst">$&#123;index&#125;</span>  索引值為<span class="subst">$&#123;element&#125;</span>`</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>一開始像是這樣，然後其實沒有辦法直接增加return在外面，或者是直接加上return換掉內部的console.log</p><p>最後的解決方式是:</p><p>多新增一個變數去接這個for of裡面的東西，因為遇到了最後增加空格的問題，所以最後return出去的版本會再加上trimEnd()&#x3D;&gt;</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">isIndex</span>(<span class="params">input</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> a = <span class="string">&quot;&quot;</span>;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> [index, element] <span class="keyword">of</span> input.<span class="title function_">entries</span>()) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="title function_">isPrime</span>(element)) &#123;</span><br><span class="line">      a += <span class="string">`質數為<span class="subst">$&#123;index&#125;</span>  索引值為<span class="subst">$&#123;element&#125;</span>`</span> + <span class="string">`\n`</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> a.<span class="title function_">trimEnd</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> JavaScript </category>
+          
+      </categories>
+      
       
     </entry>
     
