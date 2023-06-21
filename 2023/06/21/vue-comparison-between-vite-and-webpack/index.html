@@ -1,0 +1,299 @@
+<!DOCTYPE html><html lang="zh-TW" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Vite與webpack比較 | Vic's Blog</title><meta name="author" content="Vic"><meta name="copyright" content="Vic"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="vite 是 vue 的作者尤雨溪所開發的，為了改善開發者的體驗而生。 vite 嚴格來說不是純打包工具，更像是一種建構工具。 vite 的核心概念：  快速熱更新 快速冷啟動  熱更新 &#x3D;&gt; 在不重新加載整個頁面的情況下，去即時做修改。冷啟動 &#x3D;&gt; 預建構 + 開啟時準備。 這兩個功能不僅僅存在於 vite，而是 vite 進一步優化了熱更新及冷啟動的時間。 we">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vite與webpack比較">
+<meta property="og:url" content="https://yoshuu.github.io/2023/06/21/vue-comparison-between-vite-and-webpack/index.html">
+<meta property="og:site_name" content="Vic&#39;s Blog">
+<meta property="og:description" content="vite 是 vue 的作者尤雨溪所開發的，為了改善開發者的體驗而生。 vite 嚴格來說不是純打包工具，更像是一種建構工具。 vite 的核心概念：  快速熱更新 快速冷啟動  熱更新 &#x3D;&gt; 在不重新加載整個頁面的情況下，去即時做修改。冷啟動 &#x3D;&gt; 預建構 + 開啟時準備。 這兩個功能不僅僅存在於 vite，而是 vite 進一步優化了熱更新及冷啟動的時間。 we">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://member.ithome.com.tw/avatars/174235?s=ithelp">
+<meta property="article:published_time" content="2023-06-21T05:37:42.000Z">
+<meta property="article:modified_time" content="2023-06-21T05:44:00.780Z">
+<meta property="article:author" content="Vic">
+<meta property="article:tag" content="vite">
+<meta property="article:tag" content="webpack">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://member.ithome.com.tw/avatars/174235?s=ithelp"><link rel="shortcut icon" href="https://member.ithome.com.tw/avatars/174235?s=ithelp"><link rel="canonical" href="https://yoshuu.github.io/2023/06/21/vue-comparison-between-vite-and-webpack/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查詢的內容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '複製成功',
+    error: '複製錯誤',
+    noSupport: '瀏覽器不支援'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '剛剛',
+    min: '分鐘前',
+    hour: '小時前',
+    day: '天前',
+    month: '個月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Vite與webpack比較',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-06-21 13:44:00'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/fish.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/zyoushuo/Blog@latest/hexo/css/loading_style_1.css" ><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/zyoushuo/Blog@latest/hexo/css/loading_style_2.css" ><meta name="generator" content="Hexo 6.3.0"></head><body>
+<div id="loader">
+  
+  <div class="outer_box">
+    <div class="loader_overlay"></div>
+    <div class="loader_cogs">
+      <div class="loader_cogs__top">
+        <div class="top_part"></div>
+        <div class="top_part"></div>
+        <div class="top_part"></div>
+        <div class="top_hole"></div>
+      </div>
+      <div class="loader_cogs__left">
+        <div class="left_part"></div>
+        <div class="left_part"></div>
+        <div class="left_part"></div>
+        <div class="left_hole"></div>
+      </div>
+      <div class="loader_cogs__bottom">
+        <div class="bottom_part"></div>
+        <div class="bottom_part"></div>
+        <div class="bottom_part"></div>
+        <div class="bottom_hole"></div>
+      </div>
+      <p style="text-align: center">&nbsp;&nbsp;&nbsp;loading...</p>
+    </div>
+  </div>
+  
+</div>
+
+<script>
+  var endLoading = function () {
+    document.body.style.overflow = "auto";
+    document.getElementById("loader").classList.add("loading");
+  };
+  window.addEventListener("load", endLoading);
+</script>
+
+<div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://member.ithome.com.tw/avatars/174235?s=ithelp" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">65</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">9</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章總覽</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Vic's Blog"><img class="site-icon" src="https://member.ithome.com.tw/avatars/174235?s=ithelp"/><span class="site-name">Vic's Blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜尋</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章總覽</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">Vite與webpack比較</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">發表於</span><time class="post-meta-date-created" datetime="2023-06-21T05:37:42.000Z" title="發表於 2023-06-21 13:37:42">2023-06-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新於</span><time class="post-meta-date-updated" datetime="2023-06-21T05:44:00.780Z" title="更新於 2023-06-21 13:44:00">2023-06-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Vue/">Vue</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Vite與webpack比較"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">閱讀量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><p>vite 是 vue 的作者尤雨溪所開發的，<br>為了改善開發者的體驗而生。</p>
+<p>vite 嚴格來說不是純打包工具，更像是一種建構工具。</p>
+<p>vite 的核心概念：</p>
+<ul>
+<li>快速熱更新</li>
+<li>快速冷啟動</li>
+</ul>
+<p>熱更新 &#x3D;&gt; 在不重新加載整個頁面的情況下，去即時做修改。<br>冷啟動 &#x3D;&gt; 預建構 + 開啟時準備。</p>
+<p>這兩個功能不僅僅存在於 vite，而是 vite 進一步優化了熱更新及冷啟動的時間。</p>
+<p>webpack 出現時就已經擁有了熱更新及冷啟動的概念，在當時環境已經算是很快速及方便的工具，但放在現在來看，等待要好幾十秒就會讓人覺得太久了。</p>
+<p>而 vite 就帶來了更快的開發速度及優化整體的流程。</p>
+<p>vite 的出現其實不是為了要取代掉 webpack，webpack 也沒有辦法變得像是 vite 一樣，因為兩者的核心概念本就不同。</p>
+<p>webpack 的核心是先打包再去建立環境，主軸會是放在打包這一塊。</p>
+<p>vite 則是不打包，在開發環境時，不會做打包這件事情，只會在最初的時候去進行預建構之後存放在本地端，之後如果有需要去修改的其他地方時，會利用原生 ESM 的機制，等於說把一部分打包的任務交給了瀏覽器，而不是本身的 vite 來處來，有需要修改時，就去對瀏覽器發出請求。</p>
+<p>也因如此，所以熱更新才會非常快速。</p>
+<p>冷啟動的部分則是 vite 使用了叫做 esbuild 的打包器來處理，這是使用 go 程式語言來撰寫，據官網所說速度會比使用 javascript 的打包器快了 10~100 倍，我在想可能是因為 go 是多執行緒的，比起 javascript 的單執行緒，可以並行去處理程序，所以才有辦法快這麽多。</p>
+<p>只基於 javascript 去進行開發的工具鏈及生態，速度上就有其局限性，會有一個極限在，要再優化就很難。</p>
+<p>所以說 webpack 假如說想要變成像是 vite 一樣，成本會非常巨大，還不如就直接轉成使用 vite，轉換成本會比較低。</p>
+<h2 id="前端打包的價值"><a href="#前端打包的價值" class="headerlink" title="前端打包的價值"></a>前端打包的價值</h2><ol>
+<li>模組化(module) - 把許多的檔案整合成一個。<br>早期在還沒有推出 ESM(ES Module)之前，瀏覽器是沒有辦法利用原生的機制去處理有關於模組化的部分，但模組化有其必要性，想要程式碼擁有複用性、提高可測試性，就得模組化。</li>
+</ol>
+<p>所以作法為在開發環境寫好自己的好幾個模組檔案，經過打包工具的「bundle」成一個瀏覽器看得懂的主要檔案。</p>
+<ol start="2">
+<li>搖樹優化(tree shaking) - 減小最終打包後的檔案。<br>撰寫專案時，多少都會寫些冗贅的程式碼，在自己所有程式碼「bundle」打包過程時可以去把這些專案中並沒有使用到的部分給清除掉。</li>
+</ol>
+<p>我會想像成是在搖一棵樹時，樹上綠色的葉子會不為所動，但黃色的枯葉就會隨著搖動掉落下來，最終樹上只會剩下綠色的葉子，剩下的綠色葉子其實就是代表著打包過後確定真正的用到的程式碼。</p>
+<ol start="3">
+<li>延遲載入(lazy loading)</li>
+</ol>
+<p>混淆器(Obfuscator) - 讓別人看不懂你的程式。<br>打包過程中可以透過一些 plugin 做到程式碼混淆的功能，讓最後打包完成的程式碼，讓其他人沒辦法很容易就看懂。</p>
+<p>除此之外當然還有其他許許多多原因，列出三點是我目前所想到的，我覺得重點要記得打包最主要其實就是在優化前端資源的載入以及效能，幫助提高網頁中的載入速度或是改善用戶跟開發者體驗。</p>
+<h2 id="vite-核心功能"><a href="#vite-核心功能" class="headerlink" title="vite 核心功能"></a>vite 核心功能</h2><p>上方提完了核心概念，繼續來講核心功能。</p>
+<p>功能：</p>
+<ol>
+<li>打包</li>
+<li>開發伺服器</li>
+</ol>
+<p>第一個打包的部分可以分成兩個地方來看。</p>
+<p>預建構是交給 esbuild 來處理 ;<br>其餘主要打包的部分是交由 Rollup。</p>
+<p>所以單論打包的話，像是 webpack 是純打包工具，那比較的對象通常跟 Rollup 進行比較，而不是與 vite。</p>
+<p>這點可以從 webpack 及 vite 的官方文件中，都沒有將彼此列進去與自己做比較對象可以佐證。</p>
+<p>另外可能會有人困惑的點，現階段已知 esbuild 在做打包的速度比起 Rollup 要快上不少，但為什麼主要打包是選擇 Rollup？</p>
+<p>這部分在官方文檔中就有特別為了這件事情去做解釋:<br>首先不排除未來會改使用 esbuild 作為主要打包器的可能性，畢竟近年來 esbuild 有很大進展，但是現階段依舊會使用 Rollup。</p>
+<p>這塊我的想法是快速不一定是判別的唯一基準，靈活性跟適不適合 vite 的生態也是很重要的一塊，現階段 vite 的開發團隊覺得 Rollup 會帶來更好的性能跟靈活性。</p>
+<p>開發伺服器的部分，webpack 也可以作為開發伺服器，但最大的差別在於 webpack 是用打包的方式進行，而 vite 選擇不打包。</p>
+<p>這兩者在這塊所採取的策略是不一樣的。</p>
+<p>vite 的載入不打包，因為利用原生 ESM 的機制，直接就先 server ready，<br>檔案再按照瀏覽器的 request，所以可以編譯之後就載入，如下圖。<br><img src="https://hackmd.io/_uploads/H1jrD-g_n.png">(圖來源：vite 官方文檔)</p>
+<p>不自己打包是因為把這件事情交給了瀏覽器去執行。</p>
+<p>webpack 沒有利用 ESM 的機制，所以在開發伺服器的時候是採取先全部打包，再一次性的載入，也因為每次都得全部重新打包，所以在啟動開發伺服器時會比 vite 還慢許多，如下圖。</p>
+<p><img src="https://hackmd.io/_uploads/ry50Pbgd2.png">(圖來源：vite 官方文檔)</p>
+<h2 id="小結"><a href="#小結" class="headerlink" title="小結"></a>小結</h2><p>Webpack 的核心就是打包，<br>但是 Vite 的核心不是打包，最主要差別在此。</p>
+<p>webpack 使用基於打包的開發伺服器，<br>vite 使用 ESM 的機制的開發伺服器。</p>
+<p>plugin 來說，這東西是沒辦法共用的，所以對於比較老牌的 webpack 較有利&#x3D;&gt;</p>
+<p>webpack 的 plugin 生態成熟，社群發展大。<br>vite 的 plugin 持續成長中，目前快速進步發展中。</p>
+<p>關於使用情境，下方的參考資料我有看到一篇名為“vite 多久后能干掉 webpack？”的文章，有引出 vite 開發者來回覆。</p>
+<p>裡面就有很明確提到，vite 不是為了取代 webpack，定位就不一樣了，</p>
+<p>尤雨溪：「webpack core 是一个纯打包工具（对标 Rollup），而 Vite 其实是一个更上层的工具链方案，对标的是 （webpack + 针对 web 的常用配置 + webpack-dev-server）。」</p>
+<p>什麼時候使用哪種工具，除了使用情境及需求外，更多的是開發者自己的喜好，今天處理的是一個複雜的專案，需要支援各種情況的 plugin 跟可以容納複雜的配置依賴，那可能使用 webpack 是一個好選擇。</p>
+<p>若今天想少等待熱更新時間，想啟動開發伺服器時可以速度快一些，比起開發效能，更注重在開發本身體驗的話，那可能 vite 就會變成是好選擇。</p>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://cn.vitejs.dev/guide/why.html">为什么选 Vite | Vite 官方中文文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/477139054">vite 多久后能干掉 webpack？ - 知乎</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.explainthis.io/zh-hant/interview-guides/frontend/what-is-vite">Vite 是什麼? 為什麼要用 Vite? 它解決了哪些問題? 又是如何解決? - 軟體工程師面試、職涯、新加坡生活分享 - ExplainThis</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://yoshuu.github.io">Vic</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章連結: </span><span class="post-copyright-info"><a href="https://yoshuu.github.io/2023/06/21/vue-comparison-between-vite-and-webpack/">https://yoshuu.github.io/2023/06/21/vue-comparison-between-vite-and-webpack/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版權聲明: </span><span class="post-copyright-info">本部落格所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 許可協議。轉載請註明來自 <a href="https://yoshuu.github.io" target="_blank">Vic's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/vite/">vite</a><a class="post-meta__tags" href="/tags/webpack/">webpack</a></div><div class="post_share"><div class="social-share" data-image="https://member.ithome.com.tw/avatars/174235?s=ithelp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2023/06/13/f2e-research-vue-i18n/" title="研究前端實作多國語系"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">研究前端實作多國語系</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 評論</span></div></div><div class="comment-wrap"><div><div id="utterances-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://member.ithome.com.tw/avatars/174235?s=ithelp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Vic</div><div class="author-info__description">喜歡複雜的東西變簡單🍎</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">65</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">9</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/yoshuu"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://www.facebook.com/profile.php?id=100010997769542" target="_blank" title="Facebook"><i class="fa-brands fa-square-facebook" style="color: #000;"></i></a><a class="social-icon" href="https://yoshuu.github.io/about/" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #000;"></i></a><a class="social-icon" href="https://www.instagram.com/appcs342/" target="_blank" title="Instagram"><i class="fa-brands fa-instagram" style="color: #000;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">這裡主要分享軟體程式技術文章，期望透過分享和堅持變得越來越好，目標是變卓越邁向大師，歡迎各種交流。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目錄</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%AB%AF%E6%89%93%E5%8C%85%E7%9A%84%E5%83%B9%E5%80%BC"><span class="toc-number">1.</span> <span class="toc-text">前端打包的價值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vite-%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD"><span class="toc-number">2.</span> <span class="toc-text">vite 核心功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%B5%90"><span class="toc-number">3.</span> <span class="toc-text">小結</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">4.</span> <span class="toc-text">參考資料</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2023 By Vic</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主題 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">未來的事情，誰也不知道。正因為如此，就如同再次相見本身，未來才有無限的可能。</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="閱讀模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="淺色和深色模式轉換"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="單欄和雙欄切換"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="設定"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目錄"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直達評論"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到頂部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>function loadUtterances () {
+  let ele = document.createElement('script')
+  ele.setAttribute('id', 'utterances_comment')
+  ele.setAttribute('src', 'https://utteranc.es/client.js')
+  ele.setAttribute('repo', 'yoshuu/yoshuu.github.io')
+  ele.setAttribute('issue-term', 'title')
+  let nowTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'photon-dark' : 'github-light'
+  ele.setAttribute('theme', nowTheme)
+  ele.setAttribute('crossorigin', 'anonymous')
+  ele.setAttribute('async', 'true')
+  document.getElementById('utterances-wrap').insertAdjacentElement('afterbegin',ele)
+}
+
+function utterancesTheme () {
+  const iframe = document.querySelector('.utterances-frame')
+  if (iframe) {
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'photon-dark' : 'github-light'
+    const message = {
+      type: 'set-theme',
+      theme: theme
+    };
+    iframe.contentWindow.postMessage(message, 'https://utteranc.es');
+  }
+}
+
+if ('Utterances' === 'Utterances' || !false) {
+  if (false) btf.loadComment(document.getElementById('utterances-wrap'), loadUtterances)
+  else loadUtterances()
+} else {
+  function loadOtherComment () {
+    loadUtterances()
+  }
+}</script></div><script type="text/javascript" src="https://unpkg.zhimg.com/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/gh/xiabo2/CDN@latest/fishes.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="false" data-text="🍎,🍏" data-fontsize="30px" data-random="true" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜尋</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  資料庫載入中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜尋文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

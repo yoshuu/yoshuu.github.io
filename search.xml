@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>Vite與webpack比較</title>
+      <link href="/2023/06/21/vue-comparison-between-vite-and-webpack/"/>
+      <url>/2023/06/21/vue-comparison-between-vite-and-webpack/</url>
+      
+        <content type="html"><![CDATA[<p>vite 是 vue 的作者尤雨溪所開發的，<br>為了改善開發者的體驗而生。</p><p>vite 嚴格來說不是純打包工具，更像是一種建構工具。</p><p>vite 的核心概念：</p><ul><li>快速熱更新</li><li>快速冷啟動</li></ul><p>熱更新 &#x3D;&gt; 在不重新加載整個頁面的情況下，去即時做修改。<br>冷啟動 &#x3D;&gt; 預建構 + 開啟時準備。</p><p>這兩個功能不僅僅存在於 vite，而是 vite 進一步優化了熱更新及冷啟動的時間。</p><p>webpack 出現時就已經擁有了熱更新及冷啟動的概念，在當時環境已經算是很快速及方便的工具，但放在現在來看，等待要好幾十秒就會讓人覺得太久了。</p><p>而 vite 就帶來了更快的開發速度及優化整體的流程。</p><p>vite 的出現其實不是為了要取代掉 webpack，webpack 也沒有辦法變得像是 vite 一樣，因為兩者的核心概念本就不同。</p><p>webpack 的核心是先打包再去建立環境，主軸會是放在打包這一塊。</p><p>vite 則是不打包，在開發環境時，不會做打包這件事情，只會在最初的時候去進行預建構之後存放在本地端，之後如果有需要去修改的其他地方時，會利用原生 ESM 的機制，等於說把一部分打包的任務交給了瀏覽器，而不是本身的 vite 來處來，有需要修改時，就去對瀏覽器發出請求。</p><p>也因如此，所以熱更新才會非常快速。</p><p>冷啟動的部分則是 vite 使用了叫做 esbuild 的打包器來處理，這是使用 go 程式語言來撰寫，據官網所說速度會比使用 javascript 的打包器快了 10~100 倍，我在想可能是因為 go 是多執行緒的，比起 javascript 的單執行緒，可以並行去處理程序，所以才有辦法快這麽多。</p><p>只基於 javascript 去進行開發的工具鏈及生態，速度上就有其局限性，會有一個極限在，要再優化就很難。</p><p>所以說 webpack 假如說想要變成像是 vite 一樣，成本會非常巨大，還不如就直接轉成使用 vite，轉換成本會比較低。</p><h2 id="前端打包的價值"><a href="#前端打包的價值" class="headerlink" title="前端打包的價值"></a>前端打包的價值</h2><ol><li>模組化(module) - 把許多的檔案整合成一個。<br>早期在還沒有推出 ESM(ES Module)之前，瀏覽器是沒有辦法利用原生的機制去處理有關於模組化的部分，但模組化有其必要性，想要程式碼擁有複用性、提高可測試性，就得模組化。</li></ol><p>所以作法為在開發環境寫好自己的好幾個模組檔案，經過打包工具的「bundle」成一個瀏覽器看得懂的主要檔案。</p><ol start="2"><li>搖樹優化(tree shaking) - 減小最終打包後的檔案。<br>撰寫專案時，多少都會寫些冗贅的程式碼，在自己所有程式碼「bundle」打包過程時可以去把這些專案中並沒有使用到的部分給清除掉。</li></ol><p>我會想像成是在搖一棵樹時，樹上綠色的葉子會不為所動，但黃色的枯葉就會隨著搖動掉落下來，最終樹上只會剩下綠色的葉子，剩下的綠色葉子其實就是代表著打包過後確定真正的用到的程式碼。</p><ol start="3"><li>延遲載入(lazy loading)</li></ol><p>混淆器(Obfuscator) - 讓別人看不懂你的程式。<br>打包過程中可以透過一些 plugin 做到程式碼混淆的功能，讓最後打包完成的程式碼，讓其他人沒辦法很容易就看懂。</p><p>除此之外當然還有其他許許多多原因，列出三點是我目前所想到的，我覺得重點要記得打包最主要其實就是在優化前端資源的載入以及效能，幫助提高網頁中的載入速度或是改善用戶跟開發者體驗。</p><h2 id="vite-核心功能"><a href="#vite-核心功能" class="headerlink" title="vite 核心功能"></a>vite 核心功能</h2><p>上方提完了核心概念，繼續來講核心功能。</p><p>功能：</p><ol><li>打包</li><li>開發伺服器</li></ol><p>第一個打包的部分可以分成兩個地方來看。</p><p>預建構是交給 esbuild 來處理 ;<br>其餘主要打包的部分是交由 Rollup。</p><p>所以單論打包的話，像是 webpack 是純打包工具，那比較的對象通常跟 Rollup 進行比較，而不是與 vite。</p><p>這點可以從 webpack 及 vite 的官方文件中，都沒有將彼此列進去與自己做比較對象可以佐證。</p><p>另外可能會有人困惑的點，現階段已知 esbuild 在做打包的速度比起 Rollup 要快上不少，但為什麼主要打包是選擇 Rollup？</p><p>這部分在官方文檔中就有特別為了這件事情去做解釋:<br>首先不排除未來會改使用 esbuild 作為主要打包器的可能性，畢竟近年來 esbuild 有很大進展，但是現階段依舊會使用 Rollup。</p><p>這塊我的想法是快速不一定是判別的唯一基準，靈活性跟適不適合 vite 的生態也是很重要的一塊，現階段 vite 的開發團隊覺得 Rollup 會帶來更好的性能跟靈活性。</p><p>開發伺服器的部分，webpack 也可以作為開發伺服器，但最大的差別在於 webpack 是用打包的方式進行，而 vite 選擇不打包。</p><p>這兩者在這塊所採取的策略是不一樣的。</p><p>vite 的載入不打包，因為利用原生 ESM 的機制，直接就先 server ready，<br>檔案再按照瀏覽器的 request，所以可以編譯之後就載入，如下圖。<br><img src="https://hackmd.io/_uploads/H1jrD-g_n.png">(圖來源：vite 官方文檔)</p><p>不自己打包是因為把這件事情交給了瀏覽器去執行。</p><p>webpack 沒有利用 ESM 的機制，所以在開發伺服器的時候是採取先全部打包，再一次性的載入，也因為每次都得全部重新打包，所以在啟動開發伺服器時會比 vite 還慢許多，如下圖。</p><p><img src="https://hackmd.io/_uploads/ry50Pbgd2.png">(圖來源：vite 官方文檔)</p><h2 id="小結"><a href="#小結" class="headerlink" title="小結"></a>小結</h2><p>Webpack 的核心就是打包，<br>但是 Vite 的核心不是打包，最主要差別在此。</p><p>webpack 使用基於打包的開發伺服器，<br>vite 使用 ESM 的機制的開發伺服器。</p><p>plugin 來說，這東西是沒辦法共用的，所以對於比較老牌的 webpack 較有利&#x3D;&gt;</p><p>webpack 的 plugin 生態成熟，社群發展大。<br>vite 的 plugin 持續成長中，目前快速進步發展中。</p><p>關於使用情境，下方的參考資料我有看到一篇名為“vite 多久后能干掉 webpack？”的文章，有引出 vite 開發者來回覆。</p><p>裡面就有很明確提到，vite 不是為了取代 webpack，定位就不一樣了，</p><p>尤雨溪：「webpack core 是一个纯打包工具（对标 Rollup），而 Vite 其实是一个更上层的工具链方案，对标的是 （webpack + 针对 web 的常用配置 + webpack-dev-server）。」</p><p>什麼時候使用哪種工具，除了使用情境及需求外，更多的是開發者自己的喜好，今天處理的是一個複雜的專案，需要支援各種情況的 plugin 跟可以容納複雜的配置依賴，那可能使用 webpack 是一個好選擇。</p><p>若今天想少等待熱更新時間，想啟動開發伺服器時可以速度快一些，比起開發效能，更注重在開發本身體驗的話，那可能 vite 就會變成是好選擇。</p><h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul><li><a href="https://cn.vitejs.dev/guide/why.html">为什么选 Vite | Vite 官方中文文档</a></li><li><a href="https://www.zhihu.com/question/477139054">vite 多久后能干掉 webpack？ - 知乎</a></li><li><a href="https://www.explainthis.io/zh-hant/interview-guides/frontend/what-is-vite">Vite 是什麼? 為什麼要用 Vite? 它解決了哪些問題? 又是如何解決? - 軟體工程師面試、職涯、新加坡生活分享 - ExplainThis</a></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> Vue </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> vite </tag>
+            
+            <tag> webpack </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>研究前端實作多國語系</title>
       <link href="/2023/06/13/f2e-research-vue-i18n/"/>
       <url>/2023/06/13/f2e-research-vue-i18n/</url>
