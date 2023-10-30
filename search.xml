@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>用vue來實作reCAPTCHA筆記</title>
+      <link href="/2023/10/30/vue-reCAPTCHA-notes/"/>
+      <url>/2023/10/30/vue-reCAPTCHA-notes/</url>
+      
+        <content type="html"><![CDATA[<p>網頁中常常在進去到真正內容之前，會先跳出一個「我不是機器人」的區塊，像是這樣：<br><img src="https://hackmd.io/_uploads/BkXknlnza.png"></p><p>可能是要驗證目前是不是真人在使用，只要勾選完後就可以正常前往，比較進階一點的可能會出現一個九宮格，問裡面哪一些圖裡面有車，答對了就可以進去，亂選就進不去。</p><p>專案中會用到，原本以為蠻複雜的但其實文件寫得很清楚。</p><p>接下來紀錄我在實作這個需求的脈絡。</p><h2 id="確認需求"><a href="#確認需求" class="headerlink" title="確認需求"></a>確認需求</h2><p>reCAPTCHA 其實是有分版本的，v2 以及 v3，v3 是目前最新的。<br>差別在於說 v3 是採取分數的方式，所以使用者不用點擊按鈕了，不然的話 v2 時，還是要點擊一個「我不是機器人」的按鈕，取而代之的是運行在後台，從後台來判斷是不是機器人。</p><p>v3 等於說 google 會自動判斷你這個人進到這個網站會給你多少分，然後後台可以去控制幾分才能進到這個網頁裡面。</p><p>v2 是用問題來驗證要求。<br>v3 是用分數來驗證要求。</p><p>假如說需求是會希望看到「我不是機器人」的選項可以選擇 v2，想要更方便讓使用者不要有負擔的話可以選擇 v3，這邊我是選擇 reCAPTCHA v2。</p><h2 id="註冊-reCAPTCHA"><a href="#註冊-reCAPTCHA" class="headerlink" title="註冊 reCAPTCHA"></a>註冊 reCAPTCHA</h2><p>確認好需求好在寫程式之前，要先去 reCAPTCHA 的官網去註冊，<a href="https://www.google.com/recaptcha/about/">https://www.google.com/recaptcha/about/</a></p><p>進到連結後，點選右上角的「Admin Console」，就會出現一系列相關註冊表單，會問說要選擇 v2、v3 哪一種類型，新增在哪一個網域上面，這邊的話正式的網域名我還不知道，所以最終是等後端去申請，目前只能我自己申請的只是測試用的，所以我填了目前本機 localhost 的網域。</p><p>註冊成功之後，會拿到一串金鑰及密鑰，可以理解成金鑰是前端頁面使用，密鑰是後端在 server 使用，前端這邊主要會用到金鑰。</p><p>拿到了相對應的金鑰之後，就可以繼續往下一步。</p><h2 id="vue3-recaptcha2"><a href="#vue3-recaptcha2" class="headerlink" title="vue3-recaptcha2"></a>vue3-recaptcha2</h2><p>因為我用 vue3，然後實作的是 reCAPTCHA v2，所以先試著去找有沒有別人已經寫好的套件，後來找到了標題這款。</p><p><a href="https://www.npmjs.com/package/vue3-recaptcha2">vue3-recaptcha2 - npm</a></p><p>有了套件之後做起來就方便許多。</p><p>在創建好 vue 環境之後，安裝這個套件。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install vue3-recaptcha2</span><br></pre></td></tr></table></figure><p>確認安裝好之後，在要使用到 reCAPTCHA 的那個頁面引入套件後，宣告這個變數，我是宣告在登入這頁：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import vueRecaptcha from &#x27;vue3-recaptcha2&#x27;;</span><br><span class="line">const instance_vueRecaptchaV2 = reactive(&#123;</span><br><span class="line">  data_v2SiteKey: import.meta.env.VITE_APP_DATA_V25ITEKEY,</span><br><span class="line">  recaptchaVerified: response_token =&gt; &#123;</span><br><span class="line">    RecaptchaToken.value = response_token</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure><p><code>data_v2SiteKey</code>就是註冊時的金鑰。<br><code>recaptchaVerified</code>是給後端驗證後的動作。</p><p>文件中其實還有提到另外兩個。<br><img src="https://hackmd.io/_uploads/H1b6Dj3fT.png"></p><p><code>recaptchaExpired</code>是處理驗證過期後的動作。<br><code>recaptchaError</code>是處理驗證碼錯誤後的動作。</p><p>這些變數都會用到待會寫在 vue template 實際上元件的 props 中。</p><p>寫起來會像是這樣：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;VueRecaptcha</span><br><span class="line">  class=&quot;d-flex justify-center mb-4&quot;</span><br><span class="line">  :sitekey=&quot;instance_vueRecaptchaV2.data_v2SiteKey&quot;</span><br><span class="line">  size=&quot;normal&quot;</span><br><span class="line">  theme=&quot;light&quot;</span><br><span class="line">  @verify=&quot;instance_vueRecaptchaV2.recaptchaVerified&quot;</span><br><span class="line">/&gt;</span><br></pre></td></tr></table></figure><p>再看畫面上有沒有需要調整 css 的部分，也可以直接改在<code>VueRecaptcha</code>的 tag 上面，這樣功能就完成了。</p><p><img src="https://hackmd.io/_uploads/HJa8MphGa.png"></p><h2 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h2><p>v3 版本要設定的東西會比較多，但 v2 大致上這些東西就能設定完成，要注意的是如何依照跟後端的溝通進行驗證，在登入頁中算是一個蠻常見的需求。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Vue </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>JavaScript中的IIFE還會用得到嗎？</title>
       <link href="/2023/08/17/javascript-IIFE/"/>
       <url>/2023/08/17/javascript-IIFE/</url>
