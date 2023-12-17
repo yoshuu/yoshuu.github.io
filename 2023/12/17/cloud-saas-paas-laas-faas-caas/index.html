@@ -1,0 +1,270 @@
+<!DOCTYPE html><html lang="zh-TW" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>搞懂雲服務模式(SaaS、PaaS、IaaS、FaaS、CaaS) | Vic's Blog</title><meta name="author" content="Vic"><meta name="copyright" content="Vic"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="本地端做好的網頁要讓大家都能看到就需要上傳到雲端，現今社會有很多種方式可以實現，研究之後發現這種服務還真不少，爬文整理吸收過後，大致可以分為以下這幾種： SaaS全名是Software as a Service，中文叫軟體即服務，我理解成所有的應用程式，每一個app都算在裡面，可能會有一個免費版可以使用，也可以付費來享受完整版，由於只需要連網路，其他什麼都不需要準備，所以可以當作是種使用門檻最低的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="搞懂雲服務模式(SaaS、PaaS、IaaS、FaaS、CaaS)">
+<meta property="og:url" content="https://yoshuu.github.io/2023/12/17/cloud-saas-paas-laas-faas-caas/index.html">
+<meta property="og:site_name" content="Vic&#39;s Blog">
+<meta property="og:description" content="本地端做好的網頁要讓大家都能看到就需要上傳到雲端，現今社會有很多種方式可以實現，研究之後發現這種服務還真不少，爬文整理吸收過後，大致可以分為以下這幾種： SaaS全名是Software as a Service，中文叫軟體即服務，我理解成所有的應用程式，每一個app都算在裡面，可能會有一個免費版可以使用，也可以付費來享受完整版，由於只需要連網路，其他什麼都不需要準備，所以可以當作是種使用門檻最低的">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://member.ithome.com.tw/avatars/174235?s=ithelp">
+<meta property="article:published_time" content="2023-12-17T10:40:26.000Z">
+<meta property="article:modified_time" content="2023-12-17T17:47:39.581Z">
+<meta property="article:author" content="Vic">
+<meta property="article:tag" content="雲服務">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://member.ithome.com.tw/avatars/174235?s=ithelp"><link rel="shortcut icon" href="https://member.ithome.com.tw/avatars/174235?s=ithelp"><link rel="canonical" href="https://yoshuu.github.io/2023/12/17/cloud-saas-paas-laas-faas-caas/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查詢的內容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '複製成功',
+    error: '複製錯誤',
+    noSupport: '瀏覽器不支援'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '剛剛',
+    min: '分鐘前',
+    hour: '小時前',
+    day: '天前',
+    month: '個月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '搞懂雲服務模式(SaaS、PaaS、IaaS、FaaS、CaaS)',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-12-18 01:47:39'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/fish.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/zyoushuo/Blog@latest/hexo/css/loading_style_1.css" ><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/zyoushuo/Blog@latest/hexo/css/loading_style_2.css" ><meta name="generator" content="Hexo 6.3.0"></head><body>
+<div id="loader">
+  
+  <div class="outer_box">
+    <div class="loader_overlay"></div>
+    <div class="loader_cogs">
+      <div class="loader_cogs__top">
+        <div class="top_part"></div>
+        <div class="top_part"></div>
+        <div class="top_part"></div>
+        <div class="top_hole"></div>
+      </div>
+      <div class="loader_cogs__left">
+        <div class="left_part"></div>
+        <div class="left_part"></div>
+        <div class="left_part"></div>
+        <div class="left_hole"></div>
+      </div>
+      <div class="loader_cogs__bottom">
+        <div class="bottom_part"></div>
+        <div class="bottom_part"></div>
+        <div class="bottom_part"></div>
+        <div class="bottom_hole"></div>
+      </div>
+      <p style="text-align: center">&nbsp;&nbsp;&nbsp;loading...</p>
+    </div>
+  </div>
+  
+</div>
+
+<script>
+  var endLoading = function () {
+    document.body.style.overflow = "auto";
+    document.getElementById("loader").classList.add("loading");
+  };
+  window.addEventListener("load", endLoading);
+</script>
+
+<div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://member.ithome.com.tw/avatars/174235?s=ithelp" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">72</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">10</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章總覽</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Vic's Blog"><img class="site-icon" src="https://member.ithome.com.tw/avatars/174235?s=ithelp"/><span class="site-name">Vic's Blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜尋</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章總覽</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">搞懂雲服務模式(SaaS、PaaS、IaaS、FaaS、CaaS)</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">發表於</span><time class="post-meta-date-created" datetime="2023-12-17T10:40:26.000Z" title="發表於 2023-12-17 18:40:26">2023-12-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新於</span><time class="post-meta-date-updated" datetime="2023-12-17T17:47:39.581Z" title="更新於 2023-12-18 01:47:39">2023-12-18</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%BE%8C%E7%AB%AF%E7%9B%B8%E9%97%9C/">後端相關</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="搞懂雲服務模式(SaaS、PaaS、IaaS、FaaS、CaaS)"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">閱讀量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><p>本地端做好的網頁要讓大家都能看到就需要上傳到雲端，現今社會有很多種方式可以實現，研究之後發現這種服務還真不少，爬文整理吸收過後，大致可以分為以下這幾種：</p>
+<h2 id="SaaS"><a href="#SaaS" class="headerlink" title="SaaS"></a>SaaS</h2><p>全名是Software as a Service，中文叫軟體即服務，我理解成所有的應用程式，每一個app都算在裡面，可能會有一個免費版可以使用，也可以付費來享受完整版，由於只需要連網路，其他什麼都不需要準備，所以可以當作是種使用門檻最低的雲端服務形式。</p>
+<h2 id="PaaS"><a href="#PaaS" class="headerlink" title="PaaS"></a>PaaS</h2><p>全名是Platform as a Service，中文叫做平台即服務，服務提供了開發環境，讓開發者不需要再自己去建立，這樣可以專注於應用程式的開發而不必擔心底層的基礎架構，這種模式包括開發工具、資料庫和其他基礎組件，減輕了應用程式的管理負擔，對新手開發者比較友善，所以網路上爬文對於剛碰部署的朋友們都建議從PaaS服務下手。</p>
+<h2 id="IaaS"><a href="#IaaS" class="headerlink" title="IaaS"></a>IaaS</h2><p>全名是Infrastructure as a Service，中文叫做基礎架構即服務，顧名思義雲服務模式中最基本的一環，提供了所有開發者所需基礎架構，同時也讓開發者不需要準備任何硬體也能開發，高手境界，擁有高度的自由性跟擴充性，配置相當的彈性，缺點我想可能是很複雜吧。</p>
+<h2 id="FaaS"><a href="#FaaS" class="headerlink" title="FaaS"></a>FaaS</h2><p>全名是Function as a service，中文叫做函式即服務，讓開發者在需要時運行特定功能，而不必擔心整個應用程式的管理，沒有serve，開發者可以馬上寫程式碼，然後馬上放到雲端當作服務來使用，一種事件驅動的運算模式，適合用在一些需要突發處理的需求上。</p>
+<h2 id="CaaS"><a href="#CaaS" class="headerlink" title="CaaS"></a>CaaS</h2><p>全名是Containers as a service，中文叫做容器即服務，google cloud的文章裡看到的，文章中的原話是這麼介紹：<br><code>容器即服務 (CaaS) 提供及管理所有硬體與軟體資源，以便透過容器開發及部署應用程式。有時候，CaaS 被視為是 IaaS 的子集或擴充功能，會使用容器而非 VM 做為主要資源。開發人員和 IT 作業小組可以使用 CaaS 來開發、執行及管理應用程式，而不必建構及維護執行及管理容器的基礎架構或平台。客戶仍需撰寫程式碼及管理資料和應用程式，但建構和部署容器化應用程式的環境是由雲端服務供應商管理及維護。</code></p>
+<p>有點難理解，但我爬文有看到一個蠻好理解的說法，可以想像成人家幫你在你mac上裝了10個IE。<br><a target="_blank" rel="noopener" href="https://b8807053.pixnet.net/blog/post/345956326-iaas%EF%BC%8Cpaas%EF%BC%8Csaas%EF%BC%8Ccaas">https://b8807053.pixnet.net/blog/post/345956326-iaas%EF%BC%8Cpaas%EF%BC%8Csaas%EF%BC%8Ccaas</a></p>
+<p>如果我要在mac為了在不同的情況下要運行不同版本的IE，那我為了測試就要手動裝10個IE版本，有夠麻煩，如果有一種服務，做到類似「IE 版本管理服務」，幫忙在Mac上建立了一個容器，每個容器裡裝了不同版本的IE。這樣一來就只需專注在測試要測試的東西，而不必親自操心管理這些IE版本。</p>
+<h2 id="運用情況及重點"><a href="#運用情況及重點" class="headerlink" title="運用情況及重點"></a>運用情況及重點</h2><ul>
+<li>使用者最常接觸到的：SaaS</li>
+<li>我是開發者想要部署我的東西：PaaS、IaaS</li>
+<li>開發者新手想好上手選PaaS，想高度自由化選IaaS</li>
+<li>最常見的FaaS: AWS的LAmbada</li>
+<li>我所知道主流的雲端平台：AWS、GCP、Azure</li>
+</ul>
+<h2 id="思考的問題"><a href="#思考的問題" class="headerlink" title="思考的問題"></a>思考的問題</h2><ul>
+<li>為什麼大家都是用別人做好的雲服務，而不是自己做呢？</li>
+</ul>
+<p>就算是最基礎設施的IaaS，也已經把很多部分交給供應商幫忙維護。</p>
+<p>因為不這樣的話，要自己買伺服器，需要自己有機房買一大堆電腦，硬體設備都要自己搞定，要花費額外人力去維護，一個沒注意到沒去叫繳電費可能好被停，十分麻煩。</p>
+<p>用別人做好的服務的話，就等於說別人買了一大堆電腦租給你用，不用管他們電腦放在哪裡，不用煩惱任何硬體設備問題，伺服器的問題通通只需要交給供應商煩惱就好，這樣可以專心在開發自己的軟體服務上面。</p>
+<ul>
+<li>假如一個純前端工程師，想要自己做一個前後端的專案，可以怎麼做？</li>
+</ul>
+<p>其實還有一種aas叫做是Baas。</p>
+<p>全名是Backend as a Service，中文就是後端即服務。</p>
+<p>提供開發者整合整個後端的雲服務，一般雲服務所需要的運算、資料庫、儲存都一次到位，甚至連身份驗證、推送都有，讓前端可以專心的開發前端程式碼，不用碰到後端也能build出一個專案。</p>
+<p>Firebase就是一個很知名的Baas服務。</p>
+<p>而且不用綁卡就可以開免費額度的專案，推薦前端工程師自己做side project可以考慮。</p>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://pcnow.cc/p/WJd7m5dc08.html">雲計算和雲服務入門科普：一文看懂IaaS、PaaS、SaaS、DaaS – PCNow</a></li>
+<li><a target="_blank" rel="noopener" href="https://medium.com/@jinghua.shih/serverless-faas-3b607f0158fe">Serverless &amp; FaaS. 順帶一提 SaaS, PaaS &amp; IaaS | by 施靜樺 | Medium</a></li>
+<li><a target="_blank" rel="noopener" href="https://cloud.google.com/learn/paas-vs-iaas-vs-saas?hl=zh-tw">PaaS、IaaS 與 SaaS 有何差異？  |  Google Cloud</a></li>
+<li><a target="_blank" rel="noopener" href="https://hennge.com/tw/cloud/cloud.html">雲端和 SaaS (Software as a Service) 的基礎 | HENNGE Taiwan 台灣惠頂益 - 日本第一雲端資安服務</a></li>
+<li><a target="_blank" rel="noopener" href="https://b8807053.pixnet.net/blog/post/345956326-iaas%EF%BC%8Cpaas%EF%BC%8Csaas%EF%BC%8Ccaas">IaaS，PaaS，SaaS，CaaS @ 立你斯學習記錄 :: 痞客邦 ::</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://yoshuu.github.io">Vic</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章連結: </span><span class="post-copyright-info"><a href="https://yoshuu.github.io/2023/12/17/cloud-saas-paas-laas-faas-caas/">https://yoshuu.github.io/2023/12/17/cloud-saas-paas-laas-faas-caas/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版權聲明: </span><span class="post-copyright-info">本部落格所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 許可協議。轉載請註明來自 <a href="https://yoshuu.github.io" target="_blank">Vic's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E9%9B%B2%E6%9C%8D%E5%8B%99/">雲服務</a></div><div class="post_share"><div class="social-share" data-image="https://member.ithome.com.tw/avatars/174235?s=ithelp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2023/10/30/vue-reCAPTCHA-notes/" title="用vue來實作reCAPTCHA筆記"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">用vue來實作reCAPTCHA筆記</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 評論</span></div></div><div class="comment-wrap"><div><div id="utterances-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://member.ithome.com.tw/avatars/174235?s=ithelp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Vic</div><div class="author-info__description">喜歡複雜的東西變簡單🍎</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">72</div></a><a href="/tags/"><div class="headline">標籤</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分類</div><div class="length-num">10</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/yoshuu"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://www.facebook.com/profile.php?id=100010997769542" target="_blank" title="Facebook"><i class="fa-brands fa-square-facebook" style="color: #000;"></i></a><a class="social-icon" href="https://yoshuu.github.io/about/" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #000;"></i></a><a class="social-icon" href="https://www.instagram.com/appcs342/" target="_blank" title="Instagram"><i class="fa-brands fa-instagram" style="color: #000;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">這裡主要分享軟體程式技術文章，期望透過分享和堅持變得越來越好，目標是變卓越邁向大師，歡迎各種交流。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目錄</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#SaaS"><span class="toc-number">1.</span> <span class="toc-text">SaaS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PaaS"><span class="toc-number">2.</span> <span class="toc-text">PaaS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IaaS"><span class="toc-number">3.</span> <span class="toc-text">IaaS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FaaS"><span class="toc-number">4.</span> <span class="toc-text">FaaS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CaaS"><span class="toc-number">5.</span> <span class="toc-text">CaaS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%81%8B%E7%94%A8%E6%83%85%E6%B3%81%E5%8F%8A%E9%87%8D%E9%BB%9E"><span class="toc-number">6.</span> <span class="toc-text">運用情況及重點</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E7%9A%84%E5%95%8F%E9%A1%8C"><span class="toc-number">7.</span> <span class="toc-text">思考的問題</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">8.</span> <span class="toc-text">參考資料</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2023 By Vic</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主題 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">未來的事情，誰也不知道。正因為如此，就如同再次相見本身，未來才有無限的可能。</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="閱讀模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="淺色和深色模式轉換"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="單欄和雙欄切換"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="設定"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目錄"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直達評論"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到頂部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>function loadUtterances () {
+  let ele = document.createElement('script')
+  ele.setAttribute('id', 'utterances_comment')
+  ele.setAttribute('src', 'https://utteranc.es/client.js')
+  ele.setAttribute('repo', 'yoshuu/yoshuu.github.io')
+  ele.setAttribute('issue-term', 'title')
+  let nowTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'photon-dark' : 'github-light'
+  ele.setAttribute('theme', nowTheme)
+  ele.setAttribute('crossorigin', 'anonymous')
+  ele.setAttribute('async', 'true')
+  document.getElementById('utterances-wrap').insertAdjacentElement('afterbegin',ele)
+}
+
+function utterancesTheme () {
+  const iframe = document.querySelector('.utterances-frame')
+  if (iframe) {
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'photon-dark' : 'github-light'
+    const message = {
+      type: 'set-theme',
+      theme: theme
+    };
+    iframe.contentWindow.postMessage(message, 'https://utteranc.es');
+  }
+}
+
+if ('Utterances' === 'Utterances' || !false) {
+  if (false) btf.loadComment(document.getElementById('utterances-wrap'), loadUtterances)
+  else loadUtterances()
+} else {
+  function loadOtherComment () {
+    loadUtterances()
+  }
+}</script></div><script type="text/javascript" src="https://unpkg.zhimg.com/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/gh/xiabo2/CDN@latest/fishes.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="false" data-text="🍎,🍏" data-fontsize="30px" data-random="true" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜尋</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  資料庫載入中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜尋文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>搞懂雲服務模式(SaaS、PaaS、IaaS、FaaS、CaaS)</title>
+      <link href="/2023/12/17/cloud-saas-paas-laas-faas-caas/"/>
+      <url>/2023/12/17/cloud-saas-paas-laas-faas-caas/</url>
+      
+        <content type="html"><![CDATA[<p>本地端做好的網頁要讓大家都能看到就需要上傳到雲端，現今社會有很多種方式可以實現，研究之後發現這種服務還真不少，爬文整理吸收過後，大致可以分為以下這幾種：</p><h2 id="SaaS"><a href="#SaaS" class="headerlink" title="SaaS"></a>SaaS</h2><p>全名是Software as a Service，中文叫軟體即服務，我理解成所有的應用程式，每一個app都算在裡面，可能會有一個免費版可以使用，也可以付費來享受完整版，由於只需要連網路，其他什麼都不需要準備，所以可以當作是種使用門檻最低的雲端服務形式。</p><h2 id="PaaS"><a href="#PaaS" class="headerlink" title="PaaS"></a>PaaS</h2><p>全名是Platform as a Service，中文叫做平台即服務，服務提供了開發環境，讓開發者不需要再自己去建立，這樣可以專注於應用程式的開發而不必擔心底層的基礎架構，這種模式包括開發工具、資料庫和其他基礎組件，減輕了應用程式的管理負擔，對新手開發者比較友善，所以網路上爬文對於剛碰部署的朋友們都建議從PaaS服務下手。</p><h2 id="IaaS"><a href="#IaaS" class="headerlink" title="IaaS"></a>IaaS</h2><p>全名是Infrastructure as a Service，中文叫做基礎架構即服務，顧名思義雲服務模式中最基本的一環，提供了所有開發者所需基礎架構，同時也讓開發者不需要準備任何硬體也能開發，高手境界，擁有高度的自由性跟擴充性，配置相當的彈性，缺點我想可能是很複雜吧。</p><h2 id="FaaS"><a href="#FaaS" class="headerlink" title="FaaS"></a>FaaS</h2><p>全名是Function as a service，中文叫做函式即服務，讓開發者在需要時運行特定功能，而不必擔心整個應用程式的管理，沒有serve，開發者可以馬上寫程式碼，然後馬上放到雲端當作服務來使用，一種事件驅動的運算模式，適合用在一些需要突發處理的需求上。</p><h2 id="CaaS"><a href="#CaaS" class="headerlink" title="CaaS"></a>CaaS</h2><p>全名是Containers as a service，中文叫做容器即服務，google cloud的文章裡看到的，文章中的原話是這麼介紹：<br><code>容器即服務 (CaaS) 提供及管理所有硬體與軟體資源，以便透過容器開發及部署應用程式。有時候，CaaS 被視為是 IaaS 的子集或擴充功能，會使用容器而非 VM 做為主要資源。開發人員和 IT 作業小組可以使用 CaaS 來開發、執行及管理應用程式，而不必建構及維護執行及管理容器的基礎架構或平台。客戶仍需撰寫程式碼及管理資料和應用程式，但建構和部署容器化應用程式的環境是由雲端服務供應商管理及維護。</code></p><p>有點難理解，但我爬文有看到一個蠻好理解的說法，可以想像成人家幫你在你mac上裝了10個IE。<br><a href="https://b8807053.pixnet.net/blog/post/345956326-iaas%EF%BC%8Cpaas%EF%BC%8Csaas%EF%BC%8Ccaas">https://b8807053.pixnet.net/blog/post/345956326-iaas%EF%BC%8Cpaas%EF%BC%8Csaas%EF%BC%8Ccaas</a></p><p>如果我要在mac為了在不同的情況下要運行不同版本的IE，那我為了測試就要手動裝10個IE版本，有夠麻煩，如果有一種服務，做到類似「IE 版本管理服務」，幫忙在Mac上建立了一個容器，每個容器裡裝了不同版本的IE。這樣一來就只需專注在測試要測試的東西，而不必親自操心管理這些IE版本。</p><h2 id="運用情況及重點"><a href="#運用情況及重點" class="headerlink" title="運用情況及重點"></a>運用情況及重點</h2><ul><li>使用者最常接觸到的：SaaS</li><li>我是開發者想要部署我的東西：PaaS、IaaS</li><li>開發者新手想好上手選PaaS，想高度自由化選IaaS</li><li>最常見的FaaS: AWS的LAmbada</li><li>我所知道主流的雲端平台：AWS、GCP、Azure</li></ul><h2 id="思考的問題"><a href="#思考的問題" class="headerlink" title="思考的問題"></a>思考的問題</h2><ul><li>為什麼大家都是用別人做好的雲服務，而不是自己做呢？</li></ul><p>就算是最基礎設施的IaaS，也已經把很多部分交給供應商幫忙維護。</p><p>因為不這樣的話，要自己買伺服器，需要自己有機房買一大堆電腦，硬體設備都要自己搞定，要花費額外人力去維護，一個沒注意到沒去叫繳電費可能好被停，十分麻煩。</p><p>用別人做好的服務的話，就等於說別人買了一大堆電腦租給你用，不用管他們電腦放在哪裡，不用煩惱任何硬體設備問題，伺服器的問題通通只需要交給供應商煩惱就好，這樣可以專心在開發自己的軟體服務上面。</p><ul><li>假如一個純前端工程師，想要自己做一個前後端的專案，可以怎麼做？</li></ul><p>其實還有一種aas叫做是Baas。</p><p>全名是Backend as a Service，中文就是後端即服務。</p><p>提供開發者整合整個後端的雲服務，一般雲服務所需要的運算、資料庫、儲存都一次到位，甚至連身份驗證、推送都有，讓前端可以專心的開發前端程式碼，不用碰到後端也能build出一個專案。</p><p>Firebase就是一個很知名的Baas服務。</p><p>而且不用綁卡就可以開免費額度的專案，推薦前端工程師自己做side project可以考慮。</p><h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul><li><a href="https://pcnow.cc/p/WJd7m5dc08.html">雲計算和雲服務入門科普：一文看懂IaaS、PaaS、SaaS、DaaS – PCNow</a></li><li><a href="https://medium.com/@jinghua.shih/serverless-faas-3b607f0158fe">Serverless &amp; FaaS. 順帶一提 SaaS, PaaS &amp; IaaS | by 施靜樺 | Medium</a></li><li><a href="https://cloud.google.com/learn/paas-vs-iaas-vs-saas?hl=zh-tw">PaaS、IaaS 與 SaaS 有何差異？  |  Google Cloud</a></li><li><a href="https://hennge.com/tw/cloud/cloud.html">雲端和 SaaS (Software as a Service) 的基礎 | HENNGE Taiwan 台灣惠頂益 - 日本第一雲端資安服務</a></li><li><a href="https://b8807053.pixnet.net/blog/post/345956326-iaas%EF%BC%8Cpaas%EF%BC%8Csaas%EF%BC%8Ccaas">IaaS，PaaS，SaaS，CaaS @ 立你斯學習記錄 :: 痞客邦 ::</a></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 後端相關 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 雲服務 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>用vue來實作reCAPTCHA筆記</title>
       <link href="/2023/10/30/vue-reCAPTCHA-notes/"/>
       <url>/2023/10/30/vue-reCAPTCHA-notes/</url>
